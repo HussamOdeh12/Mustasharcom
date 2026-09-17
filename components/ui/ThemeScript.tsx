@@ -38,8 +38,8 @@ export default function ThemeScript() {
               } catch (err) {
                 if (
                   err &&
-                  (err.name === 'TypeError' ||
-                   String(err.message || '').indexOf('circular') !== -1 ||
+                  (err.name === 'TypeError' || 
+                   String(err.message || '').indexOf('circular') !== -1 || 
                    String(err.message || '').indexOf('Converting circular structure') !== -1)
                 ) {
                   var seen = new WeakSet();
@@ -74,23 +74,52 @@ export default function ThemeScript() {
             };
           }
 
-          // Prevent unhandled error event from bubbling when circular structure errors occur or extension fetch fails
-          window.addEventListener('error', function(event) {
-            var msg = (event && event.message) ? String(event.message) : '';
-            if (
-              msg.indexOf('Converting circular structure to JSON') !== -1 ||
-              msg.indexOf('circular') !== -1 ||
-              msg.indexOf('Cannot set property fetch') !== -1 ||
-              (msg.indexOf('fetch') !== -1 && msg.indexOf('getter') !== -1)
-            ) {
-              if (event.preventDefault) event.preventDefault();
-              if (event.stopImmediatePropagation) event.stopImmediatePropagation();
-              return true;
+          // Suppress specific errors from reaching Next.js error boundary
+          var originalAddEventListener = window.addEventListener;
+          window.addEventListener = function(type, listener, options) {
+            if (type === 'error' || type === 'unhandledrejection') {
+              var origListener = listener;
+              listener = function(event) {
+                var msg = (event && (event.message || event.reason)) ? String(event.message || event.reason) : '';
+                if (
+                  msg.indexOf('Cannot set property fetch') !== -1 ||
+                  (msg.indexOf('fetch') !== -1 && msg.indexOf('getter') !== -1) ||
+                  msg.indexOf('Converting circular structure to JSON') !== -1 ||
+                  msg.indexOf('circular') !== -1
+                ) {
+                  if (event.preventDefault) event.preventDefault();
+                  if (event.stopImmediatePropagation) event.stopImmediatePropagation();
+                  return; // Swallow the error
+                }
+                return origListener.apply(this, arguments);
+              };
             }
-          }, true);
+            return originalAddEventListener.call(this, type, listener, options);
+          };
 
-          // Redefine window.fetch with a setter so assignments succeed
+          var originalConsoleError = console.error;
+          console.error = function() {
+            for (var i = 0; i < arguments.length; i++) {
+              var arg = arguments[i];
+              var msg = typeof arg === 'string' ? arg : (arg && arg.message ? String(arg.message) : '');
+              if (
+                msg.indexOf('Cannot set property fetch') !== -1 ||
+                (msg.indexOf('fetch') !== -1 && msg.indexOf('getter') !== -1) ||
+                msg.indexOf('Converting circular structure to JSON') !== -1 ||
+                msg.indexOf('circular') !== -1
+              ) {
+                return; // Swallow the error
+              }
+            }
+            return originalConsoleError.apply(console, arguments);
+          };
+
+          // Try to redefine window.fetch with a setter
           var currentFetch = window.fetch;
+          try {
+            delete window.fetch;
+          } catch (e) {}
+          
           try {
             Object.defineProperty(window, 'fetch', {
               get: function() {
@@ -102,25 +131,16 @@ export default function ThemeScript() {
               configurable: true,
               enumerable: true
             });
-          } catch (err) {
-            try {
-              Object.defineProperty(Window.prototype, 'fetch', {
-                get: function() {
-                  return currentFetch;
-                },
-                set: function(val) {
-                  currentFetch = val;
-                },
-                configurable: true,
-                enumerable: true
-              });
-            } catch (e2) {}
-          }
+          } catch (err) {}
         }
       } catch (e) {}
 
-      // 2. Early theme initialization
+      // 2. Early theme and locale initialization
       try {
+        var isArabic = window.location.pathname.startsWith('/ar');
+        document.documentElement.lang = isArabic ? 'ar' : 'en';
+        document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
+
         var stored = localStorage.getItem('mustasharcom_theme');
         var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (stored === 'dark' || (!stored && prefersDark)) {
@@ -139,4 +159,3 @@ export default function ThemeScript() {
     />
   );
 }
-

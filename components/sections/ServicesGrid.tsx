@@ -86,7 +86,7 @@ export default function ServicesGrid({ locale, showAll = true }: ServicesGridPro
                   {/* Top Bar: Number + Icon + Tag */}
                   <div className="flex items-center justify-between gap-2 mb-4">
                     <div className="flex items-center gap-3">
-                      <span className="font-mono text-xs font-bold text-zinc-400 dark:text-zinc-500">
+                      <span className="font-mono text-xs font-bold text-zinc-600 dark:text-zinc-400">
                         {svc.number}
                       </span>
                       <div className="p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 group-hover:scale-105 transition-transform">
@@ -116,7 +116,7 @@ export default function ServicesGrid({ locale, showAll = true }: ServicesGridPro
 
                   {/* Highlight Capabilities */}
                   <div className="border-t border-zinc-100 dark:border-zinc-800/80 pt-4 mb-6">
-                    <span className="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2">
+                    <span className="block text-[11px] font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-2">
                       {t.coreCapabilities}
                     </span>
                     <ul className="space-y-1.5 text-xs text-zinc-700 dark:text-zinc-300">

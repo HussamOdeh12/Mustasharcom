@@ -18,7 +18,7 @@ const categoryIcons: Record<SearchCategory, React.ReactNode> = {
   projects: <Building2 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />,
   compliance: <ShieldCheck className="w-3.5 h-3.5 text-[#008751] dark:text-[#34D399]" />,
   contact: <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />,
-  legal: <FileText className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />,
+  legal: <FileText className="w-3.5 h-3.5 text-zinc-600 dark:text-zinc-400" />,
 };
 
 export default function GlobalSearch({ locale, variant = 'header', className = '' }: GlobalSearchProps) {
@@ -154,7 +154,7 @@ export default function GlobalSearch({ locale, variant = 'header', className = '
         >
           <Search className="w-3.5 h-3.5 text-[#6B1426] dark:text-[#E63956]" />
           <span className="hidden md:inline whitespace-nowrap">{isRtl ? 'بحث' : 'Search'}</span>
-          <kbd className="hidden lg:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono text-zinc-400 dark:text-zinc-500 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700/80 rounded">
+          <kbd className="hidden lg:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono text-zinc-600 dark:text-zinc-400 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700/80 rounded">
             ⌘K
           </kbd>
         </button>
@@ -170,7 +170,7 @@ export default function GlobalSearch({ locale, variant = 'header', className = '
             <Search className="w-4 h-4 text-[#6B1426] dark:text-[#E63956]" />
             <span>{isRtl ? 'بحث في الخدمات والمشاريع...' : 'Search services & projects...'}</span>
           </div>
-          <span className="text-[10px] font-mono text-zinc-400 bg-white dark:bg-zinc-900 px-1.5 py-0.5 rounded border border-zinc-200 dark:border-zinc-700">
+          <span className="text-[10px] font-mono text-zinc-600 dark:text-zinc-400 bg-white dark:bg-zinc-900 px-1.5 py-0.5 rounded border border-zinc-200 dark:border-zinc-700">
             ⌘K
           </span>
         </button>
@@ -217,7 +217,7 @@ export default function GlobalSearch({ locale, variant = 'header', className = '
                     ? 'ابحث في الخدمات، المشاريع، شهادات الجودة، أو الصفحات...'
                     : 'Search services, projects, compliance, or pages...'
                 }
-                className="flex-1 bg-transparent text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 focus:outline-none"
+                className="flex-1 bg-transparent text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-600 dark:placeholder:text-zinc-400 focus:outline-none"
                 aria-label={isRtl ? 'خانة البحث العام' : 'Global search query input'}
               />
               {query && (
@@ -228,7 +228,7 @@ export default function GlobalSearch({ locale, variant = 'header', className = '
                     setSelectedIndex(0);
                     inputRef.current?.focus();
                   }}
-                  className="p-1 rounded-md text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200"
+                  className="p-1 rounded-md text-zinc-600 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200"
                   aria-label={isRtl ? 'مسح البحث' : 'Clear search'}
                 >
                   <X className="w-3.5 h-3.5" />
@@ -306,9 +306,9 @@ export default function GlobalSearch({ locale, variant = 'header', className = '
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-1.5 shrink-0 self-center text-zinc-400">
+                      <div className="flex items-center gap-1.5 shrink-0 self-center text-zinc-600 dark:text-zinc-400">
                         {isSelected && (
-                          <span className="hidden sm:inline-flex items-center gap-1 text-[10px] text-zinc-400">
+                          <span className="hidden sm:inline-flex items-center gap-1 text-[10px] text-zinc-600 dark:text-zinc-400">
                             <CornerDownLeft className="w-3 h-3" />
                           </span>
                         )}
@@ -382,7 +382,7 @@ export default function GlobalSearch({ locale, variant = 'header', className = '
                           <span className="w-1.5 h-1.5 rounded-full bg-[#6B1426] dark:bg-[#E63956]" />
                           <span>{item.title}</span>
                         </div>
-                        <span className="text-[10px] text-zinc-400">{item.cat}</span>
+                        <span className="text-[10px] text-zinc-600 dark:text-zinc-400">{item.cat}</span>
                       </button>
                     ))}
                   </div>
@@ -391,7 +391,7 @@ export default function GlobalSearch({ locale, variant = 'header', className = '
             </div>
 
             {/* Footer Navigation Hints */}
-            <div className="px-4 py-2.5 bg-zinc-50 dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between text-[11px] text-zinc-400">
+            <div className="px-4 py-2.5 bg-zinc-50 dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between text-[11px] text-zinc-600 dark:text-zinc-400">
               <div className="flex items-center gap-3">
                 <span className="flex items-center gap-1">
                   <kbd className="px-1 py-0.5 bg-white dark:bg-zinc-800 rounded border border-zinc-200 dark:border-zinc-700 font-mono text-[9px]">

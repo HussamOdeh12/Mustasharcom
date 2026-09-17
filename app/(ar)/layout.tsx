@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 import '../globals.css';
-import ThemeScript from '@/components/ui/ThemeScript';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
@@ -101,23 +100,17 @@ const arabicOrganizationSchema = {
 
 export default function ArabicRootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" dir="rtl" suppressHydrationWarning>
-      <head>
-        <ThemeScript />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(arabicOrganizationSchema) }}
-        />
-      </head>
-      <body
-        suppressHydrationWarning
-        className="min-h-screen flex flex-col bg-[#FDFCFB] dark:bg-[#0B0F19] text-zinc-900 dark:text-zinc-100 antialiased selection:bg-[#6B1426] selection:text-white transition-colors duration-200"
-        dir="rtl"
-      >
-        <Header locale="ar" />
-        <div className="flex-1 flex flex-col">{children}</div>
-        <Footer locale="ar" />
-      </body>
-    </html>
+    <div
+      dir="rtl"
+      className="min-h-screen flex flex-col bg-[#FDFCFB] dark:bg-[#0B0F19] text-zinc-900 dark:text-zinc-100 antialiased selection:bg-[#6B1426] selection:text-white transition-colors duration-200"
+    >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(arabicOrganizationSchema) }}
+      />
+      <Header locale="ar" />
+      <div className="flex-1 flex flex-col">{children}</div>
+      <Footer locale="ar" />
+    </div>
   );
 }

@@ -141,7 +141,7 @@ export default function CredentialsSection({ locale }: CredentialsSectionProps) 
 
         {/* 7 Registered Activities Under ADRA Licence */}
         <div className="p-6 rounded-2xl bg-white dark:bg-[#111726] border border-zinc-200 dark:border-zinc-800 shadow-xs">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-4">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-4">
             {locale === 'ar'
               ? 'الأنشطة الاقتصادية والتقنية المسجلة رسمياً برخصة أبوظبي (CN-2769971)'
               : 'Formally Authorized Economic Activities under Abu Dhabi Licence CN-2769971'}

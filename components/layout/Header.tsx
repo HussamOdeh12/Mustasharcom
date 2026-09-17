@@ -52,7 +52,8 @@ export default function Header({ locale }: HeaderProps) {
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > 20);
+          const current = window.scrollY > 20;
+          setIsScrolled((prev) => (prev !== current ? current : prev));
           ticking = false;
         });
         ticking = true;
@@ -64,6 +65,7 @@ export default function Header({ locale }: HeaderProps) {
   }, []);
 
   const isActive = (path: string) => {
+    if (!pathname) return false;
     if (path === '/' || path === '/ar') {
       return pathname === path;
     }
@@ -148,7 +150,7 @@ export default function Header({ locale }: HeaderProps) {
                           <Link
                             href={href}
                             prefetch={true}
-                            className="text-[11px] font-medium text-zinc-500 hover:text-[#6B1426] dark:hover:text-zinc-300 whitespace-nowrap"
+                            className="text-[11px] font-medium text-zinc-600 hover:text-[#6B1426] dark:hover:text-zinc-300 whitespace-nowrap"
                           >
                             {t.viewAllServices} →
                           </Link>
@@ -167,7 +169,7 @@ export default function Header({ locale }: HeaderProps) {
                               <span className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-[#6B1426] dark:group-hover:text-[#F38C9C] transition-colors whitespace-nowrap">
                                 {svc.title[locale]}
                               </span>
-                              <span className="text-[11px] text-zinc-500 dark:text-zinc-400 line-clamp-1">
+                              <span className="text-[11px] text-zinc-600 dark:text-zinc-400 line-clamp-1">
                                 {svc.shortDesc[locale]}
                               </span>
                             </div>

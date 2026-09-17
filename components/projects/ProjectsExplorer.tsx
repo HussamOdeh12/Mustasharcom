@@ -63,7 +63,7 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
 
         {/* Text Filter */}
         <div className="relative min-w-[240px]">
-          <Search className={`w-4 h-4 absolute top-1/2 -translate-y-1/2 text-zinc-400 ${isRtl ? 'right-3' : 'left-3'}`} />
+          <Search className={`w-4 h-4 absolute top-1/2 -translate-y-1/2 text-zinc-600 dark:text-zinc-400 ${isRtl ? 'right-3' : 'left-3'}`} />
           <input
             type="text"
             id="projects-search-input"
@@ -71,7 +71,7 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={locale === 'ar' ? 'بحث في المشاريع أو الجهات...' : 'Search projects or clients...'}
-            className={`w-full py-2 text-xs rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#6B1426] focus:bg-white dark:focus:bg-zinc-800 transition-all ${
+            className={`w-full py-2 text-xs rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-600 dark:placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#6B1426] focus:bg-white dark:focus:bg-zinc-800 transition-all ${
               isRtl ? 'pr-9 pl-3' : 'pl-9 pr-3'
             }`}
           />
@@ -79,13 +79,13 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
       </div>
 
       {/* Result Count & Historical Record Framing */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-zinc-500 dark:text-zinc-400 px-1">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-zinc-600 dark:text-zinc-400 px-1">
         <span>
           {locale === 'ar'
             ? `عرض ${filteredProjects.length} من أصل ${PROJECTS_RECORD.length} عقداً ومشروعاً موثقاً`
             : `Showing ${filteredProjects.length} of ${PROJECTS_RECORD.length} verified engagements`}
         </span>
-        <span className="inline-flex items-center gap-1.5 text-[11px] text-zinc-500 dark:text-zinc-400">
+        <span className="inline-flex items-center gap-1.5 text-[11px] text-zinc-600 dark:text-zinc-400">
           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
           <span>
             {locale === 'ar'
@@ -121,7 +121,7 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
                       item.isNew ? 'bg-amber-50/40 dark:bg-amber-950/20' : ''
                     }`}
                   >
-                    <td className="py-4 px-4 font-mono text-zinc-400 text-[11px] align-top">
+                    <td className="py-4 px-4 font-mono text-zinc-600 dark:text-zinc-400 text-[11px] align-top">
                       {String(item.id).padStart(2, '0')}
                     </td>
                     <td className="py-4 px-4 align-top">
@@ -141,13 +141,13 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
                     </td>
                     <td className="py-4 px-4 align-top text-zinc-700 dark:text-zinc-300">
                       <div className="flex items-center gap-1.5 font-medium">
-                        <Building2 className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+                        <Building2 className="w-3.5 h-3.5 text-zinc-600 dark:text-zinc-400 shrink-0" />
                         <span>{item.client[locale]}</span>
                       </div>
                     </td>
                     <td className="py-4 px-4 align-top font-mono font-medium text-zinc-900 dark:text-zinc-200 whitespace-nowrap">
                       {item.valueAED.startsWith('As per') || item.valueAED.startsWith('Per') || item.valueAED.startsWith('To be') ? (
-                        <span className="text-zinc-500 font-sans text-xs italic">
+                        <span className="text-zinc-600 font-sans text-xs italic">
                           {locale === 'ar'
                             ? item.valueAED === 'As per usage'
                               ? 'حسب الاستخدام الفعلي'
@@ -164,7 +164,7 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
                     </td>
                     <td className="py-4 px-4 align-top text-zinc-600 dark:text-zinc-400 whitespace-nowrap">
                       <div className="flex items-center gap-1">
-                        <Calendar className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+                        <Calendar className="w-3.5 h-3.5 text-zinc-600 dark:text-zinc-400 shrink-0" />
                         <span>{item.period}</span>
                       </div>
                     </td>
@@ -208,7 +208,7 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
               }`}
             >
               <div className="flex items-start justify-between gap-2">
-                <span className="font-mono text-xs text-zinc-500 dark:text-zinc-400 font-semibold">
+                <span className="font-mono text-xs text-zinc-600 dark:text-zinc-400 font-semibold">
                   #{String(item.id).padStart(2, '0')}
                 </span>
                 <span
@@ -227,7 +227,7 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
               </h3>
 
               <div className="flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-300">
-                <Building2 className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 shrink-0" />
+                <Building2 className="w-3.5 h-3.5 text-zinc-600 dark:text-zinc-400 shrink-0" />
                 <span>{item.client[locale]}</span>
               </div>
 

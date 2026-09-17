@@ -51,7 +51,7 @@ export default function ProjectsPageView({ locale }: ProjectsPageViewProps) {
                 <span className="text-2xl sm:text-3xl font-bold font-mono text-zinc-900 dark:text-zinc-100 block">
                   {COMPANY_PROFILE.metrics.quantifiableValue}
                 </span>
-                <span className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 block">
+                <span className="text-xs text-zinc-600 dark:text-zinc-400 mt-1 block">
                   {t.statValue}
                 </span>
               </div>
@@ -60,7 +60,7 @@ export default function ProjectsPageView({ locale }: ProjectsPageViewProps) {
                 <span className="text-2xl sm:text-3xl font-bold font-mono text-[#6B1426] dark:text-[#F38C9C] block">
                   {COMPANY_PROFILE.metrics.engagements}
                 </span>
-                <span className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 block">
+                <span className="text-xs text-zinc-600 dark:text-zinc-400 mt-1 block">
                   {t.statEngagements}
                 </span>
               </div>
@@ -69,7 +69,7 @@ export default function ProjectsPageView({ locale }: ProjectsPageViewProps) {
                 <span className="text-2xl sm:text-3xl font-bold font-mono text-[#008751] dark:text-[#34D399] block">
                   {COMPANY_PROFILE.metrics.govPercentage}
                 </span>
-                <span className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 block">
+                <span className="text-xs text-zinc-600 dark:text-zinc-400 mt-1 block">
                   {t.statGov}
                 </span>
               </div>
@@ -78,7 +78,7 @@ export default function ProjectsPageView({ locale }: ProjectsPageViewProps) {
                 <span className="text-2xl sm:text-3xl font-bold font-mono text-zinc-900 dark:text-zinc-100 block">
                   {COMPANY_PROFILE.metrics.activeProjects}
                 </span>
-                <span className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 block">
+                <span className="text-xs text-zinc-600 dark:text-zinc-400 mt-1 block">
                   {t.statActive}
                 </span>
               </div>

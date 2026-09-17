@@ -117,7 +117,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
                 <span className="text-xs font-bold uppercase tracking-wider text-[#6B1426] dark:text-[#F38C9C] whitespace-nowrap">
                   {locale === 'ar' ? 'سجل الإنجاز المعتمد' : 'Verified Engagement Record'}
                 </span>
-                <span className="text-[11px] font-mono text-zinc-400">2019 – 2026</span>
+                <span className="text-[11px] font-mono text-zinc-600 dark:text-zinc-400">2019 – 2026</span>
               </div>
 
               <div className="grid grid-cols-2 gap-4">

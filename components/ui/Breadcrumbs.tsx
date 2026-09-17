@@ -52,7 +52,7 @@ export default function Breadcrumbs({ locale, items }: BreadcrumbsProps) {
 
           return (
             <React.Fragment key={idx}>
-              {idx > 0 && <Separator className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 shrink-0" />}
+              {idx > 0 && <Separator className="w-3.5 h-3.5 text-zinc-600 dark:text-zinc-400 shrink-0" />}
               {item.href && !isLast ? (
                 <Link
                   href={item.href}

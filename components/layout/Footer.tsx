@@ -49,12 +49,12 @@ export default function Footer({ locale }: FooterProps) {
                 <span>{COMPANY_PROFILE.certifications.iso.standard}</span>
               </Link>
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white dark:bg-zinc-800/70 border border-zinc-200 dark:border-zinc-700 text-[11px] font-medium text-zinc-600 dark:text-zinc-400">
-                <FileCheck className="w-3.5 h-3.5 text-zinc-500" />
+                <FileCheck className="w-3.5 h-3.5 text-zinc-600" />
                 <span>Lic. {COMPANY_PROFILE.licence.number}</span>
               </span>
             </div>
 
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2">
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-2">
               {locale === 'ar'
                 ? 'مرخصة رسمياً من دائرة التنمية الاقتصادية في أبوظبي لتقديم الاستشارات وإدارة المشاريع والأنظمة الذكية.'
                 : 'Formally licensed by Abu Dhabi Department of Economic Development (ADRA) for smart systems, data analytics, and IT consultancy.'}
@@ -129,7 +129,7 @@ export default function Footer({ locale }: FooterProps) {
                   {COMPANY_PROFILE.office.email}
                 </a>
               </div>
-              <div className="text-[11px] text-zinc-500 pt-1">
+              <div className="text-[11px] text-zinc-600 dark:text-zinc-400 pt-1">
                 <span>P.O. Box {COMPANY_PROFILE.office.poBox} · Abu Dhabi, UAE</span>
               </div>
             </div>
@@ -137,7 +137,7 @@ export default function Footer({ locale }: FooterProps) {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 dark:text-zinc-400">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-600 dark:text-zinc-400">
           <p>
             © {new Date().getFullYear()} {COMPANY_PROFILE.name[locale]}. {t.rightsReserved}
           </p>

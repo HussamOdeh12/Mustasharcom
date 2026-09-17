@@ -195,7 +195,7 @@ export default function ServiceDetailView({ locale, slug }: ServiceDetailViewPro
                               {rel.title[locale]}
                             </span>
                           </div>
-                          <ArrowIcon className="w-4 h-4 text-zinc-400 group-hover:text-[#6B1426] shrink-0" />
+                          <ArrowIcon className="w-4 h-4 text-zinc-600 dark:text-zinc-400 group-hover:text-[#6B1426] shrink-0" />
                         </Link>
                       ))}
                     </div>

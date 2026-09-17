@@ -62,7 +62,7 @@ export default function LeadershipSection({ locale }: LeadershipSectionProps) {
                   </a>
                   <a
                     href={`mailto:${COMPANY_PROFILE.office.email}`}
-                    className="text-zinc-400 hover:text-[#6B1426] transition-colors"
+                    className="text-zinc-600 dark:text-zinc-400 hover:text-[#6B1426] transition-colors"
                     aria-label={`Email ${leader.name[locale]}`}
                   >
                     <Mail className="w-4 h-4" />

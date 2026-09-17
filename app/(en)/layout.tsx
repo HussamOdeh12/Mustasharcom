@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 import '../globals.css';
-import ThemeScript from '@/components/ui/ThemeScript';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
@@ -103,22 +102,16 @@ const organizationSchema = {
 
 export default function EnglishRootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning>
-      <head>
-        <ThemeScript />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-        />
-      </head>
-      <body
-        suppressHydrationWarning
-        className="min-h-screen flex flex-col bg-[#FDFCFB] dark:bg-[#0B0F19] text-zinc-900 dark:text-zinc-100 antialiased selection:bg-[#6B1426] selection:text-white transition-colors duration-200"
-      >
-        <Header locale="en" />
-        <div className="flex-1 flex flex-col">{children}</div>
-        <Footer locale="en" />
-      </body>
-    </html>
+    <div
+      className="min-h-screen flex flex-col bg-[#FDFCFB] dark:bg-[#0B0F19] text-zinc-900 dark:text-zinc-100 antialiased selection:bg-[#6B1426] selection:text-white transition-colors duration-200"
+    >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+      <Header locale="en" />
+      <div className="flex-1 flex flex-col">{children}</div>
+      <Footer locale="en" />
+    </div>
   );
 }

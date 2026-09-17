@@ -118,7 +118,7 @@ export default function ContactForm({ locale, preselectedService }: ContactFormP
                 value={formData.name}
                 onChange={handleChange}
                 placeholder={locale === 'ar' ? 'مثال: محمد الشامسي' : 'e.g. Mohammed Al Shamsi'}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/60 text-zinc-900 dark:text-zinc-100 text-sm focus:outline-none focus:ring-2 focus:ring-[#6B1426] focus:bg-white dark:focus:bg-zinc-800 transition-all"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/60 text-zinc-900 dark:text-zinc-100 text-sm placeholder:text-zinc-600 dark:placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#6B1426] focus:bg-white dark:focus:bg-zinc-800 transition-all"
               />
             </div>
 
@@ -134,7 +134,7 @@ export default function ContactForm({ locale, preselectedService }: ContactFormP
                 value={formData.entity}
                 onChange={handleChange}
                 placeholder={locale === 'ar' ? 'دائرة حكومية / شركة' : 'e.g. Government Department / Enterprise'}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/60 text-zinc-900 dark:text-zinc-100 text-sm focus:outline-none focus:ring-2 focus:ring-[#6B1426] focus:bg-white dark:focus:bg-zinc-800 transition-all"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/60 text-zinc-900 dark:text-zinc-100 text-sm placeholder:text-zinc-600 dark:placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#6B1426] focus:bg-white dark:focus:bg-zinc-800 transition-all"
               />
             </div>
           </div>
@@ -153,7 +153,7 @@ export default function ContactForm({ locale, preselectedService }: ContactFormP
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="name@entity.gov.ae"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/60 text-zinc-900 dark:text-zinc-100 text-sm focus:outline-none focus:ring-2 focus:ring-[#6B1426] focus:bg-white dark:focus:bg-zinc-800 transition-all dir-ltr"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/60 text-zinc-900 dark:text-zinc-100 text-sm placeholder:text-zinc-600 dark:placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#6B1426] focus:bg-white dark:focus:bg-zinc-800 transition-all dir-ltr"
               />
             </div>
 
@@ -169,7 +169,7 @@ export default function ContactForm({ locale, preselectedService }: ContactFormP
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder="+971 50 000 0000"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/60 text-zinc-900 dark:text-zinc-100 text-sm focus:outline-none focus:ring-2 focus:ring-[#6B1426] focus:bg-white dark:focus:bg-zinc-800 transition-all dir-ltr"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/60 text-zinc-900 dark:text-zinc-100 text-sm placeholder:text-zinc-600 dark:placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#6B1426] focus:bg-white dark:focus:bg-zinc-800 transition-all dir-ltr"
               />
             </div>
           </div>
@@ -184,7 +184,7 @@ export default function ContactForm({ locale, preselectedService }: ContactFormP
               name="service"
               value={formData.service}
               onChange={handleChange}
-              className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/60 text-zinc-900 dark:text-zinc-100 text-sm focus:outline-none focus:ring-2 focus:ring-[#6B1426] focus:bg-white dark:focus:bg-zinc-800 transition-all cursor-pointer"
+              className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/60 text-zinc-900 dark:text-zinc-100 text-sm placeholder:text-zinc-600 dark:placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#6B1426] focus:bg-white dark:focus:bg-zinc-800 transition-all cursor-pointer"
             >
               {SERVICES_CATALOG.map((svc) => (
                 <option key={svc.slug} value={svc.slug}>
@@ -214,7 +214,7 @@ export default function ContactForm({ locale, preselectedService }: ContactFormP
                   ? 'يرجى تقديم نبذة عن متطلبات المشروع، النطاق الزمني المتوقع، أو طلب كراسة الشروط...'
                   : 'Please summarize project objectives, timelines, and requirements...'
               }
-              className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/60 text-zinc-900 dark:text-zinc-100 text-sm focus:outline-none focus:ring-2 focus:ring-[#6B1426] focus:bg-white dark:focus:bg-zinc-800 transition-all resize-y"
+              className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/60 text-zinc-900 dark:text-zinc-100 text-sm placeholder:text-zinc-600 dark:placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#6B1426] focus:bg-white dark:focus:bg-zinc-800 transition-all resize-y"
             />
           </div>
 
@@ -228,7 +228,7 @@ export default function ContactForm({ locale, preselectedService }: ContactFormP
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-[#6B1426] hover:bg-[#8B1E3F] text-white text-sm font-semibold transition-all shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B1426] disabled:opacity-70 cursor-pointer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-[#6B1426] hover:bg-[#8B1E3F] text-white text-sm font-semibold transition-all shadow-sm placeholder:text-zinc-600 dark:placeholder:text-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B1426] disabled:opacity-70 cursor-pointer"
           >
             {status === 'loading' ? (
               <>

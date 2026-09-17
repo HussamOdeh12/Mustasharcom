@@ -89,7 +89,7 @@ export default function ContactPageView({ locale }: ContactPageViewProps) {
                     </div>
 
                     <div className="flex items-center gap-3 pt-1 text-zinc-600 dark:text-zinc-400">
-                      <Clock className="w-4 h-4 text-zinc-500 dark:text-zinc-400 shrink-0" />
+                      <Clock className="w-4 h-4 text-zinc-600 dark:text-zinc-400 shrink-0" />
                       <span>
                         {locale === 'ar'
                           ? 'الإثنين – الجمعة: 8:00 صباحاً – 5:00 مساءً (توقيت الإمارات)'
