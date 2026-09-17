@@ -1,0 +1,6 @@
+{
+  "name": "Mustasharcom for Informatics Solutions",
+  "description": "Official corporate website of Mustasharcom for Informatics Solutions (مستشاركم للحلول المعلوماتية). Premier UAE IT Consultancy, Data & AI Solutions, and Digital Transformation for Government & Enterprise.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
