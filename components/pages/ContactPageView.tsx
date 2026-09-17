@@ -88,8 +88,8 @@ export default function ContactPageView({ locale }: ContactPageViewProps) {
                       </a>
                     </div>
 
-                    <div className="flex items-center gap-3 pt-1 text-zinc-500">
-                      <Clock className="w-4 h-4 text-zinc-400 shrink-0" />
+                    <div className="flex items-center gap-3 pt-1 text-zinc-600 dark:text-zinc-400">
+                      <Clock className="w-4 h-4 text-zinc-500 dark:text-zinc-400 shrink-0" />
                       <span>
                         {locale === 'ar'
                           ? 'الإثنين – الجمعة: 8:00 صباحاً – 5:00 مساءً (توقيت الإمارات)'
@@ -101,7 +101,7 @@ export default function ContactPageView({ locale }: ContactPageViewProps) {
 
                 {/* Direct Leadership List */}
                 <div className="p-6 sm:p-7 rounded-2xl bg-white dark:bg-[#111726] border border-zinc-200 dark:border-zinc-800 shadow-xs space-y-4">
-                  <span className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 block">
+                  <span className="text-xs font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 block">
                     {t.directLeadership}
                   </span>
 

@@ -208,7 +208,7 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
               }`}
             >
               <div className="flex items-start justify-between gap-2">
-                <span className="font-mono text-xs text-zinc-400 font-semibold">
+                <span className="font-mono text-xs text-zinc-500 dark:text-zinc-400 font-semibold">
                   #{String(item.id).padStart(2, '0')}
                 </span>
                 <span
@@ -222,12 +222,12 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
                 </span>
               </div>
 
-              <h4 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 leading-snug">
+              <h3 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 leading-snug">
                 {item.project[locale]}
-              </h4>
+              </h3>
 
-              <div className="flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400">
-                <Building2 className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+              <div className="flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-300">
+                <Building2 className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 shrink-0" />
                 <span>{item.client[locale]}</span>
               </div>
 
@@ -237,7 +237,7 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
                     ? item.valueAED
                     : `AED ${item.valueAED}`}
                 </span>
-                <span className="text-zinc-500 text-[11px]">{item.period}</span>
+                <span className="text-zinc-600 dark:text-zinc-400 text-[11px]">{item.period}</span>
               </div>
             </div>
           );

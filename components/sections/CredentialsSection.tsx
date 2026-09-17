@@ -54,7 +54,7 @@ export default function CredentialsSection({ locale }: CredentialsSectionProps) 
               <div className="w-10 h-10 rounded-xl bg-[#6B1426]/10 text-[#6B1426] dark:bg-[#6B1426]/20 dark:text-[#F38C9C] flex items-center justify-center mb-4">
                 <Shield className="w-5 h-5" />
               </div>
-              <span className="text-xs font-mono font-bold text-zinc-400">QUALITY MANAGEMENT</span>
+              <span className="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400">QUALITY MANAGEMENT</span>
               <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 mt-1 mb-2">
                 {COMPANY_PROFILE.certifications.iso.standard}
               </h3>
@@ -62,7 +62,7 @@ export default function CredentialsSection({ locale }: CredentialsSectionProps) 
                 {COMPANY_PROFILE.certifications.iso.system[locale]}
               </p>
             </div>
-            <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800 text-xs space-y-1 text-zinc-500 dark:text-zinc-400">
+            <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800 text-xs space-y-1 text-zinc-600 dark:text-zinc-400">
               <div className="flex justify-between">
                 <span>{locale === 'ar' ? 'رقم الشهادة' : 'Certificate'}:</span>
                 <span className="font-mono font-medium text-zinc-900 dark:text-zinc-200">
@@ -84,7 +84,7 @@ export default function CredentialsSection({ locale }: CredentialsSectionProps) 
               <div className="w-10 h-10 rounded-xl bg-emerald-100 text-[#008751] dark:bg-emerald-950/60 dark:text-[#34D399] flex items-center justify-center mb-4">
                 <Award className="w-5 h-5" />
               </div>
-              <span className="text-xs font-mono font-bold text-zinc-400">PROCUREMENT PRIORITY</span>
+              <span className="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400">PROCUREMENT PRIORITY</span>
               <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 mt-1 mb-2">
                 ICV {COMPANY_PROFILE.certifications.icv.score} Score
               </h3>
@@ -92,7 +92,7 @@ export default function CredentialsSection({ locale }: CredentialsSectionProps) 
                 {COMPANY_PROFILE.certifications.icv.category[locale]}
               </p>
             </div>
-            <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800 text-xs space-y-1 text-zinc-500 dark:text-zinc-400">
+            <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800 text-xs space-y-1 text-zinc-600 dark:text-zinc-400">
               <div className="flex justify-between">
                 <span>{locale === 'ar' ? 'رقم الشهادة' : 'Certificate'}:</span>
                 <span className="font-mono font-medium text-zinc-900 dark:text-zinc-200">
@@ -114,7 +114,7 @@ export default function CredentialsSection({ locale }: CredentialsSectionProps) 
               <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 flex items-center justify-center mb-4">
                 <FileCheck className="w-5 h-5" />
               </div>
-              <span className="text-xs font-mono font-bold text-zinc-400">COMMERCIAL LICENCE</span>
+              <span className="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400">COMMERCIAL LICENCE</span>
               <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 mt-1 mb-2">
                 ADRA {COMPANY_PROFILE.licence.number}
               </h3>
@@ -122,7 +122,7 @@ export default function CredentialsSection({ locale }: CredentialsSectionProps) 
                 {locale === 'ar' ? COMPANY_PROFILE.licence.authorityAr : COMPANY_PROFILE.licence.authority}
               </p>
             </div>
-            <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800 text-xs space-y-1 text-zinc-500 dark:text-zinc-400">
+            <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800 text-xs space-y-1 text-zinc-600 dark:text-zinc-400">
               <div className="flex justify-between">
                 <span>{locale === 'ar' ? 'الملكية' : 'Ownership'}:</span>
                 <span className="font-semibold text-[#008751] dark:text-[#34D399]">

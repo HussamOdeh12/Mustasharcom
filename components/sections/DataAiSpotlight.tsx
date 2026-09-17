@@ -94,7 +94,7 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
               </div>
 
               <div className="pt-5 mt-5 border-t border-zinc-100 dark:border-zinc-800/80">
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-500 dark:text-zinc-400">
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-600 dark:text-zinc-400">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#008751]" />
                   <span>{locale === 'ar' ? 'تنفيذ ميداني موثق' : 'Proven Field Implementation'}</span>
                 </span>
@@ -110,11 +110,11 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
               <span className="text-xs font-mono font-bold text-[#6B1426] dark:text-[#F38C9C] uppercase">
                 {locale === 'ar' ? 'مشروع مرجعي معتمد' : 'Verified Engagement Highlight'}
               </span>
-              <h4 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
+              <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
                 {locale === 'ar'
                   ? 'مشروع أتمتة الشبكات بالذكاء الاصطناعي (RPA) بقيمة 10,000,000 درهم'
                   : 'AED 10,000,000 AI & RPA Network Automation Engagement'}
-              </h4>
+              </h3>
               <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
                 {locale === 'ar'
                   ? 'نفذته مستشاركم بنجاح لصالح دائرة البلديات والنقل بأبوظبي لأتمتة العمليات التشغيلية وتطوير أدوات القياس والمتابعة الذكية.'

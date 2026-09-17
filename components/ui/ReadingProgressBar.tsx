@@ -1,25 +1,31 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 interface ReadingProgressBarProps {
   locale?: 'en' | 'ar';
 }
 
 export default function ReadingProgressBar({ locale = 'en' }: ReadingProgressBarProps) {
-  const [progress, setProgress] = useState(0);
   const isRtl = locale === 'ar';
+  const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let ticking = false;
+    let cachedScrollHeight = 0;
+
+    const measureHeight = () => {
+      cachedScrollHeight = Math.max(
+        document.documentElement.scrollHeight - window.innerHeight,
+        1
+      );
+    };
 
     const updateScrollProgress = () => {
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-
-      if (scrollHeight > 0) {
-        const currentProgress = Math.min(Math.max((scrollTop / scrollHeight) * 100, 0), 100);
-        setProgress(currentProgress);
+      const scrollTop = window.scrollY || window.pageYOffset || 0;
+      const progress = Math.min(Math.max(scrollTop / cachedScrollHeight, 0), 1);
+      if (barRef.current) {
+        barRef.current.style.transform = `scaleX(${progress})`;
       }
       ticking = false;
     };
@@ -31,11 +37,15 @@ export default function ReadingProgressBar({ locale = 'en' }: ReadingProgressBar
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    measureHeight();
     updateScrollProgress();
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', measureHeight, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', measureHeight);
     };
   }, []);
 
@@ -45,11 +55,12 @@ export default function ReadingProgressBar({ locale = 'en' }: ReadingProgressBar
       aria-hidden="true"
     >
       <div
-        className={`h-full bg-[#6B1426] dark:bg-[#F38C9C] transition-all duration-75 ease-out shadow-xs ${
-          isRtl ? 'ml-auto origin-right' : 'mr-auto origin-left'
-        }`}
+        ref={barRef}
+        className="h-full w-full bg-[#6B1426] dark:bg-[#F38C9C] shadow-xs will-change-transform"
         style={{
-          width: `${progress}%`,
+          transform: 'scaleX(0)',
+          transformOrigin: isRtl ? 'right' : 'left',
+          transition: 'transform 75ms ease-out',
         }}
       />
     </div>

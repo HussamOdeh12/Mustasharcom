@@ -44,7 +44,7 @@ export default function Breadcrumbs({ locale, items }: BreadcrumbsProps) {
       />
       <nav
         aria-label="Breadcrumbs"
-        className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 py-2.5 overflow-x-auto whitespace-nowrap"
+        className="flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 py-2.5 overflow-x-auto whitespace-nowrap"
         dir={isRtl ? 'rtl' : 'ltr'}
       >
         {allItems.map((item, idx) => {
@@ -52,7 +52,7 @@ export default function Breadcrumbs({ locale, items }: BreadcrumbsProps) {
 
           return (
             <React.Fragment key={idx}>
-              {idx > 0 && <Separator className="w-3.5 h-3.5 text-zinc-400 shrink-0" />}
+              {idx > 0 && <Separator className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 shrink-0" />}
               {item.href && !isLast ? (
                 <Link
                   href={item.href}

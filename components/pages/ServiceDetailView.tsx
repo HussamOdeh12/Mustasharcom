@@ -70,7 +70,7 @@ export default function ServiceDetailView({ locale, slug }: ServiceDetailViewPro
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl">
               <div className="flex items-center gap-3 mb-4">
-                <span className="font-mono text-sm font-bold text-zinc-400 dark:text-zinc-500">
+                <span className="font-mono text-sm font-bold text-zinc-600 dark:text-zinc-400">
                   {service.number}
                 </span>
                 <div className="p-2.5 rounded-xl bg-white dark:bg-zinc-800 shadow-xs border border-zinc-200 dark:border-zinc-700">
@@ -165,9 +165,9 @@ export default function ServiceDetailView({ locale, slug }: ServiceDetailViewPro
                     <TrendingUp className="w-5 h-5 text-[#008751]" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mb-1">
+                    <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mb-1">
                       {t.strategicImpact}
-                    </h4>
+                    </h3>
                     <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                       {service.strategicValue[locale]}
                     </p>
@@ -177,9 +177,9 @@ export default function ServiceDetailView({ locale, slug }: ServiceDetailViewPro
                 {/* Related Practices */}
                 {relatedServicesList.length > 0 && (
                   <div className="pt-6 border-t border-zinc-200 dark:border-zinc-800">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-4">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-4">
                       {t.relatedPractices}
-                    </h4>
+                    </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {relatedServicesList.map((rel) => (
                         <Link
@@ -188,7 +188,7 @@ export default function ServiceDetailView({ locale, slug }: ServiceDetailViewPro
                           className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#111726] hover:border-[#6B1426] dark:hover:border-zinc-700 transition-colors group flex items-center justify-between gap-3"
                         >
                           <div>
-                            <span className="font-mono text-[10px] text-zinc-400 block">
+                            <span className="font-mono text-[10px] text-zinc-600 dark:text-zinc-400 block">
                               {rel.number}
                             </span>
                             <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-[#6B1426] dark:group-hover:text-[#F38C9C] transition-colors">
@@ -210,11 +210,11 @@ export default function ServiceDetailView({ locale, slug }: ServiceDetailViewPro
                     <span className="text-xs font-bold uppercase tracking-wider text-[#6B1426] dark:text-[#F38C9C] block mb-2">
                       {locale === 'ar' ? 'طلب استشارة أو كراسة شروط' : 'Direct Practice Consultation'}
                     </span>
-                    <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-4">
+                    <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-4">
                       {locale === 'ar'
                         ? 'ناقش متطلبات هذا المشروع مع استشاريينا'
                         : 'Discuss Your Requirements With Our Practice Leads'}
-                    </h3>
+                    </h2>
                   </div>
 
                   <ContactForm locale={locale} preselectedService={service.slug} />

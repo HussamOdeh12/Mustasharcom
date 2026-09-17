@@ -62,7 +62,7 @@ export default function CompanyCredibilityBar({ locale }: CompanyCredibilityBarP
                   <div className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-zinc-100 truncate">
                     {item.primary}
                   </div>
-                  <div className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate">
+                  <div className="text-[11px] text-zinc-600 dark:text-zinc-400 truncate">
                     {item.secondary}
                   </div>
                 </div>

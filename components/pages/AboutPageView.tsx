@@ -58,8 +58,11 @@ export default function AboutPageView({ locale }: AboutPageViewProps) {
 
         {/* Strategic Pillars: Mission & Philosophy */}
         <SectionReveal>
-          <section className="py-16 bg-white dark:bg-[#0B0F19] border-b border-zinc-200/80 dark:border-zinc-800/80">
+          <section className="py-16 bg-white dark:bg-[#0B0F19] border-b border-zinc-200/80 dark:border-zinc-800/80" aria-labelledby="strategic-pillars-heading">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 id="strategic-pillars-heading" className="sr-only">
+                {locale === 'ar' ? 'الرسالة والرؤية الاستشارية' : 'Strategic Mission & Consultancy Approach'}
+              </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Mission Box */}
                 <div className="p-8 rounded-2xl bg-[#FDFCFB] dark:bg-[#111726] border border-zinc-200 dark:border-zinc-800 shadow-xs flex flex-col gap-4">

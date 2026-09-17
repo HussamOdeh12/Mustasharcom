@@ -40,7 +40,7 @@ export default function WhoWeAreSection({ locale }: WhoWeAreSectionProps) {
               <p className="text-sm sm:text-base text-zinc-800 dark:text-zinc-200 font-medium italic leading-relaxed">
                 &ldquo;{COMPANY_PROFILE.quote[locale]}&rdquo;
               </p>
-              <span className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 block font-semibold">
+              <span className="text-xs text-zinc-600 dark:text-zinc-400 mt-2 block font-semibold">
                 — {COMPANY_PROFILE.name[locale]}
               </span>
             </div>

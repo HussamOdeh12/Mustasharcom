@@ -88,8 +88,11 @@ export default function ProjectsPageView({ locale }: ProjectsPageViewProps) {
 
         {/* Interactive Explorer Table */}
         <SectionReveal>
-          <section className="py-14 md:py-20">
+          <section className="py-14 md:py-20" aria-labelledby="projects-registry-heading">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 id="projects-registry-heading" className="sr-only">
+                {locale === 'ar' ? 'سجل المشاريع والتعاقدات الموثقة' : 'Verified Engagement & Project Registry'}
+              </h2>
               <ProjectsExplorer locale={locale} />
             </div>
           </section>

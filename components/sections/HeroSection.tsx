@@ -125,7 +125,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
                   <div className="text-2xl font-bold font-mono text-zinc-900 dark:text-zinc-100">
                     {COMPANY_PROFILE.metrics.quantifiableValue}
                   </div>
-                  <div className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-1 leading-tight">
+                  <div className="text-[11px] text-zinc-600 dark:text-zinc-400 mt-1 leading-tight">
                     {t.statValue}
                   </div>
                 </div>
@@ -134,7 +134,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
                   <div className="text-2xl font-bold font-mono text-[#6B1426] dark:text-[#F38C9C]">
                     {COMPANY_PROFILE.metrics.engagements}
                   </div>
-                  <div className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-1 leading-tight">
+                  <div className="text-[11px] text-zinc-600 dark:text-zinc-400 mt-1 leading-tight">
                     {t.statEngagements}
                   </div>
                 </div>
@@ -143,7 +143,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
                   <div className="text-2xl font-bold font-mono text-[#008751] dark:text-[#34D399]">
                     {COMPANY_PROFILE.metrics.govPercentage}
                   </div>
-                  <div className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-1 leading-tight">
+                  <div className="text-[11px] text-zinc-600 dark:text-zinc-400 mt-1 leading-tight">
                     {t.statGov}
                   </div>
                 </div>
@@ -152,13 +152,13 @@ export default function HeroSection({ locale }: HeroSectionProps) {
                   <div className="text-2xl font-bold font-mono text-zinc-900 dark:text-zinc-100">
                     {COMPANY_PROFILE.metrics.activeProjects}
                   </div>
-                  <div className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-1 leading-tight">
+                  <div className="text-[11px] text-zinc-600 dark:text-zinc-400 mt-1 leading-tight">
                     {t.statActive}
                   </div>
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800/80 text-[11px] text-zinc-500 flex items-center justify-between">
+              <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800/80 text-[11px] text-zinc-600 dark:text-zinc-400 flex items-center justify-between">
                 <span>ADRA Lic. {COMPANY_PROFILE.licence.number}</span>
                 <span className="text-[#008751] font-semibold">ICV 55.03%</span>
               </div>

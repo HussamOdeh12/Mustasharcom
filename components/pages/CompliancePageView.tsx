@@ -59,7 +59,7 @@ export default function CompliancePageView({ locale }: CompliancePageViewProps) 
                     <Shield className="w-6 h-6" />
                   </div>
                   <div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-zinc-400">INTERNATIONAL STANDARD</span>
+                    <span className="text-xs font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">INTERNATIONAL STANDARD</span>
                     <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
                       {COMPANY_PROFILE.certifications.iso.standard}
                     </h2>
@@ -74,11 +74,11 @@ export default function CompliancePageView({ locale }: CompliancePageViewProps) 
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                   <div className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300">
-                    <CheckCircle2 className="w-4 h-4 text-[#008751] shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-[#008751]" shrink-0 />
                     <span>{locale === 'ar' ? 'إجراءات تدقيق موثقة' : 'Standardized Delivery Frameworks'}</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300">
-                    <CheckCircle2 className="w-4 h-4 text-[#008751] shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-[#008751]" shrink-0 />
                     <span>{locale === 'ar' ? 'متابعة مؤشرات الأداء SLA' : 'Contractual SLA Telemetry'}</span>
                   </div>
                 </div>
@@ -86,19 +86,19 @@ export default function CompliancePageView({ locale }: CompliancePageViewProps) 
 
               <div className="w-full lg:w-80 p-5 rounded-2xl bg-white dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700 space-y-3 text-xs">
                 <div className="flex justify-between pb-2 border-b border-zinc-100 dark:border-zinc-700">
-                  <span className="text-zinc-500">{locale === 'ar' ? 'رقم الشهادة' : 'Certificate No.'}</span>
+                  <span className="text-zinc-600 dark:text-zinc-400">{locale === 'ar' ? 'رقم الشهادة' : 'Certificate No.'}</span>
                   <span className="font-mono font-bold text-zinc-900 dark:text-zinc-100">
                     {COMPANY_PROFILE.certifications.iso.certificateNumber}
                   </span>
                 </div>
                 <div className="flex justify-between pb-2 border-b border-zinc-100 dark:border-zinc-700">
-                  <span className="text-zinc-500">{locale === 'ar' ? 'النظام المعتمد' : 'System Standard'}</span>
+                  <span className="text-zinc-600 dark:text-zinc-400">{locale === 'ar' ? 'النظام المعتمد' : 'System Standard'}</span>
                   <span className="font-medium text-zinc-900 dark:text-zinc-100">
                     {COMPANY_PROFILE.certifications.iso.standard}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-zinc-500">{locale === 'ar' ? 'تاريخ الصلاحية' : 'Valid Until'}</span>
+                  <span className="text-zinc-600 dark:text-zinc-400">{locale === 'ar' ? 'تاريخ الصلاحية' : 'Valid Until'}</span>
                   <span className="font-semibold text-emerald-600 dark:text-emerald-400">
                     {COMPANY_PROFILE.certifications.iso.validity}
                   </span>
@@ -114,7 +114,7 @@ export default function CompliancePageView({ locale }: CompliancePageViewProps) 
                     <Award className="w-6 h-6" />
                   </div>
                   <div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-zinc-400">NATIONAL PROCUREMENT VALUE</span>
+                    <span className="text-xs font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">NATIONAL PROCUREMENT VALUE</span>
                     <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
                       In-Country Value (ICV) {COMPANY_PROFILE.certifications.icv.score}
                     </h2>
@@ -141,19 +141,19 @@ export default function CompliancePageView({ locale }: CompliancePageViewProps) 
 
               <div className="w-full lg:w-80 p-5 rounded-2xl bg-white dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700 space-y-3 text-xs">
                 <div className="flex justify-between pb-2 border-b border-zinc-100 dark:border-zinc-700">
-                  <span className="text-zinc-500">{locale === 'ar' ? 'نسبة القيمة المضافة' : 'ICV Score'}</span>
+                  <span className="text-zinc-600 dark:text-zinc-400">{locale === 'ar' ? 'نسبة القيمة المضافة' : 'ICV Score'}</span>
                   <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400 text-sm">
                     {COMPANY_PROFILE.certifications.icv.score}
                   </span>
                 </div>
                 <div className="flex justify-between pb-2 border-b border-zinc-100 dark:border-zinc-700">
-                  <span className="text-zinc-500">{locale === 'ar' ? 'رقم الشهادة' : 'Certificate No.'}</span>
+                  <span className="text-zinc-600 dark:text-zinc-400">{locale === 'ar' ? 'رقم الشهادة' : 'Certificate No.'}</span>
                   <span className="font-mono font-bold text-zinc-900 dark:text-zinc-100">
                     {COMPANY_PROFILE.certifications.icv.certificateNumber}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-zinc-500">{locale === 'ar' ? 'تاريخ الصلاحية' : 'Valid Until'}</span>
+                  <span className="text-zinc-600 dark:text-zinc-400">{locale === 'ar' ? 'تاريخ الصلاحية' : 'Valid Until'}</span>
                   <span className="font-semibold text-zinc-900 dark:text-zinc-100">
                     {COMPANY_PROFILE.certifications.icv.validity}
                   </span>
@@ -169,7 +169,7 @@ export default function CompliancePageView({ locale }: CompliancePageViewProps) 
                     <FileCheck className="w-6 h-6" />
                   </div>
                   <div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-zinc-400">REGULATORY LICENCE</span>
+                    <span className="text-xs font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">REGULATORY LICENCE</span>
                     <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
                       Abu Dhabi Licence CN-2769971
                     </h2>
@@ -184,9 +184,9 @@ export default function CompliancePageView({ locale }: CompliancePageViewProps) 
 
                 {/* 7 Activities */}
                 <div className="pt-2">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500 mb-3">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-3">
                     {locale === 'ar' ? 'الأنشطة المرخصة قانونياً:' : 'Authorized Economic Activities:'}
-                  </h4>
+                  </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                     {COMPANY_PROFILE.licence.activities[locale].map((act, i) => (
                       <div key={i} className="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
@@ -200,19 +200,19 @@ export default function CompliancePageView({ locale }: CompliancePageViewProps) 
 
               <div className="w-full lg:w-80 p-5 rounded-2xl bg-white dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700 space-y-3 text-xs">
                 <div className="flex justify-between pb-2 border-b border-zinc-100 dark:border-zinc-700">
-                  <span className="text-zinc-500">{locale === 'ar' ? 'رقم الرخصة' : 'Licence No.'}</span>
+                  <span className="text-zinc-600 dark:text-zinc-400">{locale === 'ar' ? 'رقم الرخصة' : 'Licence No.'}</span>
                   <span className="font-mono font-bold text-zinc-900 dark:text-zinc-100">
                     {COMPANY_PROFILE.licence.number}
                   </span>
                 </div>
                 <div className="flex justify-between pb-2 border-b border-zinc-100 dark:border-zinc-700">
-                  <span className="text-zinc-500">{locale === 'ar' ? 'الملكية' : 'Ownership'}</span>
+                  <span className="text-zinc-600 dark:text-zinc-400">{locale === 'ar' ? 'الملكية' : 'Ownership'}</span>
                   <span className="font-semibold text-[#008751] dark:text-[#34D399]">
                     {COMPANY_PROFILE.ownership[locale]}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-zinc-500">{locale === 'ar' ? 'تاريخ الصلاحية' : 'Valid Until'}</span>
+                  <span className="text-zinc-600 dark:text-zinc-400">{locale === 'ar' ? 'تاريخ الصلاحية' : 'Valid Until'}</span>
                   <span className="font-semibold text-zinc-900 dark:text-zinc-100">
                     {COMPANY_PROFILE.licence.validity}
                   </span>

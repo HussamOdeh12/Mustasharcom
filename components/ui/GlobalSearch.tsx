@@ -217,7 +217,7 @@ export default function GlobalSearch({ locale, variant = 'header', className = '
                     ? 'ابحث في الخدمات، المشاريع، شهادات الجودة، أو الصفحات...'
                     : 'Search services, projects, compliance, or pages...'
                 }
-                className="flex-1 bg-transparent text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none"
+                className="flex-1 bg-transparent text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 focus:outline-none"
                 aria-label={isRtl ? 'خانة البحث العام' : 'Global search query input'}
               />
               {query && (
@@ -228,7 +228,7 @@ export default function GlobalSearch({ locale, variant = 'header', className = '
                     setSelectedIndex(0);
                     inputRef.current?.focus();
                   }}
-                  className="p-1 rounded-md text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200"
+                  className="p-1 rounded-md text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200"
                   aria-label={isRtl ? 'مسح البحث' : 'Clear search'}
                 >
                   <X className="w-3.5 h-3.5" />
@@ -237,7 +237,7 @@ export default function GlobalSearch({ locale, variant = 'header', className = '
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="px-2 py-1 rounded-md text-xs font-medium text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                className="px-2 py-1 rounded-md text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
               >
                 {isRtl ? 'إلغاء' : 'Esc'}
               </button>
@@ -296,11 +296,11 @@ export default function GlobalSearch({ locale, variant = 'header', className = '
                             <span className="text-xs font-semibold leading-tight">
                               {item.title}
                             </span>
-                            <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-200/60 dark:bg-zinc-700/60 text-zinc-600 dark:text-zinc-300 font-medium">
+                            <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-200/60 dark:bg-zinc-700/60 text-zinc-700 dark:text-zinc-300 font-medium">
                               {item.categoryLabel}
                             </span>
                           </div>
-                          <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-1 line-clamp-1 leading-snug">
+                          <p className="text-[11px] text-zinc-600 dark:text-zinc-400 mt-1 line-clamp-1 leading-snug">
                             {item.description}
                           </p>
                         </div>
@@ -319,12 +319,12 @@ export default function GlobalSearch({ locale, variant = 'header', className = '
                 })
               ) : query.trim().length >= 2 ? (
                 /* No Results */
-                <div className="py-12 px-6 text-center text-zinc-500 dark:text-zinc-400">
+                <div className="py-12 px-6 text-center text-zinc-600 dark:text-zinc-400">
                   <p className="text-xs font-medium">
                     {isRtl ? 'لم نتمكن من العثور على نتائج مطابقة لـ' : 'No matching results found for'}{' '}
                     <span className="font-semibold text-zinc-800 dark:text-zinc-200">&ldquo;{query}&rdquo;</span>
                   </p>
-                  <p className="text-[11px] text-zinc-400 dark:text-zinc-500 mt-2">
+                  <p className="text-[11px] text-zinc-600 dark:text-zinc-400 mt-2">
                     {isRtl
                       ? 'جرّب البحث بكلمات عامة مثل: الذكاء الاصطناعي، الجودة، ERP، المشاريع، أو أبوظبي'
                       : 'Try general terms like: AI, Data, ISO 9001, ERP, Projects, or Abu Dhabi'}
@@ -333,7 +333,7 @@ export default function GlobalSearch({ locale, variant = 'header', className = '
               ) : (
                 /* Suggested Quick Links / Empty state */
                 <div className="py-4 px-3">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 px-2 block mb-2">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 px-2 block mb-2">
                     {isRtl ? 'عمليات بحث مقترحة' : 'Suggested Topics'}
                   </span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-xs">

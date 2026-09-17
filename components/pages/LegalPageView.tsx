@@ -40,7 +40,7 @@ export default function LegalPageView({ locale, type }: LegalPageViewProps) {
             <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 mb-3">
               {title}
             </h1>
-            <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400">
+            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
               {locale === 'ar'
                 ? 'آخر تحديث: 2026 · متوافق مع قوانين حماية البيانات والشفافية في دولة الإمارات العربية المتحدة'
                 : 'Last updated: 2026 · Formulated under UAE Federal Decree-Law No. 45 of 2021 regarding Personal Data Protection'}

@@ -107,7 +107,7 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
                 </p>
               </div>
 
-              <div className="pt-4 mt-4 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-[11px] text-zinc-500">
+              <div className="pt-4 mt-4 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-[11px] text-zinc-600 dark:text-zinc-400">
                 <span className="inline-flex items-center gap-1 text-[#008751] font-semibold">
                   <ShieldCheck className="w-3.5 h-3.5" />
                   <span>{locale === 'ar' ? 'جهة حكومية معتمدة' : 'Verified Public Mandate'}</span>
@@ -125,7 +125,7 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
               <span className="text-2xl sm:text-3xl font-bold font-mono text-zinc-900 dark:text-zinc-100 block">
                 {COMPANY_PROFILE.metrics.quantifiableValue}
               </span>
-              <span className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 block">
+              <span className="text-xs text-zinc-600 dark:text-zinc-400 mt-1 block">
                 {locale === 'ar' ? 'قيمة العقود الموثقة' : 'Verified Mandate Value'}
               </span>
             </div>
@@ -133,7 +133,7 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
               <span className="text-2xl sm:text-3xl font-bold font-mono text-[#6B1426] dark:text-[#F38C9C] block">
                 {COMPANY_PROFILE.metrics.engagements}
               </span>
-              <span className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 block">
+              <span className="text-xs text-zinc-600 dark:text-zinc-400 mt-1 block">
                 {locale === 'ar' ? 'عقداً ومشروعاً معتمداً' : 'Delivered Engagements'}
               </span>
             </div>
@@ -141,7 +141,7 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
               <span className="text-2xl sm:text-3xl font-bold font-mono text-[#008751] dark:text-[#34D399] block">
                 {COMPANY_PROFILE.metrics.govPercentage}
               </span>
-              <span className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 block">
+              <span className="text-xs text-zinc-600 dark:text-zinc-400 mt-1 block">
                 {locale === 'ar' ? 'جهات حكومية وشبه حكومية' : 'Public Sector Focus'}
               </span>
             </div>
@@ -149,7 +149,7 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
               <span className="text-2xl sm:text-3xl font-bold font-mono text-zinc-900 dark:text-zinc-100 block">
                 {COMPANY_PROFILE.certifications.icv.score}
               </span>
-              <span className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 block">
+              <span className="text-xs text-zinc-600 dark:text-zinc-400 mt-1 block">
                 {locale === 'ar' ? 'القيمة المحلية المضافة ICV' : 'In-Country Value (ICV)'}
               </span>
             </div>
