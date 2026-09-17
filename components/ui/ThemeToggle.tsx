@@ -12,20 +12,9 @@ interface ThemeToggleProps {
 function subscribe(callback: () => void) {
   window.addEventListener('theme-toggle', callback);
   window.addEventListener('storage', callback);
-  let observer: MutationObserver | null = null;
-  if (typeof document !== 'undefined') {
-    observer = new MutationObserver(callback);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class'],
-    });
-  }
   return () => {
     window.removeEventListener('theme-toggle', callback);
     window.removeEventListener('storage', callback);
-    if (observer) {
-      observer.disconnect();
-    }
   };
 }
 
@@ -84,5 +73,3 @@ export default function ThemeToggle({
     </button>
   );
 }
-
-

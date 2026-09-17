@@ -85,6 +85,7 @@ export const UI_STRINGS = {
     deliverables: 'Key Deliverables & Outputs',
     strategicImpact: 'Strategic Sector Impact',
     relatedPractices: 'Related Practices',
+    skipToContent: 'Skip to main content',
   },
   ar: {
     siteTitle: 'مستشاركم للحلول المعلوماتية',
@@ -170,5 +171,6 @@ export const UI_STRINGS = {
     deliverables: 'المخرجات ونواتج العمل الرئيسية',
     strategicImpact: 'الأثر الاستراتيجي في القطاع',
     relatedPractices: 'خدمات واستشارات ذات صلة',
+    skipToContent: 'الانتقال إلى المحتوى الرئيسي',
   },
 };

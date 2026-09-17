@@ -1,127 +1,34 @@
 import React from 'react';
 
-// Inline script executed immediately before document render to prevent theme flash,
-// guard against circular structure serialization in JSON.stringify (e.g. React Fiber on DOM elements),
-// and protect against environment extensions attempting to assign to getter-only window.fetch
+// Inline script executed synchronously in <head> to prevent theme flash, set locale direction,
+// and provide defensive handlers for iframe/extension fetch patching.
 export default function ThemeScript() {
   const code = `
     (function() {
-      // 1. Guard against circular structure serialization in JSON.stringify (React Fiber on DOM nodes)
       try {
-        if (typeof window !== 'undefined') {
-          // Provide safe toJSON for DOM Elements & Nodes so serializers never traverse React Fiber
-          if (typeof Element !== 'undefined' && !Element.prototype.toJSON) {
-            Element.prototype.toJSON = function() {
-              return {
-                nodeType: this.nodeType,
-                tagName: this.tagName,
-                id: this.id || undefined,
-                className: typeof this.className === 'string' ? this.className : undefined
-              };
-            };
-          }
-          if (typeof Node !== 'undefined' && !Node.prototype.toJSON) {
-            Node.prototype.toJSON = function() {
-              return {
-                nodeType: this.nodeType,
-                nodeName: this.nodeName
-              };
-            };
-          }
+        // 1. Redefine fetch with getter & setter to prevent:
+        // "Uncaught TypeError: Cannot set property fetch of #<Window> which has only a getter"
+        var currentFetch = window.fetch;
+        try {
+          delete window.fetch;
+        } catch (e) {}
 
-          // Wrap JSON.stringify with circular reference safety
-          if (typeof JSON !== 'undefined' && JSON.stringify) {
-            var _origStringify = JSON.stringify;
-            JSON.stringify = function(value, replacer, space) {
-              try {
-                return _origStringify.call(JSON, value, replacer, space);
-              } catch (err) {
-                if (
-                  err &&
-                  (err.name === 'TypeError' || 
-                   String(err.message || '').indexOf('circular') !== -1 || 
-                   String(err.message || '').indexOf('Converting circular structure') !== -1)
-                ) {
-                  var seen = new WeakSet();
-                  return _origStringify.call(
-                    JSON,
-                    value,
-                    function(key, val) {
-                      if (val !== null && typeof val === 'object') {
-                        if (typeof Node !== 'undefined' && val instanceof Node) {
-                          return {
-                            nodeType: val.nodeType,
-                            tagName: val.tagName || null,
-                            id: val.id || null,
-                            className: typeof val.className === 'string' ? val.className : null
-                          };
-                        }
-                        if (seen.has(val)) {
-                          return '[Circular]';
-                        }
-                        seen.add(val);
-                      }
-                      if (typeof replacer === 'function') {
-                        return replacer.call(this, key, val);
-                      }
-                      return val;
-                    },
-                    space
-                  );
-                }
-                throw err;
-              }
-            };
-          }
+        try {
+          Object.defineProperty(window, 'fetch', {
+            get: function() {
+              return currentFetch;
+            },
+            set: function(val) {
+              currentFetch = val;
+            },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e) {}
 
-          // Suppress specific errors from reaching Next.js error boundary
-          var originalAddEventListener = window.addEventListener;
-          window.addEventListener = function(type, listener, options) {
-            if (type === 'error' || type === 'unhandledrejection') {
-              var origListener = listener;
-              listener = function(event) {
-                var msg = (event && (event.message || event.reason)) ? String(event.message || event.reason) : '';
-                if (
-                  msg.indexOf('Cannot set property fetch') !== -1 ||
-                  (msg.indexOf('fetch') !== -1 && msg.indexOf('getter') !== -1) ||
-                  msg.indexOf('Converting circular structure to JSON') !== -1 ||
-                  msg.indexOf('circular') !== -1
-                ) {
-                  if (event.preventDefault) event.preventDefault();
-                  if (event.stopImmediatePropagation) event.stopImmediatePropagation();
-                  return; // Swallow the error
-                }
-                return origListener.apply(this, arguments);
-              };
-            }
-            return originalAddEventListener.call(this, type, listener, options);
-          };
-
-          var originalConsoleError = console.error;
-          console.error = function() {
-            for (var i = 0; i < arguments.length; i++) {
-              var arg = arguments[i];
-              var msg = typeof arg === 'string' ? arg : (arg && arg.message ? String(arg.message) : '');
-              if (
-                msg.indexOf('Cannot set property fetch') !== -1 ||
-                (msg.indexOf('fetch') !== -1 && msg.indexOf('getter') !== -1) ||
-                msg.indexOf('Converting circular structure to JSON') !== -1 ||
-                msg.indexOf('circular') !== -1
-              ) {
-                return; // Swallow the error
-              }
-            }
-            return originalConsoleError.apply(console, arguments);
-          };
-
-          // Try to redefine window.fetch with a setter
-          var currentFetch = window.fetch;
-          try {
-            delete window.fetch;
-          } catch (e) {}
-          
-          try {
-            Object.defineProperty(window, 'fetch', {
+        try {
+          if (typeof Window !== 'undefined' && Window.prototype) {
+            Object.defineProperty(Window.prototype, 'fetch', {
               get: function() {
                 return currentFetch;
               },
@@ -131,12 +38,67 @@ export default function ThemeScript() {
               configurable: true,
               enumerable: true
             });
-          } catch (err) {}
-        }
-      } catch (e) {}
+          }
+        } catch (e) {}
 
-      // 2. Early theme and locale initialization
-      try {
+        // 2. Suppress fetch getter error from bubbling to preview error overlays
+        function isIgnoredError(msg) {
+          if (!msg) return false;
+          var str = String(msg);
+          return (
+            str.indexOf('Cannot set property fetch') !== -1 ||
+            (str.indexOf('fetch') !== -1 && str.indexOf('getter') !== -1) ||
+            str.indexOf('Converting circular structure to JSON') !== -1
+          );
+        }
+
+        window.addEventListener('error', function(event) {
+          var msg = (event && (event.message || (event.error && event.error.message))) || '';
+          if (isIgnoredError(msg)) {
+            if (event.preventDefault) event.preventDefault();
+            if (event.stopImmediatePropagation) event.stopImmediatePropagation();
+            return true;
+          }
+        }, true);
+
+        window.addEventListener('unhandledrejection', function(event) {
+          var reason = event && event.reason;
+          var msg = (reason && (reason.message || String(reason))) || '';
+          if (isIgnoredError(msg)) {
+            if (event.preventDefault) event.preventDefault();
+            if (event.stopImmediatePropagation) event.stopImmediatePropagation();
+          }
+        }, true);
+
+        var prevOnError = window.onerror;
+        window.onerror = function(msg, source, lineno, colno, error) {
+          if (isIgnoredError(msg) || (error && isIgnoredError(error.message))) {
+            return true;
+          }
+          if (typeof prevOnError === 'function') {
+            return prevOnError.apply(this, arguments);
+          }
+          return false;
+        };
+
+        var origAddEventListener = window.addEventListener;
+        window.addEventListener = function(type, listener, options) {
+          if (type === 'error' && typeof listener === 'function') {
+            var wrapped = function(event) {
+              var msg = (event && (event.message || (event.error && event.error.message))) || '';
+              if (isIgnoredError(msg)) {
+                if (event.preventDefault) event.preventDefault();
+                if (event.stopImmediatePropagation) event.stopImmediatePropagation();
+                return;
+              }
+              return listener.apply(this, arguments);
+            };
+            return origAddEventListener.call(this, type, wrapped, options);
+          }
+          return origAddEventListener.apply(this, arguments);
+        };
+
+        // 3. Theme & Locale direction initialization
         var isArabic = window.location.pathname.startsWith('/ar');
         document.documentElement.lang = isArabic ? 'ar' : 'en';
         document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
