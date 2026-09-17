@@ -60,6 +60,14 @@ export const metadata: Metadata = {
     description:
       'Premier UAE IT Consultancy, Data & AI Solutions, and Digital Transformation for Government & Enterprise in Abu Dhabi.',
   },
+  icons: {
+    icon: [
+      { url: '/mustasharcom-icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    shortcut: '/mustasharcom-icon.svg',
+    apple: '/mustasharcom-icon.svg',
+  },
   robots: {
     index: true,
     follow: true,

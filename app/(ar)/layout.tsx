@@ -58,6 +58,14 @@ export const metadata: Metadata = {
     description:
       'شريك استشاري وتقني رائد يقدم حلول البيانات والذكاء الاصطناعي والتحول الرقمي للقطاع الحكومي في أبوظبي.',
   },
+  icons: {
+    icon: [
+      { url: '/mustasharcom-icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    shortcut: '/mustasharcom-icon.svg',
+    apple: '/mustasharcom-icon.svg',
+  },
   robots: {
     index: true,
     follow: true,

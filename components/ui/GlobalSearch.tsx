@@ -76,11 +76,31 @@ export default function GlobalSearch({ locale, variant = 'header', className = '
     isFirstRender.current = false;
   }, [isOpen]);
 
-  // Handle keyboard navigation inside dialog
+  // Handle keyboard navigation inside dialog with accessible focus management
+  const modalRef = useRef<HTMLDivElement>(null);
+
   const handleDialogKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Escape') {
       e.preventDefault();
       setIsOpen(false);
+      return;
+    }
+
+    if (e.key === 'Tab' && modalRef.current) {
+      const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+        'input, button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length > 0) {
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
       return;
     }
 
@@ -172,8 +192,14 @@ export default function GlobalSearch({ locale, variant = 'header', className = '
           dir={isRtl ? 'rtl' : 'ltr'}
         >
           <div
+            ref={modalRef}
             className="w-full max-w-xl bg-white dark:bg-[#111726] border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh] transition-all transform animate-in zoom-in-95 duration-150"
           >
+            {/* Accessible Dialog Title for Screen Readers */}
+            <h2 id={`${dialogId}-title`} className="sr-only">
+              {isRtl ? 'البحث العام في موقع مستشاركم' : 'Global Website Search'}
+            </h2>
+
             {/* Search Input Bar */}
             <div className="flex items-center gap-3 px-4 py-3.5 border-b border-zinc-200 dark:border-zinc-800">
               <Search className="w-4 h-4 text-[#6B1426] dark:text-[#E63956] shrink-0" />
