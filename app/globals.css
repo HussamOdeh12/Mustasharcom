@@ -2,35 +2,41 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ============================================================================
+   CONSILIO-INSPIRED GREEN / TEAL DESIGN TOKEN SYSTEM
+   Cohesive Deep Forest, Emerald & Luminous Teal Brand Identity
+   ============================================================================ */
 :root {
-  --bg-canvas: #F5F7F7;
+  --bg-canvas: #F7F5F0;
   --bg-surface: #FFFFFF;
-  --bg-subtle: #EAEFEF;
-  --bg-dark-hero: #000D0E;
-  --bg-dark-card: #04191B;
-  --text-primary: #001517;
-  --text-secondary: #3E5456;
-  --text-muted: #647A7C;
-  --border-hairline: #D8E2E2;
-  --accent-burgundy: #6B1426;
-  --accent-teal: #008559;
-  --accent-luminous: #2DD4A4;
+  --bg-subtle: #ECE9E2;
+  --bg-dark-hero: #071C17;
+  --bg-dark-card: #0B2922;
+  --text-primary: #17211D;
+  --text-secondary: #3E544C;
+  --text-muted: #697671;
+  --border-hairline: #DCE3DF;
+  --accent-primary: #174B3E;
+  --accent-teal: #18C6A0;
+  --accent-hover: #12A989;
+  --accent-luminous: #18C6A0;
   --accent-gold: #C6A355;
 }
 
 .dark {
-  --bg-canvas: #000D0E;
-  --bg-surface: #04191B;
-  --bg-subtle: #072225;
-  --bg-dark-hero: #00090A;
-  --bg-dark-card: #04191B;
-  --text-primary: #F2F6F6;
-  --text-secondary: #9CB2B4;
-  --text-muted: #6C8587;
-  --border-hairline: #0E2F33;
-  --accent-burgundy: #E64866;
-  --accent-teal: #2DD4A4;
-  --accent-luminous: #2DD4A4;
+  --bg-canvas: #071C17;
+  --bg-surface: #0B2922;
+  --bg-subtle: #10352C;
+  --bg-dark-hero: #051410;
+  --bg-dark-card: #0B2922;
+  --text-primary: #F4F7F5;
+  --text-secondary: #A3B8B0;
+  --text-muted: #6E857D;
+  --border-hairline: #174B3E;
+  --accent-primary: #18C6A0;
+  --accent-teal: #18C6A0;
+  --accent-hover: #12A989;
+  --accent-luminous: #18C6A0;
   --accent-gold: #D4B46A;
 }
 
@@ -56,14 +62,14 @@ html {
 
 /* ============================================================================
    CONSILIO-INSPIRED EDITORIAL MOTION & REVEAL SYSTEM
-   Lightweight CSS + IntersectionObserver (Zero main-thread frame loop overhead)
+   Suggested duration: 450-800ms | Easing: cubic-bezier(0.22, 1, 0.36, 1)
    ============================================================================ */
 
 /* Page Transition Animation */
 @keyframes pageTransitionEnter {
   0% {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(8px);
   }
   100% {
     opacity: 1;
@@ -72,7 +78,7 @@ html {
 }
 
 .page-transition-enter {
-  animation: pageTransitionEnter 280ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: pageTransitionEnter 320ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
   will-change: opacity, transform;
 }
 
@@ -91,7 +97,7 @@ html {
 @keyframes heroMediaReveal {
   0% {
     opacity: 0;
-    transform: scale(1.035) translate3d(0, 18px, 0);
+    transform: scale(1.035) translate3d(0, 22px, 0);
   }
   100% {
     opacity: 1;
@@ -100,29 +106,29 @@ html {
 }
 
 .hero-stagger-1 {
-  animation: heroFadeUp 650ms cubic-bezier(0.16, 1, 0.3, 1) 40ms both;
+  animation: heroFadeUp 650ms cubic-bezier(0.22, 1, 0.36, 1) 40ms both;
 }
 
 .hero-stagger-2 {
-  animation: heroFadeUp 750ms cubic-bezier(0.16, 1, 0.3, 1) 140ms both;
+  animation: heroFadeUp 750ms cubic-bezier(0.22, 1, 0.36, 1) 140ms both;
 }
 
 .hero-stagger-3 {
-  animation: heroFadeUp 750ms cubic-bezier(0.16, 1, 0.3, 1) 240ms both;
+  animation: heroFadeUp 750ms cubic-bezier(0.22, 1, 0.36, 1) 240ms both;
 }
 
 .hero-stagger-4 {
-  animation: heroFadeUp 750ms cubic-bezier(0.16, 1, 0.3, 1) 340ms both;
+  animation: heroFadeUp 750ms cubic-bezier(0.22, 1, 0.36, 1) 340ms both;
 }
 
 .hero-media-reveal {
-  animation: heroMediaReveal 950ms cubic-bezier(0.16, 1, 0.3, 1) 180ms both;
+  animation: heroMediaReveal 800ms cubic-bezier(0.22, 1, 0.36, 1) 200ms both;
 }
 
-/* Scroll-Triggered Section Reveal */
+/* Scroll-Triggered Section Reveal & Nested Stagger System */
 .section-reveal {
-  transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
-              transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
 
@@ -136,16 +142,38 @@ html {
   transform: translate3d(0, 0, 0);
 }
 
+/* Nested Staggered Child Items inside SectionReveal */
+.reveal-item {
+  transition: opacity 650ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.section-reveal-hidden .reveal-item {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+}
+
+.section-reveal-visible .reveal-item {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.reveal-delay-1 { transition-delay: 80ms; }
+.reveal-delay-2 { transition-delay: 160ms; }
+.reveal-delay-3 { transition-delay: 240ms; }
+.reveal-delay-4 { transition-delay: 320ms; }
+
 /* Consilio-style Card Lift & Editorial Image Zoom */
 .hover-card-lift {
-  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 260ms cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 260ms cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 280ms cubic-bezier(0.22, 1, 0.36, 1),
+              background-color 280ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 350ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .img-zoom-transition {
-  transition: transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -157,16 +185,9 @@ html {
   }
 }
 
-/* Consilio Dual-Layer Button / Link Sliding Text Micro-interaction */
-.btn-slide-text {
-  position: relative;
-  overflow: hidden;
-  display: inline-flex;
-  align-items: center;
-}
-
+/* Consilio Button / Link Sliding Arrow & Nav Underline Micro-interaction */
 .btn-slide-arrow {
-  transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -178,6 +199,28 @@ html {
   [dir="rtl"] .btn-slide-trigger:hover .btn-slide-arrow {
     transform: translateX(-4px);
   }
+}
+
+.nav-link-underline {
+  position: relative;
+}
+
+.nav-link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  background-color: #18C6A0;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-link-underline:hover::after,
+.nav-link-underline[data-active="true"]::after {
+  transform: scaleX(1);
 }
 
 /* Custom Hide Scrollbar for Horizontal Carousels */
@@ -206,7 +249,10 @@ html {
   }
   .section-reveal,
   .section-reveal-hidden,
-  .section-reveal-visible {
+  .section-reveal-visible,
+  .reveal-item,
+  .section-reveal-hidden .reveal-item,
+  .section-reveal-visible .reveal-item {
     transition: none !important;
     transform: none !important;
     opacity: 1 !important;

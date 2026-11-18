@@ -38,13 +38,13 @@ export default function LanguageSwitcher({
   return (
     <Link
       href={targetUrl}
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium border border-[#E3DFD7] dark:border-[#1A2E26] text-[#2C3A34] dark:text-[#C8D4CE] hover:text-[#0B1713] dark:hover:text-white hover:bg-[#F3EFEA] dark:hover:bg-[#10221C] transition-colors whitespace-nowrap shrink-0 ${className}`}
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium border border-[#DCE3DF] dark:border-[#174B3E] text-[#17211D] dark:text-[#DCE6E2] hover:text-[#174B3E] dark:hover:text-[#18C6A0] hover:bg-[#ECE9E2] dark:hover:bg-[#10352C] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] whitespace-nowrap shrink-0 ${className}`}
       aria-label={`Switch to ${label}`}
       title={`Switch to ${label}`}
       lang={currentLocale === 'en' ? 'ar' : 'en'}
       dir={currentLocale === 'en' ? 'rtl' : 'ltr'}
     >
-      <Globe className="w-3.5 h-3.5 text-[#6B1426] dark:text-[#2DD4A4]" />
+      <Globe className="w-3.5 h-3.5 text-[#174B3E] dark:text-[#18C6A0]" />
       <span>{label}</span>
     </Link>
   );

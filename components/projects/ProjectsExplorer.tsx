@@ -42,7 +42,7 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
   return (
     <div className="space-y-6" dir={isRtl ? 'rtl' : 'ltr'}>
       {/* Search & Segmented Filter Controls */}
-      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 p-4 rounded-lg bg-[#F3EFEA]/70 dark:bg-[#0C1A15] border border-[#E3DFD7] dark:border-[#1A2E26]">
+      <div className="reveal-item reveal-delay-1 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 p-4 rounded-xl bg-[#EFECE5] dark:bg-[#0B2922] border border-[#DCE2DE] dark:border-[#18382F]">
         {/* Interactive Filter Tabs */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none whitespace-nowrap">
           {categories.map((cat) => (
@@ -50,10 +50,10 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
               key={cat.key}
               type="button"
               onClick={() => setSelectedCategory(cat.key)}
-              className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
+              className={`px-3.5 py-1.5 rounded-md text-xs font-medium transition-colors cursor-pointer whitespace-nowrap shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] ${
                 selectedCategory === cat.key
-                  ? 'bg-[#6B1426] dark:bg-[#2DD4A4] text-white dark:text-[#06110D]'
-                  : 'text-[#485650] dark:text-[#A6B5AF] hover:bg-[#E3DFD7]/60 dark:hover:bg-[#10221C]'
+                  ? 'bg-[#174B3E] dark:bg-[#18C6A0] text-white dark:text-[#071C17]'
+                  : 'text-[#43524C] dark:text-[#A5B8B1] hover:bg-[#DCE2DE]/70 dark:hover:bg-[#10382F]'
               }`}
             >
               {cat.label}
@@ -64,7 +64,7 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
         {/* Text Filter */}
         <div className="relative min-w-[240px]">
           <Search
-            className={`w-4 h-4 absolute top-1/2 -translate-y-1/2 text-[#687670] dark:text-[#8FA19A] ${
+            className={`w-4 h-4 absolute top-1/2 -translate-y-1/2 text-[#697671] dark:text-[#7E968E] ${
               isRtl ? 'right-3' : 'left-3'
             }`}
           />
@@ -75,7 +75,7 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={locale === 'ar' ? 'بحث في المشاريع أو الجهات...' : 'Search projects or clients...'}
-            className={`w-full py-2 text-xs rounded-md border border-[#E3DFD7] dark:border-[#1A2E26] bg-white dark:bg-[#07110E] text-[#0B1713] dark:text-[#F4F6F5] placeholder:text-[#687670] dark:placeholder:text-[#768780] focus:outline-none focus:ring-2 focus:ring-[#6B1426] dark:focus:ring-[#2DD4A4] transition-all ${
+            className={`w-full py-2 text-xs rounded-md border border-[#DCE2DE] dark:border-[#18382F] bg-white dark:bg-[#071C17] text-[#17211D] dark:text-[#F4F7F5] placeholder:text-[#697671] dark:placeholder:text-[#7E968E] focus:outline-none focus:ring-2 focus:ring-[#174B3E] dark:focus:ring-[#18C6A0] transition-all ${
               isRtl ? 'pr-9 pl-3' : 'pl-9 pr-3'
             }`}
           />
@@ -83,7 +83,7 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
       </div>
 
       {/* Result Count & Historical Record Framing */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-[#687670] dark:text-[#8FA19A] px-1">
+      <div className="reveal-item reveal-delay-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-[#697671] dark:text-[#7E968E] px-1">
         <span>
           {locale === 'ar'
             ? `عرض ${filteredProjects.length} من أصل ${PROJECTS_RECORD.length} عقداً ومشروعاً موثقاً`
@@ -96,12 +96,12 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
         </span>
       </div>
 
-      {/* Desktop Tabular Ledger View (No Table Row Dot Scatter) */}
-      <div className="hidden md:block rounded-lg border border-[#E3DFD7] dark:border-[#1A2E26] bg-white dark:bg-[#0C1A15] overflow-hidden">
+      {/* Desktop Tabular Ledger View */}
+      <div className="reveal-item reveal-delay-3 hidden md:block rounded-xl border border-[#DCE2DE] dark:border-[#18382F] bg-white dark:bg-[#0B2922] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-start text-xs border-collapse">
             <thead>
-              <tr className="bg-[#F3EFEA] dark:bg-[#07110E] border-b border-[#E3DFD7] dark:border-[#1A2E26] text-[#485650] dark:text-[#8FA19A] font-semibold text-[11px]">
+              <tr className="bg-[#EFECE5] dark:bg-[#071C17] border-b border-[#DCE2DE] dark:border-[#18382F] text-[#43524C] dark:text-[#7E968E] font-semibold text-[11px]">
                 <th className="py-3.5 px-4 text-start w-12 font-mono">#</th>
                 <th className="py-3.5 px-4 text-start min-w-[280px]">{locale === 'ar' ? 'المشروع / نطاق العمل' : 'Project / Scope'}</th>
                 <th className="py-3.5 px-4 text-start min-w-[200px]">{t.client}</th>
@@ -111,36 +111,36 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
                 <th className="py-3.5 px-4 text-end whitespace-nowrap">{locale === 'ar' ? 'نسبة الإنجاز' : 'Progress'}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E3DFD7] dark:divide-[#1A2E26]">
+            <tbody className="divide-y divide-[#DCE2DE] dark:divide-[#18382F]">
               {filteredProjects.map((item) => {
                 const isCompleted = item.status.en === 'Completed';
 
                 return (
                   <tr
                     key={item.id}
-                    className="hover:bg-[#FAF8F5] dark:hover:bg-[#10221C] transition-colors"
+                    className="hover:bg-[#F7F5F0] dark:hover:bg-[#10382F] transition-colors"
                   >
-                    <td className="py-4 px-4 font-mono tabular-nums text-[#6B1426] dark:text-[#2DD4A4] text-[11px] align-top">
+                    <td className="py-4 px-4 font-mono tabular-nums text-[#174B3E] dark:text-[#18C6A0] text-[11px] align-top">
                       {String(item.id).padStart(2, '0')}
                     </td>
                     <td className="py-4 px-4 align-top">
                       <div className="flex flex-col gap-1">
-                        <span className="font-semibold text-[#0B1713] dark:text-[#F4F6F5] text-sm leading-snug">
+                        <span className="font-semibold text-[#17211D] dark:text-[#F4F7F5] text-sm leading-snug">
                           {item.project[locale]}
                         </span>
                         {item.isNew && (
-                          <span className="text-[11px] font-mono text-[#6B1426] dark:text-[#2DD4A4]">
+                          <span className="text-[11px] font-mono text-[#174B3E] dark:text-[#18C6A0]">
                             {t.newBadge}
                           </span>
                         )}
                       </div>
                     </td>
-                    <td className="py-4 px-4 align-top text-[#2C3A34] dark:text-[#C8D4CE] font-medium">
+                    <td className="py-4 px-4 align-top text-[#2E3C37] dark:text-[#C8D8D3] font-medium">
                       {item.client[locale]}
                     </td>
-                    <td className="py-4 px-4 align-top font-mono tabular-nums font-medium text-[#0B1713] dark:text-[#F4F6F5] whitespace-nowrap">
+                    <td className="py-4 px-4 align-top font-mono tabular-nums font-medium text-[#17211D] dark:text-[#F4F7F5] whitespace-nowrap">
                       {item.valueAED.startsWith('As per') || item.valueAED.startsWith('Per') || item.valueAED.startsWith('To be') ? (
-                        <span className="text-[#687670] dark:text-[#8FA19A] font-sans text-xs italic">
+                        <span className="text-[#697671] dark:text-[#7E968E] font-sans text-xs italic">
                           {locale === 'ar'
                             ? item.valueAED === 'As per usage'
                               ? 'حسب الاستخدام الفعلي'
@@ -155,21 +155,21 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
                         </span>
                       )}
                     </td>
-                    <td className="py-4 px-4 align-top font-mono tabular-nums text-[#485650] dark:text-[#A6B5AF] whitespace-nowrap">
+                    <td className="py-4 px-4 align-top font-mono tabular-nums text-[#43524C] dark:text-[#A5B8B1] whitespace-nowrap">
                       {item.period}
                     </td>
                     <td className="py-4 px-4 align-top whitespace-nowrap">
                       <span
                         className={`text-xs font-medium ${
                           isCompleted
-                            ? 'text-[#007A4D] dark:text-[#2DD4A4]'
-                            : 'text-[#6B1426] dark:text-[#C6A355]'
+                            ? 'text-[#174B3E] dark:text-[#18C6A0]'
+                            : 'text-[#0B2922] dark:text-[#18C6A0]'
                         }`}
                       >
                         {item.status[locale]}
                       </span>
                     </td>
-                    <td className="py-4 px-4 align-top text-end font-mono tabular-nums font-semibold text-[#0B1713] dark:text-[#F4F6F5] whitespace-nowrap">
+                    <td className="py-4 px-4 align-top text-end font-mono tabular-nums font-semibold text-[#17211D] dark:text-[#F4F7F5] whitespace-nowrap">
                       {item.progress}
                     </td>
                   </tr>
@@ -185,10 +185,10 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
         {filteredProjects.map((item) => (
           <div
             key={item.id}
-            className="p-5 rounded-lg border border-[#E3DFD7] dark:border-[#1A2E26] bg-white dark:bg-[#0C1A15] flex flex-col gap-3"
+            className="p-5 rounded-xl border border-[#DCE2DE] dark:border-[#18382F] bg-white dark:bg-[#0B2922] flex flex-col gap-3"
           >
-            <div className="flex items-center justify-between gap-2 text-xs text-[#687670] dark:text-[#8FA19A]">
-              <span className="font-mono font-semibold text-[#6B1426] dark:text-[#2DD4A4]">
+            <div className="flex items-center justify-between gap-2 text-xs text-[#697671] dark:text-[#7E968E]">
+              <span className="font-mono font-semibold text-[#174B3E] dark:text-[#18C6A0]">
                 #{String(item.id).padStart(2, '0')}
               </span>
               <span className="font-mono">
@@ -196,21 +196,21 @@ export default function ProjectsExplorer({ locale }: ProjectsExplorerProps) {
               </span>
             </div>
 
-            <h3 className="font-bold text-sm text-[#0B1713] dark:text-[#F4F6F5] leading-snug">
+            <h3 className="font-bold text-sm text-[#17211D] dark:text-[#F4F7F5] leading-snug">
               {item.project[locale]}
             </h3>
 
-            <div className="text-xs text-[#485650] dark:text-[#A6B5AF]">
+            <div className="text-xs text-[#43524C] dark:text-[#A5B8B1]">
               {item.client[locale]}
             </div>
 
-            <div className="pt-3 border-t border-[#E3DFD7] dark:border-[#1A2E26] flex items-center justify-between text-xs">
-              <span className="font-mono tabular-nums font-bold text-[#0B1713] dark:text-[#F4F6F5]">
+            <div className="pt-3 border-t border-[#DCE2DE] dark:border-[#18382F] flex items-center justify-between text-xs">
+              <span className="font-mono tabular-nums font-bold text-[#17211D] dark:text-[#F4F7F5]">
                 {item.valueAED.startsWith('As per') || item.valueAED.startsWith('Per') || item.valueAED.startsWith('To be')
                   ? item.valueAED
                   : `AED ${item.valueAED}`}
               </span>
-              <span className="font-mono text-[#687670] dark:text-[#8FA19A] text-[11px]">{item.period}</span>
+              <span className="font-mono text-[#697671] dark:text-[#7E968E] text-[11px]">{item.period}</span>
             </div>
           </div>
         ))}

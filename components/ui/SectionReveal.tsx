@@ -16,23 +16,27 @@ export default function SectionReveal({
   id,
 }: SectionRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
-  // Progressive enhancement: start visible on SSR/initial render so no content is blank if JS is slow,
-  // then animate below-the-fold sections smoothly when entering viewport.
+  // Start visible on SSR/initial render so content is 100% visible if JS is disabled,
+  // then animate below-the-fold sections smoothly when entering the viewport.
   const [revealState, setRevealState] = useState<'initial' | 'hidden' | 'visible'>('initial');
 
   useEffect(() => {
     const el = ref.current;
     if (!el || typeof window === 'undefined') return;
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion =
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     if (prefersReducedMotion || !('IntersectionObserver' in window)) {
       setRevealState('visible');
       return;
     }
 
     const rect = el.getBoundingClientRect();
-    // If already within or above the viewport on mount, reveal immediately without hiding
-    if (rect.top < window.innerHeight * 0.92) {
+    // If section is already well inside the viewport on initial load, keep it visible immediately.
+    // Otherwise prepare it for scroll-triggered entrance reveal.
+    if (rect.top < window.innerHeight * 0.78 && rect.bottom > 0) {
       setRevealState('visible');
       return;
     }
@@ -50,7 +54,7 @@ export default function SectionReveal({
       },
       {
         threshold: 0.08,
-        rootMargin: '0px 0px -40px 0px',
+        rootMargin: '0px 0px -48px 0px',
       }
     );
 
@@ -67,6 +71,7 @@ export default function SectionReveal({
     <div
       ref={ref}
       id={id}
+      data-reveal-state={revealState}
       className={`${stateClass} ${className}`.trim()}
       style={delay > 0 ? { transitionDelay: `${delay}ms` } : undefined}
     >

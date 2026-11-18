@@ -20,7 +20,7 @@ export default function AboutPageView({ locale }: AboutPageViewProps) {
   return (
     <main id="main-content" className="flex-1" dir={isRtl ? 'rtl' : 'ltr'}>
       {/* Breadcrumbs Header Strip */}
-      <div className="border-b border-[#D8E2E2] dark:border-[#0E2F33] bg-[#EAEFEF] dark:bg-[#021214]">
+      <div className="border-b border-[#DCE2DE] dark:border-[#18382F] bg-[#EFECE5] dark:bg-[#051410]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
           <Breadcrumbs
             locale={locale}
@@ -30,24 +30,24 @@ export default function AboutPageView({ locale }: AboutPageViewProps) {
       </div>
 
       {/* Consilio-style Dark Editorial Hero */}
-      <section className="py-20 md:py-28 bg-[#000D0E] text-[#F2F6F6] border-b border-[#0E2F33] relative overflow-hidden">
+      <section className="py-20 md:py-28 bg-[#071C17] text-[#F4F7F5] border-b border-[#18382F] relative overflow-hidden">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'radial-gradient(ellipse 75% 60% at 80% 20%, rgba(45, 212, 164, 0.14) 0%, rgba(0, 13, 14, 0) 75%)',
+              'radial-gradient(ellipse 75% 60% at 80% 20%, rgba(24, 198, 160, 0.14) 0%, rgba(7, 28, 23, 0) 75%)',
           }}
           aria-hidden="true"
         />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
             <div className="lg:col-span-7 space-y-6">
-              <div className="text-xs font-mono font-semibold uppercase tracking-widest text-[#2DD4A4] hero-stagger-1">
+              <div className="text-xs font-mono font-semibold uppercase tracking-widest text-[#18C6A0] hero-stagger-1">
                 {COMPANY_PROFILE.ownership[locale]} · {COMPANY_PROFILE.location.city[locale]} · Est. {COMPANY_PROFILE.established}
               </div>
 
               <h1
-                className="font-bold tracking-[-0.035em] text-[#F2F6F6] leading-[1.06] text-balance hero-stagger-2"
+                className="font-bold tracking-[-0.035em] text-[#F4F7F5] leading-[1.06] text-balance hero-stagger-2"
                 style={{ fontSize: 'clamp(2.25rem, 4.6vw, 4.25rem)' }}
               >
                 {locale === 'ar'
@@ -55,17 +55,17 @@ export default function AboutPageView({ locale }: AboutPageViewProps) {
                   : 'Architecting Digital Transformation for Government & Enterprise'}
               </h1>
 
-              <p className="text-lg sm:text-xl text-[#2DD4A4] font-medium leading-relaxed hero-stagger-3">
+              <p className="text-lg sm:text-xl text-[#18C6A0] font-medium leading-relaxed hero-stagger-3">
                 &ldquo;{COMPANY_PROFILE.quote[locale]}&rdquo;
               </p>
 
-              <p className="text-base sm:text-lg text-[#B4C8CA] leading-relaxed hero-stagger-4">
+              <p className="text-base sm:text-lg text-[#B8C7C2] leading-relaxed hero-stagger-4">
                 {COMPANY_PROFILE.consultancyApproach[locale]}
               </p>
             </div>
 
             <div className="lg:col-span-5 hero-media-reveal">
-              <div className="group relative h-[320px] sm:h-[400px] rounded-xl overflow-hidden border border-[#123A3F] bg-[#04191B]">
+              <div className="group relative h-[320px] sm:h-[400px] rounded-xl overflow-hidden border border-[#18382F] bg-[#0B2922]">
                 <Image
                   src="/images/about_executive_boardroom_1794979011521.jpg"
                   alt={
@@ -78,10 +78,10 @@ export default function AboutPageView({ locale }: AboutPageViewProps) {
                   referrerPolicy="no-referrer"
                   className="object-cover object-center img-zoom-transition"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#000D0E]/90 via-transparent to-transparent" />
-                <div className="absolute bottom-0 inset-x-0 p-6 flex items-center justify-between text-xs text-[#F2F6F6] border-t border-white/10 bg-[#000D0E]/70 backdrop-blur-md">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#071C17]/90 via-transparent to-transparent" />
+                <div className="absolute bottom-0 inset-x-0 p-6 flex items-center justify-between text-xs text-[#F4F7F5] border-t border-white/10 bg-[#071C17]/75 backdrop-blur-md">
                   <span className="font-semibold">{COMPANY_PROFILE.name[locale]}</span>
-                  <span className="font-mono text-[#2DD4A4]">ADRA {COMPANY_PROFILE.licence.number}</span>
+                  <span className="font-mono text-[#18C6A0]">ADRA {COMPANY_PROFILE.licence.number}</span>
                 </div>
               </div>
             </div>
@@ -92,7 +92,7 @@ export default function AboutPageView({ locale }: AboutPageViewProps) {
       {/* Strategic Pillars: Mission & Philosophy */}
       <SectionReveal>
         <section
-          className="py-24 bg-[#F5F7F7] dark:bg-[#000D0E] border-b border-[#D8E2E2] dark:border-[#0E2F33]"
+          className="py-24 bg-[#F7F5F0] dark:bg-[#071C17] border-b border-[#DCE2DE] dark:border-[#18382F]"
           aria-labelledby="strategic-pillars-heading"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -100,26 +100,26 @@ export default function AboutPageView({ locale }: AboutPageViewProps) {
               {locale === 'ar' ? 'الرسالة والرؤية الاستشارية' : 'Strategic Mission & Consultancy Approach'}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              <div className="p-8 sm:p-12 rounded-xl bg-white dark:bg-[#04191B] border border-[#D8E2E2] dark:border-[#0E2F33] flex flex-col gap-5">
-                <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#6B1426] dark:text-[#2DD4A4]">
+              <div className="reveal-item reveal-delay-1 p-8 sm:p-12 rounded-xl bg-white dark:bg-[#0B2922] border border-[#DCE2DE] dark:border-[#18382F] flex flex-col gap-5 hover-card-lift">
+                <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#174B3E] dark:text-[#18C6A0]">
                   01 / MISSION MANDATE
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-bold text-[#001517] dark:text-[#F2F6F6] tracking-tight">
+                <h3 className="text-2xl sm:text-3xl font-bold text-[#17211D] dark:text-[#F4F7F5] tracking-tight">
                   {t.ourMission}
                 </h3>
-                <p className="text-base text-[#3E5456] dark:text-[#9CB2B4] leading-relaxed">
+                <p className="text-base text-[#43524C] dark:text-[#A5B8B1] leading-relaxed">
                   {COMPANY_PROFILE.mission[locale]}
                 </p>
               </div>
 
-              <div className="p-8 sm:p-12 rounded-xl bg-white dark:bg-[#04191B] border border-[#D8E2E2] dark:border-[#0E2F33] flex flex-col gap-5">
-                <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#6B1426] dark:text-[#2DD4A4]">
+              <div className="reveal-item reveal-delay-2 p-8 sm:p-12 rounded-xl bg-white dark:bg-[#0B2922] border border-[#DCE2DE] dark:border-[#18382F] flex flex-col gap-5 hover-card-lift">
+                <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#174B3E] dark:text-[#18C6A0]">
                   02 / ADVISORY METHODOLOGY
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-bold text-[#001517] dark:text-[#F2F6F6] tracking-tight">
+                <h3 className="text-2xl sm:text-3xl font-bold text-[#17211D] dark:text-[#F4F7F5] tracking-tight">
                   {t.ourApproach}
                 </h3>
-                <p className="text-base text-[#3E5456] dark:text-[#9CB2B4] leading-relaxed">
+                <p className="text-base text-[#43524C] dark:text-[#A5B8B1] leading-relaxed">
                   {locale === 'ar'
                     ? 'نعمل كشريك استشاري يدمج الفهم العميق لبيئة العمل المؤسسية مع خبرة التنفيذ الميدانية. نركز على استدامة الأنظمة، تدريب الكوادر الوطنية، وضمان أعلى عائد على الاستثمارات التقنية.'
                     : 'We act as senior consultants who integrate institutional understanding with disciplined technical execution — prioritizing system maintainability, knowledge transfer, and measurable return on IT expenditure.'}

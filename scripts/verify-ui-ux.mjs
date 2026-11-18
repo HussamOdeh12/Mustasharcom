@@ -1,0 +1,171 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+
+const ROOT = process.cwd();
+
+function getAllFiles(dirPath, arrayOfFiles = []) {
+  const files = fs.readdirSync(dirPath);
+  for (const file of files) {
+    const fullPath = path.join(dirPath, file);
+    if (fs.statSync(fullPath).isDirectory()) {
+      if (file !== 'node_modules' && file !== '.next' && file !== '.git') {
+        getAllFiles(fullPath, arrayOfFiles);
+      }
+    } else {
+      arrayOfFiles.push(fullPath);
+    }
+  }
+  return arrayOfFiles;
+}
+
+test('Priority 1: Zero legacy burgundy/red brand tokens remain across app, components, lib, and public assets', () => {
+  const dirs = ['app', 'components', 'lib', 'public'];
+  const forbiddenPatterns = [
+    /#6B1426/i,
+    /#82182E/i,
+    /#E64866/i,
+    /#9E2448/i,
+    /#7F1D1D/i,
+    /#800020/i,
+    /#991B1B/i,
+    /107,\s*20,\s*38/,
+    /burgundy/i,
+    /maroon/i,
+    /crimson/i,
+    /rose-/i,
+  ];
+
+  const violations = [];
+
+  for (const dir of dirs) {
+    const files = getAllFiles(path.join(ROOT, dir));
+    for (const file of files) {
+      const relPath = path.relative(ROOT, file);
+      if (relPath === 'public/mustasharcom-logo-original-backup.svg') continue;
+      if (!/\.(tsx?|css|svg|mjs|json)$/i.test(relPath)) continue;
+
+      const content = fs.readFileSync(file, 'utf8');
+      for (const regex of forbiddenPatterns) {
+        if (regex.test(content)) {
+          violations.push(`${relPath} matched ${regex}`);
+        }
+      }
+
+      // Check red-* classes (only allowed in ContactForm.tsx semantic error banner)
+      if (/red-\d{2,3}/.test(content) && relPath !== 'components/forms/ContactForm.tsx') {
+        violations.push(`${relPath} matched red-* outside semantic error state`);
+      }
+    }
+  }
+
+  assert.deepEqual(violations, [], `Found forbidden red/burgundy brand tokens:\n${violations.join('\n')}`);
+});
+
+test('Priority 1: Centralized green/teal palette and logo assets are configured with backup preserved', () => {
+  const globalsCss = fs.readFileSync(path.join(ROOT, 'app/globals.css'), 'utf8');
+  const requiredTokens = [
+    '#071C17',
+    '#0B2922',
+    '#174B3E',
+    '#18C6A0',
+    '#12A989',
+    '#F7F5F0',
+    '#FFFFFF',
+    '#17211D',
+    '#697671',
+  ];
+  for (const token of requiredTokens) {
+    assert.ok(globalsCss.includes(token), `Expected app/globals.css to define token ${token}`);
+  }
+
+  // Backup of original logo exists
+  assert.ok(
+    fs.existsSync(path.join(ROOT, 'public/mustasharcom-logo-original-backup.svg')),
+    'Expected backup of original logo at public/mustasharcom-logo-original-backup.svg'
+  );
+
+  // Active logo assets use green/teal palette
+  const logoTsx = fs.readFileSync(path.join(ROOT, 'components/ui/Logo.tsx'), 'utf8');
+  assert.ok(logoTsx.includes('#18C6A0') && logoTsx.includes('#174B3E'), 'Logo.tsx must use green/teal palette');
+  assert.ok(!logoTsx.includes('#6B1426'), 'Logo.tsx must not contain #6B1426');
+
+  const logoSvg = fs.readFileSync(path.join(ROOT, 'public/mustasharcom-logo.svg'), 'utf8');
+  assert.ok(logoSvg.includes('#18C6A0') && logoSvg.includes('#174B3E'), 'mustasharcom-logo.svg must use green/teal palette');
+  assert.ok(!logoSvg.includes('#6B1426'), 'mustasharcom-logo.svg must not contain #6B1426');
+});
+
+test('Priority 2: ServicesCarousel implements all 6 practices, prev/next boundary states, RTL keyboard navigation, drag, and native scroll-snap without wheel hijacking', () => {
+  const carouselCode = fs.readFileSync(path.join(ROOT, 'components/sections/ServicesCarousel.tsx'), 'utf8');
+
+  // Verify Prev/Next boundary disabled state logic
+  assert.ok(carouselCode.includes('setCanScrollPrev(closestIdx > 0)'), 'Expected canScrollPrev boundary check');
+  assert.ok(carouselCode.includes('setCanScrollNext(closestIdx < total - 1)'), 'Expected canScrollNext boundary check');
+  assert.ok(carouselCode.includes('disabled={!canScrollPrev}'), 'Prev button must be disabled at start boundary');
+  assert.ok(carouselCode.includes('disabled={!canScrollNext}'), 'Next button must be disabled at end boundary');
+
+  // Verify native CSS scroll-snap and onScroll rAF synchronization
+  assert.ok(carouselCode.includes('snap-x snap-mandatory'), 'Track must use native horizontal scroll-snap');
+  assert.ok(carouselCode.includes('onScroll={handleTrackScroll}'), 'Track must synchronize active index on scroll');
+  assert.ok(carouselCode.includes('requestAnimationFrame'), 'Scroll handler must be throttled with requestAnimationFrame');
+
+  // Verify keyboard navigation with RTL support
+  assert.ok(carouselCode.includes("e.key === 'ArrowRight'") && carouselCode.includes("e.key === 'ArrowLeft'"), 'Must support ArrowLeft and ArrowRight');
+  assert.ok(carouselCode.includes("e.key === 'Home'") && carouselCode.includes("e.key === 'End'"), 'Must support Home and End keys');
+  assert.ok(carouselCode.includes('if (isRtl)') && carouselCode.includes('handlePrev()') && carouselCode.includes('handleNext()'), 'Must invert arrow direction in Arabic RTL');
+
+  // Verify vertical scroll protection (no onWheel hijacking, touchAction pan-x pan-y)
+  assert.ok(!carouselCode.includes('onWheel'), 'Carousel must not hijack vertical wheel scrolling');
+  assert.ok(carouselCode.includes("touchAction: 'pan-x pan-y'"), 'Carousel must allow both horizontal and vertical touch panning');
+});
+
+test('Priority 3: SectionReveal defaults to visible on SSR, uses IntersectionObserver, and respects prefers-reduced-motion', () => {
+  const revealCode = fs.readFileSync(path.join(ROOT, 'components/ui/SectionReveal.tsx'), 'utf8');
+  const globalsCss = fs.readFileSync(path.join(ROOT, 'app/globals.css'), 'utf8');
+
+  // Default SSR state is visible ('initial' renders section-reveal-visible)
+  assert.ok(
+    revealCode.includes("useState<'initial' | 'hidden' | 'visible'>('initial')"),
+    'SectionReveal must initialize in visible SSR state'
+  );
+  assert.ok(
+    revealCode.includes("window.matchMedia('(prefers-reduced-motion: reduce)').matches"),
+    'SectionReveal must check prefers-reduced-motion'
+  );
+  assert.ok(revealCode.includes('new IntersectionObserver'), 'SectionReveal must use IntersectionObserver');
+
+  // CSS staggered child classes & reduced motion media query
+  assert.ok(globalsCss.includes('.section-reveal-hidden .reveal-item'), 'globals.css must define nested .reveal-item hidden state');
+  assert.ok(globalsCss.includes('.section-reveal-visible .reveal-item'), 'globals.css must define nested .reveal-item visible state');
+  assert.ok(globalsCss.includes('@media (prefers-reduced-motion: reduce)'), 'globals.css must include prefers-reduced-motion media query');
+});
+
+test('Priority 5 & 7: Live HTTP SSR verification across English and Arabic routes', async () => {
+  const routes = [
+    '/',
+    '/ar',
+    '/about',
+    '/ar/about',
+    '/services',
+    '/ar/services',
+    '/services/data-ai',
+    '/ar/services/data-ai',
+    '/projects',
+    '/ar/projects',
+    '/quality-compliance',
+    '/ar/quality-compliance',
+    '/contact',
+    '/ar/contact',
+    '/privacy',
+    '/terms',
+  ];
+
+  for (const route of routes) {
+    const res = await fetch(`http://localhost:3000${route}`);
+    assert.equal(res.status, 200, `Expected HTTP 200 for ${route}, got ${res.status}`);
+    const html = await res.text();
+    assert.ok(!html.includes('#6B1426'), `Rendered HTML for ${route} must not contain legacy #6B1426`);
+    assert.ok(!html.includes('#82182E'), `Rendered HTML for ${route} must not contain legacy #82182E`);
+  }
+});

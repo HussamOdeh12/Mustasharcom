@@ -16,8 +16,6 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
 
   const [activePhase, setActivePhase] = useState(0);
 
-  // Consilio-inspired Interactive 3-Stage Process ("Our Approach: Proven Framework For Sustainable Growth")
-  // Grounded 100% in Mustasharcom's verified Corporate Profile consultancy philosophy & ISO 9001 delivery
   const approachPhases = [
     {
       step: '01',
@@ -93,7 +91,6 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
     },
   ];
 
-  // Consilio "The Difference: Why Organizations Choose Mustasharcom" Comparison
   const traditionalChallenges =
     locale === 'ar'
       ? [
@@ -162,19 +159,19 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
   return (
     <section
       id="experience"
-      className="py-24 md:py-36 bg-[#EAEFEF] dark:bg-[#021214] border-b border-[#D8E2E2] dark:border-[#0E2F33] transition-colors"
+      className="py-24 md:py-36 bg-[#ECE9E2] dark:bg-[#051410] border-b border-[#DCE3DF] dark:border-[#174B3E] transition-colors"
       dir={isRtl ? 'rtl' : 'ltr'}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* PART 1: Consilio Interactive Approach / Methodology Framework */}
-        <div className="pb-24 md:pb-28 border-b border-[#D8E2E2] dark:border-[#0E2F33]">
+        <div className="reveal-item reveal-delay-1 pb-24 md:pb-28 border-b border-[#DCE3DF] dark:border-[#174B3E]">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-12">
             <div className="max-w-3xl space-y-4">
-              <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#6B1426] dark:text-[#2DD4A4] block">
+              <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#174B3E] dark:text-[#18C6A0] block">
                 05 / {locale === 'ar' ? 'منهجية العمل الاستشاري' : 'Our Consultancy Approach'}
               </span>
               <h2
-                className="font-bold text-[#001517] dark:text-[#F2F6F6] tracking-[-0.03em] leading-[1.08] text-balance"
+                className="font-bold text-[#17211D] dark:text-[#F4F7F5] tracking-[-0.03em] leading-[1.08] text-balance"
                 style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
               >
                 {locale === 'ar'
@@ -185,7 +182,7 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
 
             <Link
               href={aboutHref}
-              className="btn-slide-trigger inline-flex items-center gap-2 text-sm font-semibold text-[#6B1426] dark:text-[#2DD4A4] hover:underline whitespace-nowrap shrink-0"
+              className="btn-slide-trigger inline-flex items-center gap-2 text-sm font-semibold text-[#174B3E] dark:text-[#18C6A0] hover:underline whitespace-nowrap shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-xs"
             >
               <span>{locale === 'ar' ? 'المزيد عن فلسفتنا الاستشارية' : 'More About Our Methodology'}</span>
               <ArrowIcon className="w-4 h-4 btn-slide-arrow" />
@@ -194,7 +191,7 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
 
           {/* Interactive 3-Stage Process Selector Tabs */}
           <div
-            className="grid grid-cols-1 md:grid-cols-3 border border-[#C5D3D3] dark:border-[#0E2F33] rounded-t-xl overflow-hidden bg-white/60 dark:bg-[#04191B]/60"
+            className="grid grid-cols-1 md:grid-cols-3 border border-[#DCE3DF] dark:border-[#174B3E] rounded-t-xl overflow-hidden bg-white/60 dark:bg-[#0B2922]/60"
             role="tablist"
             aria-label={locale === 'ar' ? 'مراحل المنهجية الاستشارية' : 'Consultancy methodology stages'}
           >
@@ -207,10 +204,10 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
                   role="tab"
                   aria-selected={isSelected}
                   onClick={() => setActivePhase(idx)}
-                  className={`p-6 sm:p-7 text-start transition-all duration-200 cursor-pointer border-b md:border-b-0 md:border-e last:border-0 border-[#C5D3D3] dark:border-[#0E2F33] flex items-center justify-between ${
+                  className={`p-6 sm:p-7 text-start transition-all duration-200 cursor-pointer border-b md:border-b-0 md:border-e last:border-0 border-[#DCE3DF] dark:border-[#174B3E] flex items-center justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#18C6A0] ${
                     isSelected
-                      ? 'bg-[#001517] text-[#F2F6F6] dark:bg-[#2DD4A4] dark:text-[#001517]'
-                      : 'hover:bg-white dark:hover:bg-[#072225] text-[#3E5456] dark:text-[#9CB2B4]'
+                      ? 'bg-[#071C17] text-[#F4F7F5] dark:bg-[#18C6A0] dark:text-[#071C17]'
+                      : 'hover:bg-white dark:hover:bg-[#10352C] text-[#3E544C] dark:text-[#A3B8B0]'
                   }`}
                 >
                   <span className="text-base sm:text-lg font-bold tracking-tight">
@@ -219,8 +216,8 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
                   <span
                     className={`w-2.5 h-2.5 rounded-full ${
                       isSelected
-                        ? 'bg-[#2DD4A4] dark:bg-[#001517]'
-                        : 'bg-[#C5D3D3] dark:bg-[#153C40]'
+                        ? 'bg-[#18C6A0] dark:bg-[#071C17]'
+                        : 'bg-[#DCE3DF] dark:bg-[#174B3E]'
                     }`}
                   />
                 </button>
@@ -229,31 +226,31 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
           </div>
 
           {/* Active Stage Large Editorial Showcase Panel */}
-          <div className="p-8 sm:p-12 lg:p-14 rounded-b-xl border-x border-b border-[#C5D3D3] dark:border-[#0E2F33] bg-white dark:bg-[#04191B] grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="p-8 sm:p-12 lg:p-14 rounded-b-xl border-x border-b border-[#DCE3DF] dark:border-[#174B3E] bg-white dark:bg-[#0B2922] grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-7 space-y-5 page-transition-enter" key={currentPhase.step}>
-              <div className="inline-flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-[#6B1426] dark:text-[#2DD4A4]">
+              <div className="inline-flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-[#174B3E] dark:text-[#18C6A0]">
                 <span>STAGE {currentPhase.step} OF 03</span>
                 <span>·</span>
                 <span>ISO 9001:2015 GOVERNED</span>
               </div>
 
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#001517] dark:text-[#F2F6F6] tracking-tight leading-[1.15]">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#17211D] dark:text-[#F4F7F5] tracking-tight leading-[1.15]">
                 {currentPhase.title}
               </h3>
 
-              <p className="text-base sm:text-lg text-[#3E5456] dark:text-[#9CB2B4] leading-relaxed">
+              <p className="text-base sm:text-lg text-[#3E544C] dark:text-[#A3B8B0] leading-relaxed">
                 {currentPhase.summary}
               </p>
             </div>
 
-            <div className="lg:col-span-5 p-6 sm:p-8 rounded-xl bg-[#F5F7F7] dark:bg-[#000D0E] border border-[#D8E2E2] dark:border-[#0E2F33] space-y-4">
-              <div className="text-xs font-mono uppercase tracking-wider text-[#647A7C] dark:text-[#6C8587]">
+            <div className="lg:col-span-5 p-6 sm:p-8 rounded-xl bg-[#F7F5F0] dark:bg-[#071C17] border border-[#DCE3DF] dark:border-[#174B3E] space-y-4">
+              <div className="text-xs font-mono uppercase tracking-wider text-[#697671] dark:text-[#A3B8B0]">
                 {locale === 'ar' ? 'المخرجات الرئيسية لهذه المرحلة' : 'Key Stage Deliverables'}
               </div>
               <ul className="space-y-3">
                 {currentPhase.deliverables.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-[#001517] dark:text-[#F2F6F6] font-medium">
-                    <CheckCircle2 className="w-4 h-4 text-[#6B1426] dark:text-[#2DD4A4] shrink-0 mt-0.5" />
+                  <li key={i} className="flex items-start gap-3 text-sm text-[#17211D] dark:text-[#F4F7F5] font-medium">
+                    <CheckCircle2 className="w-4 h-4 text-[#174B3E] dark:text-[#18C6A0] shrink-0 mt-0.5" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -263,13 +260,13 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
         </div>
 
         {/* PART 2: Consilio "The Difference — Why Organizations Choose Mustasharcom" */}
-        <div className="py-24 md:py-28 border-b border-[#D8E2E2] dark:border-[#0E2F33]">
+        <div className="reveal-item reveal-delay-2 py-24 md:py-28 border-b border-[#DCE3DF] dark:border-[#174B3E]">
           <div className="max-w-3xl space-y-4 mb-14">
-            <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#6B1426] dark:text-[#2DD4A4] block">
+            <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#174B3E] dark:text-[#18C6A0] block">
               06 / {locale === 'ar' ? 'الفارق الاستراتيجي' : 'The Mustasharcom Difference'}
             </span>
             <h2
-              className="font-bold text-[#001517] dark:text-[#F2F6F6] tracking-[-0.03em] leading-[1.08] text-balance"
+              className="font-bold text-[#17211D] dark:text-[#F4F7F5] tracking-[-0.03em] leading-[1.08] text-balance"
               style={{ fontSize: 'clamp(1.85rem, 3.6vw, 3.25rem)' }}
             >
               {locale === 'ar'
@@ -280,20 +277,20 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             {/* Conventional Consultancy Pitfalls */}
-            <div className="lg:col-span-5 p-8 sm:p-10 rounded-xl border border-[#D8E2E2] dark:border-[#0E2F33] bg-[#F5F7F7]/70 dark:bg-[#04191B]/40 flex flex-col justify-between">
+            <div className="lg:col-span-5 p-8 sm:p-10 rounded-xl border border-[#DCE3DF] dark:border-[#174B3E] bg-[#F7F5F0]/80 dark:bg-[#0B2922]/50 flex flex-col justify-between">
               <div className="space-y-6">
-                <div className="text-xs font-mono uppercase tracking-wider text-[#647A7C] dark:text-[#6C8587]">
+                <div className="text-xs font-mono uppercase tracking-wider text-[#697671] dark:text-[#A3B8B0]">
                   {locale === 'ar' ? 'النماذج الاستشارية التقليدية' : 'Conventional Vendors'}
                 </div>
-                <h3 className="text-xl font-bold text-[#3E5456] dark:text-[#9CB2B4]">
+                <h3 className="text-xl font-bold text-[#3E544C] dark:text-[#A3B8B0]">
                   {locale === 'ar'
                     ? 'العديد من المشاريع الاستشارية تتعثر عند الانتقال من التخطيط إلى التشغيل الفعلي.'
                     : 'Many consulting engagements deliver lengthy reports, but fall short during technical execution.'}
                 </h3>
                 <ul className="space-y-3.5 pt-2">
                   {traditionalChallenges.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-sm text-[#52686A] dark:text-[#8AA3A5]">
-                      <span className="font-mono text-xs text-[#647A7C] mt-0.5">—</span>
+                    <li key={idx} className="flex items-start gap-3 text-sm text-[#697671] dark:text-[#A3B8B0]">
+                      <span className="font-mono text-xs text-[#697671] mt-0.5">—</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -302,21 +299,21 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
             </div>
 
             {/* With Mustasharcom (High-Contrast Dark Editorial Panel) */}
-            <div className="lg:col-span-7 p-8 sm:p-12 rounded-xl border border-[#123A3F] bg-[#001517] text-[#F2F6F6] flex flex-col justify-between relative overflow-hidden">
+            <div className="lg:col-span-7 p-8 sm:p-12 rounded-xl border border-[#174B3E] bg-[#071C17] text-[#F4F7F5] flex flex-col justify-between relative overflow-hidden">
               <div className="space-y-6 relative z-10">
-                <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#2DD4A4]">
-                  <span className="w-2 h-2 rounded-full bg-[#2DD4A4]" />
+                <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#18C6A0]">
+                  <span className="w-2 h-2 rounded-full bg-[#18C6A0]" />
                   <span>{locale === 'ar' ? 'مع مستشاركم للحلول المعلوماتية' : 'With Mustasharcom'}</span>
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-bold text-[#F2F6F6] tracking-tight leading-snug">
+                <h3 className="text-2xl sm:text-3xl font-bold text-[#F4F7F5] tracking-tight leading-snug">
                   {locale === 'ar'
                     ? 'ندمج الخبرة الاستشارية مع التنفيذ الهندسي الميداني لتحقيق كفاءة ملموسة ومستدامة.'
                     : 'We combine senior advisory expertise with hands-on software & AI execution to deliver measurable institutional results.'}
                 </h3>
                 <ul className="space-y-4 pt-2">
                   {mustasharcomAdvantages.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-3.5 text-sm sm:text-base text-[#D8E6E7]">
-                      <CheckCircle2 className="w-5 h-5 text-[#2DD4A4] shrink-0 mt-0.5" />
+                    <li key={idx} className="flex items-start gap-3.5 text-sm sm:text-base text-[#DCE6E2]">
+                      <CheckCircle2 className="w-5 h-5 text-[#18C6A0] shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -327,38 +324,38 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
         </div>
 
         {/* PART 3: Verified Abu Dhabi Government Partner Roster (Architectural Hairline Matrix) */}
-        <div className="pt-20">
+        <div className="reveal-item reveal-delay-3 pt-20">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
             <div>
-              <span className="text-xs font-mono uppercase tracking-wider text-[#6B1426] dark:text-[#2DD4A4] block mb-1">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#174B3E] dark:text-[#18C6A0] block mb-1">
                 {locale === 'ar' ? 'الجهات الحكومية المتعاقد معها' : 'Verified Government Partner Roster'}
               </span>
-              <h3 className="text-2xl sm:text-3xl font-bold text-[#001517] dark:text-[#F2F6F6] tracking-tight">
+              <h3 className="text-2xl sm:text-3xl font-bold text-[#17211D] dark:text-[#F4F7F5] tracking-tight">
                 {locale === 'ar'
                   ? 'شراكات راسخة مع هيئات ودوائر حكومة أبوظبي'
                   : 'Trusted by Leading Authorities Across the Emirate of Abu Dhabi'}
               </h3>
             </div>
-            <span className="font-mono text-xs text-[#647A7C] dark:text-[#9CB2B4]">
+            <span className="font-mono text-xs text-[#697671] dark:text-[#A3B8B0]">
               {COMPANY_PROFILE.location.city[locale]} · 100% PUBLIC SECTOR HERITAGE
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-t border-s border-[#C5D3D3] dark:border-[#0E2F33]">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-t border-s border-[#DCE3DF] dark:border-[#174B3E]">
             {clientEntities.map((entity) => (
               <div
                 key={entity.idx}
-                className="p-7 sm:p-8 border-e border-b border-[#C5D3D3] dark:border-[#0E2F33] bg-white/75 dark:bg-[#04191B]/75 hover:bg-white dark:hover:bg-[#04191B] transition-colors flex flex-col justify-between gap-4"
+                className="p-7 sm:p-8 border-e border-b border-[#DCE3DF] dark:border-[#174B3E] bg-white/80 dark:bg-[#0B2922]/80 hover:bg-white dark:hover:bg-[#0B2922] transition-colors flex flex-col justify-between gap-4"
               >
                 <div className="space-y-2.5">
-                  <span className="font-mono text-xs font-bold text-[#6B1426] dark:text-[#2DD4A4]">
+                  <span className="font-mono text-xs font-bold text-[#174B3E] dark:text-[#18C6A0]">
                     /{entity.idx}
                   </span>
-                  <h4 className="text-lg font-bold text-[#001517] dark:text-[#F2F6F6] leading-snug">
+                  <h4 className="text-lg font-bold text-[#17211D] dark:text-[#F4F7F5] leading-snug">
                     {entity.name}
                   </h4>
                 </div>
-                <p className="text-xs sm:text-sm text-[#3E5456] dark:text-[#9CB2B4] pt-4 border-t border-[#D8E2E2] dark:border-[#0E2F33]">
+                <p className="text-xs sm:text-sm text-[#3E544C] dark:text-[#A3B8B0] pt-4 border-t border-[#DCE3DF] dark:border-[#174B3E]">
                   {entity.scope}
                 </p>
               </div>

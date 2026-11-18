@@ -13,18 +13,18 @@ export default function LeadershipSection({ locale }: LeadershipSectionProps) {
 
   return (
     <section
-      className="py-20 md:py-24 bg-[#F3EFEA]/60 dark:bg-[#0A1612] border-b border-[#E3DFD7] dark:border-[#1A2E26] transition-colors"
+      className="py-20 md:py-24 bg-[#EFECE5] dark:bg-[#051410] border-b border-[#DCE2DE] dark:border-[#18382F] transition-colors"
       dir={isRtl ? 'rtl' : 'ltr'}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl pb-12 space-y-3">
-          <span className="text-xs font-semibold text-[#6B1426] dark:text-[#2DD4A4] tracking-wide block">
+          <span className="reveal-item reveal-delay-1 text-xs font-mono font-semibold uppercase tracking-widest text-[#174B3E] dark:text-[#18C6A0] block">
             {t.directLeadership}
           </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0B1713] dark:text-[#F4F6F5] tracking-tight leading-tight">
+          <h2 className="reveal-item reveal-delay-2 text-2xl sm:text-3xl md:text-4xl font-bold text-[#17211D] dark:text-[#F4F7F5] tracking-tight leading-tight">
             {locale === 'ar' ? 'فريق القيادة والاستشارات المباشر' : 'Executive & Technical Leadership'}
           </h2>
-          <p className="text-sm sm:text-base text-[#485650] dark:text-[#A6B5AF] leading-relaxed">
+          <p className="reveal-item reveal-delay-3 text-sm sm:text-base text-[#43524C] dark:text-[#A5B8B1] leading-relaxed">
             {locale === 'ar'
               ? 'تواصل مباشرة مع قيادات ومستشاري مستشاركم في أبوظبي لمناقشة استراتيجيات المشاريع والتعاقدات الحكومية.'
               : 'Direct executive sponsorship, technical architecture oversight, and client engagement leadership in Abu Dhabi.'}
@@ -34,35 +34,36 @@ export default function LeadershipSection({ locale }: LeadershipSectionProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {COMPANY_PROFILE.leadership.map((leader, idx) => {
             const cleanPhone = leader.phone.replace(/\s+/g, '');
+            const delayClass = `reveal-delay-${Math.min(idx + 1, 4)}`;
 
             return (
               <div
                 key={idx}
-                className="p-7 rounded-lg bg-[#FAF8F5] dark:bg-[#0C1A15] border border-[#E3DFD7] dark:border-[#1A2E26] flex flex-col justify-between gap-6"
+                className={`reveal-item ${delayClass} p-7 rounded-xl bg-white dark:bg-[#0B2922] border border-[#DCE2DE] dark:border-[#18382F] hover:border-[#174B3E] dark:hover:border-[#18C6A0] transition-colors flex flex-col justify-between gap-6 hover-card-lift`}
               >
                 <div className="space-y-2">
-                  <span className="font-mono text-xs font-semibold text-[#6B1426] dark:text-[#2DD4A4] block">
+                  <span className="font-mono text-xs font-semibold text-[#174B3E] dark:text-[#18C6A0] block">
                     0{idx + 1}.
                   </span>
-                  <h3 className="text-lg font-bold text-[#0B1713] dark:text-[#F4F6F5]">
+                  <h3 className="text-lg font-bold text-[#17211D] dark:text-[#F4F7F5]">
                     {leader.name[locale]}
                   </h3>
-                  <p className="text-xs font-medium text-[#485650] dark:text-[#A6B5AF]">
+                  <p className="text-xs font-medium text-[#43524C] dark:text-[#A5B8B1]">
                     {leader.title[locale]}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-[#E3DFD7] dark:border-[#1A2E26] flex items-center justify-between text-xs">
+                <div className="pt-4 border-t border-[#DCE2DE] dark:border-[#18382F] flex items-center justify-between text-xs">
                   <a
                     href={`tel:${cleanPhone}`}
-                    className="inline-flex items-center gap-2 font-mono tabular-nums font-medium text-[#0B1713] dark:text-[#F4F6F5] hover:text-[#6B1426] dark:hover:text-[#2DD4A4] transition-colors dir-ltr"
+                    className="inline-flex items-center gap-2 font-mono tabular-nums font-medium text-[#17211D] dark:text-[#F4F7F5] hover:text-[#174B3E] dark:hover:text-[#18C6A0] transition-colors dir-ltr focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-sm"
                   >
-                    <Phone className="w-3.5 h-3.5 text-[#6B1426] dark:text-[#2DD4A4]" />
+                    <Phone className="w-3.5 h-3.5 text-[#174B3E] dark:text-[#18C6A0]" />
                     <span>{leader.phone}</span>
                   </a>
                   <a
                     href={`mailto:${COMPANY_PROFILE.office.email}`}
-                    className="text-[#687670] dark:text-[#8FA19A] hover:text-[#0B1713] dark:hover:text-white transition-colors"
+                    className="text-[#697671] dark:text-[#7E968E] hover:text-[#174B3E] dark:hover:text-[#18C6A0] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-sm"
                     aria-label={`Email ${leader.name[locale]}`}
                   >
                     <Mail className="w-4 h-4" />

@@ -43,7 +43,7 @@ export default function Breadcrumbs({ locale, items }: BreadcrumbsProps) {
       />
       <nav
         aria-label="Breadcrumbs"
-        className="flex items-center gap-1.5 text-xs text-[#687670] dark:text-[#8FA19A] py-2.5 overflow-x-auto whitespace-nowrap"
+        className="flex items-center gap-1.5 text-xs text-[#697671] dark:text-[#A3B8B0] py-2.5 overflow-x-auto whitespace-nowrap"
         dir={isRtl ? 'rtl' : 'ltr'}
       >
         {allItems.map((item, idx) => {
@@ -51,16 +51,16 @@ export default function Breadcrumbs({ locale, items }: BreadcrumbsProps) {
 
           return (
             <React.Fragment key={idx}>
-              {idx > 0 && <Separator className="w-3.5 h-3.5 text-[#687670] dark:text-[#8FA19A] shrink-0" />}
+              {idx > 0 && <Separator className="w-3.5 h-3.5 text-[#697671] dark:text-[#A3B8B0] shrink-0" />}
               {item.href && !isLast ? (
                 <Link
                   href={item.href}
-                  className="hover:text-[#0B1713] dark:hover:text-[#F4F6F5] transition-colors"
+                  className="hover:text-[#174B3E] dark:hover:text-[#18C6A0] transition-colors focus:outline-none focus-visible:underline"
                 >
                   {item.label}
                 </Link>
               ) : (
-                <span className="font-medium text-[#0B1713] dark:text-[#F4F6F5]" aria-current={isLast ? 'page' : undefined}>
+                <span className="font-medium text-[#17211D] dark:text-[#F4F7F5]" aria-current={isLast ? 'page' : undefined}>
                   {item.label}
                 </span>
               )}

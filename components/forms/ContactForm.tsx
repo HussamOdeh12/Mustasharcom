@@ -70,24 +70,24 @@ export default function ContactForm({ locale, preselectedService }: ContactFormP
 
   return (
     <div
-      className="bg-white dark:bg-[#0C1A15] rounded-lg p-6 sm:p-8 lg:p-10 border border-[#E3DFD7] dark:border-[#1A2E26]"
+      className="bg-white dark:bg-[#0B2922] rounded-xl p-6 sm:p-8 lg:p-10 border border-[#DCE2DE] dark:border-[#18382F]"
       dir={isRtl ? 'rtl' : 'ltr'}
     >
       {status === 'success' ? (
         <div className="flex flex-col items-center text-center py-8 px-4">
-          <div className="w-12 h-12 rounded-full bg-[#007A4D]/10 dark:bg-[#2DD4A4]/15 text-[#007A4D] dark:text-[#2DD4A4] flex items-center justify-center mb-4">
+          <div className="w-12 h-12 rounded-full bg-[#174B3E]/10 dark:bg-[#18C6A0]/15 text-[#174B3E] dark:text-[#18C6A0] flex items-center justify-center mb-4">
             <CheckCircle2 className="w-6 h-6" />
           </div>
-          <h3 className="text-xl font-bold text-[#0B1713] dark:text-[#F4F6F5] mb-2">
+          <h3 className="text-xl font-bold text-[#17211D] dark:text-[#F4F7F5] mb-2">
             {t.successTitle}
           </h3>
-          <p className="text-sm text-[#485650] dark:text-[#A6B5AF] max-w-md mb-6 leading-relaxed">
+          <p className="text-sm text-[#43524C] dark:text-[#A5B8B1] max-w-md mb-6 leading-relaxed">
             {t.successMsg}
           </p>
           <button
             type="button"
             onClick={() => setStatus('idle')}
-            className="px-5 py-2.5 rounded-md bg-[#6B1426] hover:bg-[#82182E] dark:bg-[#2DD4A4] text-white dark:text-[#06110D] text-xs font-semibold transition-colors cursor-pointer"
+            className="px-5 py-2.5 rounded-md bg-[#174B3E] hover:bg-[#0B2922] dark:bg-[#18C6A0] dark:hover:bg-[#12A989] text-white dark:text-[#071C17] text-xs font-semibold transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0]"
           >
             {locale === 'ar' ? 'إرسال استفسار آخر' : 'Submit Another Enquiry'}
           </button>
@@ -109,8 +109,8 @@ export default function ContactForm({ locale, preselectedService }: ContactFormP
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
-              <label htmlFor="contact-name" className="block text-xs font-semibold text-[#0B1713] dark:text-[#F4F6F5] mb-1.5">
-                {t.fullName} <span className="text-[#6B1426] dark:text-[#2DD4A4]">*</span>
+              <label htmlFor="contact-name" className="block text-xs font-semibold text-[#17211D] dark:text-[#F4F7F5] mb-1.5">
+                {t.fullName} <span className="text-[#174B3E] dark:text-[#18C6A0]">*</span>
               </label>
               <input
                 type="text"
@@ -120,12 +120,12 @@ export default function ContactForm({ locale, preselectedService }: ContactFormP
                 value={formData.name}
                 onChange={handleChange}
                 placeholder={locale === 'ar' ? 'مثال: محمد الشامسي' : 'e.g. Mohammed Al Shamsi'}
-                className="w-full px-3.5 py-2.5 rounded-md border border-[#E3DFD7] dark:border-[#1A2E26] bg-[#FAF8F5] dark:bg-[#07110E] text-[#0B1713] dark:text-[#F4F6F5] text-sm placeholder:text-[#687670] dark:placeholder:text-[#768780] focus:outline-none focus:ring-2 focus:ring-[#6B1426] dark:focus:ring-[#2DD4A4] transition-all"
+                className="w-full px-3.5 py-2.5 rounded-md border border-[#DCE2DE] dark:border-[#18382F] bg-[#F7F5F0] dark:bg-[#071C17] text-[#17211D] dark:text-[#F4F7F5] text-sm placeholder:text-[#697671] dark:placeholder:text-[#7E968E] focus:outline-none focus:ring-2 focus:ring-[#174B3E] dark:focus:ring-[#18C6A0] transition-all"
               />
             </div>
 
             <div>
-              <label htmlFor="contact-entity" className="block text-xs font-semibold text-[#0B1713] dark:text-[#F4F6F5] mb-1.5">
+              <label htmlFor="contact-entity" className="block text-xs font-semibold text-[#17211D] dark:text-[#F4F7F5] mb-1.5">
                 {t.entityName}
               </label>
               <input
@@ -135,15 +135,15 @@ export default function ContactForm({ locale, preselectedService }: ContactFormP
                 value={formData.entity}
                 onChange={handleChange}
                 placeholder={locale === 'ar' ? 'دائرة حكومية / شركة' : 'e.g. Government Department / Enterprise'}
-                className="w-full px-3.5 py-2.5 rounded-md border border-[#E3DFD7] dark:border-[#1A2E26] bg-[#FAF8F5] dark:bg-[#07110E] text-[#0B1713] dark:text-[#F4F6F5] text-sm placeholder:text-[#687670] dark:placeholder:text-[#768780] focus:outline-none focus:ring-2 focus:ring-[#6B1426] dark:focus:ring-[#2DD4A4] transition-all"
+                className="w-full px-3.5 py-2.5 rounded-md border border-[#DCE2DE] dark:border-[#18382F] bg-[#F7F5F0] dark:bg-[#071C17] text-[#17211D] dark:text-[#F4F7F5] text-sm placeholder:text-[#697671] dark:placeholder:text-[#7E968E] focus:outline-none focus:ring-2 focus:ring-[#174B3E] dark:focus:ring-[#18C6A0] transition-all"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
-              <label htmlFor="contact-email" className="block text-xs font-semibold text-[#0B1713] dark:text-[#F4F6F5] mb-1.5">
-                {t.workEmail} <span className="text-[#6B1426] dark:text-[#2DD4A4]">*</span>
+              <label htmlFor="contact-email" className="block text-xs font-semibold text-[#17211D] dark:text-[#F4F7F5] mb-1.5">
+                {t.workEmail} <span className="text-[#174B3E] dark:text-[#18C6A0]">*</span>
               </label>
               <input
                 type="email"
@@ -153,12 +153,12 @@ export default function ContactForm({ locale, preselectedService }: ContactFormP
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="name@entity.gov.ae"
-                className="w-full px-3.5 py-2.5 rounded-md border border-[#E3DFD7] dark:border-[#1A2E26] bg-[#FAF8F5] dark:bg-[#07110E] text-[#0B1713] dark:text-[#F4F6F5] text-sm placeholder:text-[#687670] dark:placeholder:text-[#768780] focus:outline-none focus:ring-2 focus:ring-[#6B1426] dark:focus:ring-[#2DD4A4] transition-all dir-ltr"
+                className="w-full px-3.5 py-2.5 rounded-md border border-[#DCE2DE] dark:border-[#18382F] bg-[#F7F5F0] dark:bg-[#071C17] text-[#17211D] dark:text-[#F4F7F5] text-sm placeholder:text-[#697671] dark:placeholder:text-[#7E968E] focus:outline-none focus:ring-2 focus:ring-[#174B3E] dark:focus:ring-[#18C6A0] transition-all dir-ltr"
               />
             </div>
 
             <div>
-              <label htmlFor="contact-phone" className="block text-xs font-semibold text-[#0B1713] dark:text-[#F4F6F5] mb-1.5">
+              <label htmlFor="contact-phone" className="block text-xs font-semibold text-[#17211D] dark:text-[#F4F7F5] mb-1.5">
                 {t.phone}
               </label>
               <input
@@ -168,13 +168,13 @@ export default function ContactForm({ locale, preselectedService }: ContactFormP
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder="+971 50 000 0000"
-                className="w-full px-3.5 py-2.5 rounded-md border border-[#E3DFD7] dark:border-[#1A2E26] bg-[#FAF8F5] dark:bg-[#07110E] text-[#0B1713] dark:text-[#F4F6F5] text-sm placeholder:text-[#687670] dark:placeholder:text-[#768780] focus:outline-none focus:ring-2 focus:ring-[#6B1426] dark:focus:ring-[#2DD4A4] transition-all dir-ltr"
+                className="w-full px-3.5 py-2.5 rounded-md border border-[#DCE2DE] dark:border-[#18382F] bg-[#F7F5F0] dark:bg-[#071C17] text-[#17211D] dark:text-[#F4F7F5] text-sm placeholder:text-[#697671] dark:placeholder:text-[#7E968E] focus:outline-none focus:ring-2 focus:ring-[#174B3E] dark:focus:ring-[#18C6A0] transition-all dir-ltr"
               />
             </div>
           </div>
 
           <div>
-            <label htmlFor="contact-service" className="block text-xs font-semibold text-[#0B1713] dark:text-[#F4F6F5] mb-1.5">
+            <label htmlFor="contact-service" className="block text-xs font-semibold text-[#17211D] dark:text-[#F4F7F5] mb-1.5">
               {t.serviceInterest}
             </label>
             <select
@@ -182,7 +182,7 @@ export default function ContactForm({ locale, preselectedService }: ContactFormP
               name="service"
               value={formData.service}
               onChange={handleChange}
-              className="w-full px-3.5 py-2.5 rounded-md border border-[#E3DFD7] dark:border-[#1A2E26] bg-[#FAF8F5] dark:bg-[#07110E] text-[#0B1713] dark:text-[#F4F6F5] text-sm focus:outline-none focus:ring-2 focus:ring-[#6B1426] dark:focus:ring-[#2DD4A4] transition-all cursor-pointer"
+              className="w-full px-3.5 py-2.5 rounded-md border border-[#DCE2DE] dark:border-[#18382F] bg-[#F7F5F0] dark:bg-[#071C17] text-[#17211D] dark:text-[#F4F7F5] text-sm focus:outline-none focus:ring-2 focus:ring-[#174B3E] dark:focus:ring-[#18C6A0] transition-all cursor-pointer"
             >
               {SERVICES_CATALOG.map((svc) => (
                 <option key={svc.slug} value={svc.slug}>
@@ -196,8 +196,8 @@ export default function ContactForm({ locale, preselectedService }: ContactFormP
           </div>
 
           <div>
-            <label htmlFor="contact-message" className="block text-xs font-semibold text-[#0B1713] dark:text-[#F4F6F5] mb-1.5">
-              {t.message} <span className="text-[#6B1426] dark:text-[#2DD4A4]">*</span>
+            <label htmlFor="contact-message" className="block text-xs font-semibold text-[#17211D] dark:text-[#F4F7F5] mb-1.5">
+              {t.message} <span className="text-[#174B3E] dark:text-[#18C6A0]">*</span>
             </label>
             <textarea
               id="contact-message"
@@ -211,10 +211,11 @@ export default function ContactForm({ locale, preselectedService }: ContactFormP
                   ? 'يرجى تقديم نبذة عن متطلبات المشروع، النطاق الزمني المتوقع، أو طلب كراسة الشروط...'
                   : 'Please summarize project objectives, timelines, and requirements...'
               }
-              className="w-full px-3.5 py-2.5 rounded-md border border-[#E3DFD7] dark:border-[#1A2E26] bg-[#FAF8F5] dark:bg-[#07110E] text-[#0B1713] dark:text-[#F4F6F5] text-sm placeholder:text-[#687670] dark:placeholder:text-[#768780] focus:outline-none focus:ring-2 focus:ring-[#6B1426] dark:focus:ring-[#2DD4A4] transition-all resize-y"
+              className="w-full px-3.5 py-2.5 rounded-md border border-[#DCE2DE] dark:border-[#18382F] bg-[#F7F5F0] dark:bg-[#071C17] text-[#17211D] dark:text-[#F4F7F5] text-sm placeholder:text-[#697671] dark:placeholder:text-[#7E968E] focus:outline-none focus:ring-2 focus:ring-[#174B3E] dark:focus:ring-[#18C6A0] transition-all resize-y"
             />
           </div>
 
+          {/* Semantic validation error state */}
           {status === 'error' && (
             <div className="flex items-center gap-2 p-3 rounded-md bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-xs text-red-700 dark:text-red-300">
               <AlertCircle className="w-4 h-4 shrink-0" />
@@ -225,7 +226,7 @@ export default function ContactForm({ locale, preselectedService }: ContactFormP
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md bg-[#6B1426] hover:bg-[#82182E] dark:bg-[#2DD4A4] dark:hover:bg-[#24B88D] text-white dark:text-[#06110D] text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B1426] disabled:opacity-70 cursor-pointer whitespace-nowrap"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md bg-[#174B3E] hover:bg-[#0B2922] dark:bg-[#18C6A0] dark:hover:bg-[#12A989] text-white dark:text-[#071C17] text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] disabled:opacity-70 cursor-pointer whitespace-nowrap"
           >
             {status === 'loading' ? (
               <>

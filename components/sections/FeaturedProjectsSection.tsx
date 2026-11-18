@@ -15,7 +15,7 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
   const ArrowIcon = isRtl ? ArrowLeft : ArrowRight;
   const projectsHref = locale === 'ar' ? '/ar/projects' : '/projects';
 
-  // 2 Flagship Large-Scale Editorial Case Studies (Consilio 1-2 large case studies pattern)
+  // 2 Flagship Large-Scale Editorial Case Studies
   const flagshipCases = [
     {
       index: '01',
@@ -71,7 +71,7 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
     },
   ];
 
-  // Compact Architectural Ledger of 4 Additional Verified Mandates (Not a card grid!)
+  // Compact Architectural Ledger of 4 Additional Verified Mandates
   const ledgerHighlights = [
     PROJECTS_RECORD[7],  // AED 9,000,000 Municipal Presence Centre
     PROJECTS_RECORD[0],  // AED 3,599,984 Data Analysis & Digital Usage
@@ -82,25 +82,25 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
   return (
     <section
       id="engagements"
-      className="py-24 md:py-36 bg-[#F5F7F7] dark:bg-[#000D0E] border-b border-[#D8E2E2] dark:border-[#0E2F33] transition-colors"
+      className="py-24 md:py-36 bg-[#F7F5F0] dark:bg-[#071C17] border-b border-[#DCE3DF] dark:border-[#174B3E] transition-colors"
       dir={isRtl ? 'rtl' : 'ltr'}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Editorial Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-14 md:pb-20 border-b border-[#D8E2E2] dark:border-[#0E2F33]">
+        <div className="reveal-item reveal-delay-1 flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-14 md:pb-20 border-b border-[#DCE3DF] dark:border-[#174B3E]">
           <div className="max-w-3xl space-y-4">
-            <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#6B1426] dark:text-[#2DD4A4] block">
+            <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#174B3E] dark:text-[#18C6A0] block">
               04 / {t.selectedEngagements}
             </span>
             <h2
-              className="font-bold text-[#001517] dark:text-[#F2F6F6] tracking-[-0.03em] leading-[1.08] text-balance"
+              className="font-bold text-[#17211D] dark:text-[#F4F7F5] tracking-[-0.03em] leading-[1.08] text-balance"
               style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
             >
               {locale === 'ar'
                 ? 'نتائج حقيقية من شراكات استراتيجية مع القطاع الحكومي'
                 : 'Real Results From Strategic Public-Sector Partnerships'}
             </h2>
-            <p className="text-base sm:text-lg text-[#3E5456] dark:text-[#9CB2B4] leading-relaxed max-w-2xl">
+            <p className="text-base sm:text-lg text-[#3E544C] dark:text-[#A3B8B0] leading-relaxed max-w-2xl">
               {locale === 'ar'
                 ? 'سجل عقود حكومية موثق يتجاوز 69 مليون درهم عبر 17 مشروعاً استراتيجياً مع بلدية مدينة أبوظبي، دائرة البلديات والنقل، وهيئة أبوظبي الرقمية.'
                 : 'Over AED 69M+ in verified contract value delivered across 17 public-sector mandates with Abu Dhabi municipal, transport, and digital authorities.'}
@@ -109,7 +109,7 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
 
           <Link
             href={projectsHref}
-            className="btn-slide-trigger inline-flex items-center gap-2.5 px-6 py-3.5 rounded-md bg-[#001517] dark:bg-[#2DD4A4] text-[#F2F6F6] dark:text-[#001517] text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap shrink-0"
+            className="btn-slide-trigger inline-flex items-center gap-2.5 px-6 py-3.5 rounded-md bg-[#071C17] hover:bg-[#174B3E] dark:bg-[#18C6A0] dark:hover:bg-[#12A989] text-[#F4F7F5] dark:text-[#071C17] text-xs sm:text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] whitespace-nowrap shrink-0"
           >
             <span>
               {locale === 'ar'
@@ -124,10 +124,11 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
         <div className="mt-14 md:mt-20 space-y-16 md:space-y-24">
           {flagshipCases.map((item, idx) => {
             const isReversed = idx % 2 === 1;
+            const delayClass = idx === 0 ? 'reveal-delay-2' : 'reveal-delay-3';
             return (
               <article
                 key={item.id}
-                className="group grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-stretch"
+                className={`reveal-item ${delayClass} group grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-stretch`}
               >
                 {/* Large Image Frame (7 Columns) */}
                 <div
@@ -137,7 +138,7 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
                 >
                   <Link
                     href={projectsHref}
-                    className="relative flex-1 min-h-[300px] sm:min-h-[380px] lg:min-h-[440px] rounded-xl overflow-hidden border border-[#D8E2E2] dark:border-[#0E2F33] bg-[#04191B] block"
+                    className="relative flex-1 min-h-[300px] sm:min-h-[380px] lg:min-h-[440px] rounded-xl overflow-hidden border border-[#DCE3DF] dark:border-[#174B3E] bg-[#0B2922] block focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0]"
                   >
                     <Image
                       src={item.image}
@@ -151,16 +152,16 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
                       className="absolute inset-0"
                       style={{
                         background:
-                          'linear-gradient(180deg, rgba(0,13,14,0.1) 0%, rgba(0,13,14,0.3) 60%, rgba(0,13,14,0.88) 100%)',
+                          'linear-gradient(180deg, rgba(7,28,23,0.12) 0%, rgba(7,28,23,0.32) 60%, rgba(7,28,23,0.9) 100%)',
                       }}
                     />
 
                     {/* Top Category & Period Tag */}
                     <div className="absolute top-0 inset-x-0 p-5 sm:p-6 flex items-center justify-between gap-4">
-                      <span className="px-3 py-1 rounded bg-[#000D0E]/80 backdrop-blur-md border border-white/10 text-xs font-mono text-[#2DD4A4]">
+                      <span className="px-3 py-1 rounded bg-[#071C17]/80 backdrop-blur-md border border-white/10 text-xs font-mono text-[#18C6A0]">
                         {item.category}
                       </span>
-                      <span className="px-3 py-1 rounded bg-[#000D0E]/80 backdrop-blur-md border border-white/10 text-xs font-mono text-[#F2F6F6]">
+                      <span className="px-3 py-1 rounded bg-[#071C17]/80 backdrop-blur-md border border-white/10 text-xs font-mono text-[#F4F7F5]">
                         {item.period}
                       </span>
                     </div>
@@ -168,15 +169,15 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
                     {/* Bottom Contract Value Callout */}
                     <div className="absolute bottom-0 inset-x-0 p-6 sm:p-8 flex items-end justify-between gap-4">
                       <div>
-                        <div className="text-xs font-mono text-[#9CB2B4] uppercase">
+                        <div className="text-xs font-mono text-[#A3B8B0] uppercase">
                           {locale === 'ar' ? 'قيمة العقد الموثقة' : 'Verified Contract Value'}
                         </div>
-                        <div className="text-2xl sm:text-3xl font-bold font-mono tabular-nums text-[#F2F6F6] mt-0.5">
+                        <div className="text-2xl sm:text-3xl font-bold font-mono tabular-nums text-[#F4F7F5] mt-0.5">
                           {item.value}
                         </div>
                       </div>
 
-                      <span className="w-11 h-11 rounded-full bg-[#2DD4A4] text-[#001517] flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+                      <span className="w-11 h-11 rounded-full bg-[#18C6A0] text-[#071C17] flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
                         <ArrowUpRight className="w-5 h-5" />
                       </span>
                     </div>
@@ -190,41 +191,41 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
                   }`}
                 >
                   <div className="space-y-5">
-                    <div className="flex items-center justify-between border-b border-[#D8E2E2] dark:border-[#0E2F33] pb-4">
-                      <span className="font-mono text-sm font-bold text-[#6B1426] dark:text-[#2DD4A4]">
+                    <div className="flex items-center justify-between border-b border-[#DCE3DF] dark:border-[#174B3E] pb-4">
+                      <span className="font-mono text-sm font-bold text-[#174B3E] dark:text-[#18C6A0]">
                         CASE STUDY {item.index}
                       </span>
-                      <span className="font-mono text-xs text-[#647A7C] dark:text-[#6C8587]">
+                      <span className="font-mono text-xs text-[#697671] dark:text-[#A3B8B0]">
                         {item.status}
                       </span>
                     </div>
 
-                    <div className="text-xs font-mono uppercase tracking-wider text-[#3E5456] dark:text-[#9CB2B4]">
+                    <div className="text-xs font-mono uppercase tracking-wider text-[#3E544C] dark:text-[#A3B8B0]">
                       {item.client}
                     </div>
 
-                    <h3 className="text-2xl sm:text-3xl font-bold text-[#001517] dark:text-[#F2F6F6] tracking-tight leading-[1.18]">
+                    <h3 className="text-2xl sm:text-3xl font-bold text-[#17211D] dark:text-[#F4F7F5] tracking-tight leading-[1.18]">
                       <Link
                         href={projectsHref}
-                        className="hover:text-[#6B1426] dark:hover:text-[#2DD4A4] transition-colors"
+                        className="hover:text-[#174B3E] dark:hover:text-[#18C6A0] transition-colors focus:outline-none focus-visible:underline"
                       >
                         {item.title}
                       </Link>
                     </h3>
 
-                    <p className="text-sm sm:text-base text-[#3E5456] dark:text-[#9CB2B4] leading-relaxed">
+                    <p className="text-sm sm:text-base text-[#3E544C] dark:text-[#A3B8B0] leading-relaxed">
                       {item.summary}
                     </p>
                   </div>
 
-                  <div className="mt-8 pt-6 border-t border-[#D8E2E2] dark:border-[#0E2F33] space-y-4">
-                    <div className="text-xs font-mono text-[#6B1426] dark:text-[#2DD4A4]">
+                  <div className="mt-8 pt-6 border-t border-[#DCE3DF] dark:border-[#174B3E] space-y-4">
+                    <div className="text-xs font-mono text-[#174B3E] dark:text-[#18C6A0]">
                       {item.additionalMandate}
                     </div>
 
                     <Link
                       href={projectsHref}
-                      className="btn-slide-trigger inline-flex items-center gap-2 text-sm font-semibold text-[#001517] dark:text-[#F2F6F6] hover:text-[#6B1426] dark:hover:text-[#2DD4A4] transition-colors"
+                      className="btn-slide-trigger inline-flex items-center gap-2 text-sm font-semibold text-[#17211D] dark:text-[#F4F7F5] hover:text-[#174B3E] dark:hover:text-[#18C6A0] transition-colors focus:outline-none focus-visible:underline"
                     >
                       <span>
                         {locale === 'ar' ? 'عرض تفاصيل العقد في السجل' : 'View Full Mandate Specification'}
@@ -238,14 +239,14 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
           })}
         </div>
 
-        {/* Clean Architectural Index Table for 4 Additional Verified Mandates (No Small Cards) */}
-        <div className="mt-20 md:mt-24 pt-12 border-t border-[#D8E2E2] dark:border-[#0E2F33]">
+        {/* Clean Architectural Index Table for 4 Additional Verified Mandates */}
+        <div className="reveal-item reveal-delay-4 mt-20 md:mt-24 pt-12 border-t border-[#DCE3DF] dark:border-[#174B3E]">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
             <div>
-              <span className="text-xs font-mono uppercase tracking-wider text-[#647A7C] dark:text-[#6C8587] block mb-1">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#697671] dark:text-[#A3B8B0] block mb-1">
                 {locale === 'ar' ? 'مختارات إضافية من السجل الرسمي' : 'Additional Verified Public-Sector Mandates'}
               </span>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#001517] dark:text-[#F2F6F6]">
+              <h3 className="text-xl sm:text-2xl font-bold text-[#17211D] dark:text-[#F4F7F5]">
                 {locale === 'ar'
                   ? 'عقود حكومية إضافية ضمن محفظة الـ 17 مشروعاً'
                   : 'Selected Highlights from Our 17-Contract Government Portfolio'}
@@ -253,13 +254,13 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
             </div>
             <Link
               href={projectsHref}
-              className="text-xs font-mono font-semibold text-[#6B1426] dark:text-[#2DD4A4] hover:underline"
+              className="text-xs font-mono font-semibold text-[#174B3E] dark:text-[#18C6A0] hover:underline"
             >
               {locale === 'ar' ? 'عرض جميع العقود الـ 17 ←' : 'VIEW COMPLETE 17-CONTRACT LEDGER →'}
             </Link>
           </div>
 
-          <div className="divide-y divide-[#D8E2E2] dark:divide-[#0E2F33] border-y border-[#D8E2E2] dark:border-[#0E2F33]">
+          <div className="divide-y divide-[#DCE3DF] dark:divide-[#174B3E] border-y border-[#DCE3DF] dark:border-[#174B3E]">
             {ledgerHighlights.map((proj) => {
               const isMonetary =
                 !proj.valueAED.startsWith('As per') &&
@@ -270,34 +271,34 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
                 <Link
                   key={proj.id}
                   href={projectsHref}
-                  className="group py-5 px-2 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-[#EAEFEF]/60 dark:hover:bg-[#04191B] transition-colors"
+                  className="group py-5 px-2 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-[#ECE9E2]/60 dark:hover:bg-[#0B2922] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0]"
                 >
                   <div className="flex items-baseline gap-4 md:max-w-xl">
-                    <span className="font-mono text-xs font-semibold text-[#6B1426] dark:text-[#2DD4A4] shrink-0">
+                    <span className="font-mono text-xs font-semibold text-[#174B3E] dark:text-[#18C6A0] shrink-0">
                       #{String(proj.id).padStart(2, '0')}
                     </span>
                     <div>
-                      <div className="text-base font-bold text-[#001517] dark:text-[#F2F6F6] group-hover:text-[#6B1426] dark:group-hover:text-[#2DD4A4] transition-colors">
+                      <div className="text-base font-bold text-[#17211D] dark:text-[#F4F7F5] group-hover:text-[#174B3E] dark:group-hover:text-[#18C6A0] transition-colors">
                         {proj.project[locale]}
                       </div>
-                      <div className="text-xs text-[#647A7C] dark:text-[#9CB2B4] mt-0.5">
+                      <div className="text-xs text-[#697671] dark:text-[#A3B8B0] mt-0.5">
                         {proj.client[locale]}
                       </div>
                     </div>
                   </div>
 
                   <div className="flex items-center justify-between md:justify-end gap-8 ps-8 md:ps-0 shrink-0">
-                    <span className="font-mono text-xs text-[#647A7C] dark:text-[#6C8587]">
+                    <span className="font-mono text-xs text-[#697671] dark:text-[#A3B8B0]">
                       {proj.period}
                     </span>
-                    <span className="font-mono text-sm font-bold tabular-nums text-[#001517] dark:text-[#F2F6F6] min-w-[140px] text-end">
+                    <span className="font-mono text-sm font-bold tabular-nums text-[#17211D] dark:text-[#F4F7F5] min-w-[140px] text-end">
                       {isMonetary
                         ? `AED ${proj.valueAED}`
                         : locale === 'ar'
                         ? 'عقد استشاري جديد'
                         : proj.valueAED}
                     </span>
-                    <ArrowUpRight className="w-4 h-4 text-[#647A7C] group-hover:text-[#6B1426] dark:group-hover:text-[#2DD4A4] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <ArrowUpRight className="w-4 h-4 text-[#697671] group-hover:text-[#174B3E] dark:group-hover:text-[#18C6A0] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </div>
                 </Link>
               );

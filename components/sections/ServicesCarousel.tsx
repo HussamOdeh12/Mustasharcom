@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight, ArrowLeft, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { Locale, SERVICES_CATALOG } from '@/lib/company-data';
@@ -17,36 +17,105 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
   const PrevIcon = isRtl ? ArrowRight : ArrowLeft;
   const NextIcon = isRtl ? ArrowLeft : ArrowRight;
 
+  const total = SERVICES_CATALOG.length;
   const [activeIndex, setActiveIndex] = useState(0);
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(true);
+  const [isDragging, setIsDragging] = useState(false);
+
   const trackRef = useRef<HTMLDivElement>(null);
   const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const touchStartX = useRef<number | null>(null);
-  const touchEndX = useRef<number | null>(null);
+  const rafRef = useRef<number | null>(null);
 
-  const total = SERVICES_CATALOG.length;
+  // Drag state refs (non-render-triggering)
+  const dragStartRef = useRef<{ x: number; scrollLeft: number; active: boolean; moved: boolean }>({
+    x: 0,
+    scrollLeft: 0,
+    active: false,
+    moved: false,
+  });
 
-  const scrollToPanel = useCallback((index: number) => {
-    const clamped = Math.max(0, Math.min(total - 1, index));
-    setActiveIndex(clamped);
-    const panel = panelRefs.current[clamped];
+  // Synchronize activeIndex and boundary button disabled states with native scroll position
+  const updateScrollState = useCallback(() => {
     const track = trackRef.current;
-    if (panel && track) {
-      const trackRect = track.getBoundingClientRect();
-      const panelRect = panel.getBoundingClientRect();
-      const offset = panelRect.left - trackRect.left + track.scrollLeft;
-      track.scrollTo({
-        left: offset,
-        behavior: 'smooth',
-      });
-    }
-  }, [total]);
+    if (!track) return;
+
+    const trackRect = track.getBoundingClientRect();
+    let closestIdx = 0;
+    let minDistance = Infinity;
+
+    panelRefs.current.forEach((panel, idx) => {
+      if (!panel) return;
+      const rect = panel.getBoundingClientRect();
+      // Distance from the start edge of the track (right edge in RTL, left edge in LTR)
+      const distance = isRtl
+        ? Math.abs(rect.right - trackRect.right)
+        : Math.abs(rect.left - trackRect.left);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIdx = idx;
+      }
+    });
+
+    setActiveIndex(closestIdx);
+    setCanScrollPrev(closestIdx > 0);
+    setCanScrollNext(closestIdx < total - 1);
+  }, [isRtl, total]);
+
+  const handleTrackScroll = useCallback(() => {
+    if (rafRef.current !== null) return;
+    rafRef.current = window.requestAnimationFrame(() => {
+      updateScrollState();
+      rafRef.current = null;
+    });
+  }, [updateScrollState]);
+
+  useEffect(() => {
+    updateScrollState();
+    window.addEventListener('resize', handleTrackScroll, { passive: true });
+    return () => {
+      window.removeEventListener('resize', handleTrackScroll);
+      if (rafRef.current !== null) {
+        window.cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, [handleTrackScroll, updateScrollState]);
+
+  const scrollToPanel = useCallback(
+    (index: number) => {
+      const clamped = Math.max(0, Math.min(total - 1, index));
+      setActiveIndex(clamped);
+      setCanScrollPrev(clamped > 0);
+      setCanScrollNext(clamped < total - 1);
+
+      const panel = panelRefs.current[clamped];
+      const track = trackRef.current;
+      if (panel && track) {
+        const trackRect = track.getBoundingClientRect();
+        const panelRect = panel.getBoundingClientRect();
+        const delta = isRtl
+          ? panelRect.right - trackRect.right
+          : panelRect.left - trackRect.left;
+
+        track.scrollBy({
+          left: delta,
+          behavior: 'smooth',
+        });
+      }
+    },
+    [isRtl, total]
+  );
 
   const handlePrev = () => {
-    scrollToPanel(activeIndex > 0 ? activeIndex - 1 : total - 1);
+    if (activeIndex > 0) {
+      scrollToPanel(activeIndex - 1);
+    }
   };
 
   const handleNext = () => {
-    scrollToPanel(activeIndex < total - 1 ? activeIndex + 1 : 0);
+    if (activeIndex < total - 1) {
+      scrollToPanel(activeIndex + 1);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -64,33 +133,42 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
       } else {
         handlePrev();
       }
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      scrollToPanel(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      scrollToPanel(total - 1);
     }
   };
 
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    touchStartX.current = e.targetTouches[0].clientX;
-    touchEndX.current = null;
+  // Mouse Drag Support (Desktop pointer drag without interfering with vertical scroll or touch)
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.button !== 0 || !trackRef.current) return;
+    dragStartRef.current = {
+      x: e.pageX,
+      scrollLeft: trackRef.current.scrollLeft,
+      active: true,
+      moved: false,
+    };
   };
 
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    touchEndX.current = e.targetTouches[0].clientX;
-  };
-
-  const handleTouchEnd = () => {
-    if (touchStartX.current === null || touchEndX.current === null) return;
-    const distance = touchStartX.current - touchEndX.current;
-    const minSwipeDistance = 45;
-    if (Math.abs(distance) > minSwipeDistance) {
-      if (distance > 0) {
-        // Swiped left
-        isRtl ? handlePrev() : handleNext();
-      } else {
-        // Swiped right
-        isRtl ? handleNext() : handlePrev();
-      }
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!dragStartRef.current.active || !trackRef.current) return;
+    const dx = e.pageX - dragStartRef.current.x;
+    if (Math.abs(dx) > 6) {
+      dragStartRef.current.moved = true;
+      if (!isDragging) setIsDragging(true);
+      trackRef.current.scrollLeft = dragStartRef.current.scrollLeft - dx;
     }
-    touchStartX.current = null;
-    touchEndX.current = null;
+  };
+
+  const finishDrag = () => {
+    if (!dragStartRef.current.active) return;
+    dragStartRef.current.active = false;
+    if (isDragging) {
+      setIsDragging(false);
+    }
   };
 
   const servicesHref = locale === 'ar' ? '/ar/services' : '/services';
@@ -98,20 +176,20 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
   return (
     <section
       id="services"
-      className="py-24 md:py-36 bg-[#EAEFEF] dark:bg-[#021214] border-b border-[#D8E2E2] dark:border-[#0E2F33] transition-colors overflow-hidden"
+      className="py-24 md:py-36 bg-[#ECE9E2] dark:bg-[#051410] border-b border-[#DCE3DF] dark:border-[#174B3E] transition-colors overflow-x-clip"
       dir={isRtl ? 'rtl' : 'ltr'}
       aria-labelledby="services-carousel-heading"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Editorial Header & Interactive Carousel Controls */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-12 md:pb-16 border-b border-[#D8E2E2] dark:border-[#0E2F33]">
+        <div className="reveal-item reveal-delay-1 flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-12 md:pb-16 border-b border-[#DCE3DF] dark:border-[#174B3E]">
           <div className="max-w-3xl space-y-4">
-            <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#6B1426] dark:text-[#2DD4A4] block">
+            <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#174B3E] dark:text-[#18C6A0] block">
               02 / {locale === 'ar' ? 'الممارسات الاستشارية والحلول التقنية' : 'Our Services & Consulting Practices'}
             </span>
             <h2
               id="services-carousel-heading"
-              className="font-bold text-[#001517] dark:text-[#F2F6F6] tracking-[-0.03em] leading-[1.08] text-balance"
+              className="font-bold text-[#17211D] dark:text-[#F4F7F5] tracking-[-0.03em] leading-[1.08] text-balance"
               style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
             >
               {locale === 'ar'
@@ -120,32 +198,38 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
             </h2>
           </div>
 
-          {/* Interactive Controls Cluster: Progress Counter + Prev/Next Buttons + View All */}
+          {/* Interactive Controls Cluster: Progress Counter + Prev/Next Buttons with Boundary Disabled States */}
           <div className="flex flex-wrap items-center justify-between lg:justify-end gap-6 shrink-0">
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-sm font-bold text-[#001517] dark:text-[#F2F6F6] tabular-nums">
+            <div className="flex items-center gap-3" aria-live="polite" aria-atomic="true">
+              <span className="font-mono text-sm font-bold text-[#17211D] dark:text-[#F4F7F5] tabular-nums">
                 {String(activeIndex + 1).padStart(2, '0')}
               </span>
-              <span className="w-8 h-[1px] bg-[#9CB2B4] dark:bg-[#1E454A]" />
-              <span className="font-mono text-sm text-[#647A7C] dark:text-[#6C8587] tabular-nums">
+              <span className="w-8 h-[1px] bg-[#697671] dark:bg-[#174B3E]" />
+              <span className="font-mono text-sm text-[#697671] dark:text-[#A3B8B0] tabular-nums">
                 {String(total).padStart(2, '0')}
               </span>
             </div>
 
-            <div className="flex items-center gap-2.5" role="group" aria-label={locale === 'ar' ? 'التحكم بعرض الخدمات' : 'Service carousel navigation'}>
+            <div
+              className="flex items-center gap-2.5"
+              role="group"
+              aria-label={locale === 'ar' ? 'التحكم بعرض الخدمات' : 'Service carousel navigation'}
+            >
               <button
                 type="button"
                 onClick={handlePrev}
+                disabled={!canScrollPrev}
                 aria-label={locale === 'ar' ? 'الخدمة السابقة' : 'Previous service'}
-                className="w-12 h-12 rounded-full border border-[#C5D3D3] dark:border-[#153C40] bg-white dark:bg-[#04191B] hover:bg-[#001517] hover:text-white dark:hover:bg-[#2DD4A4] dark:hover:text-[#001517] text-[#001517] dark:text-[#F2F6F6] flex items-center justify-center transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2DD4A4]"
+                className="w-12 h-12 rounded-full border border-[#DCE3DF] dark:border-[#174B3E] bg-white dark:bg-[#0B2922] enabled:hover:bg-[#174B3E] enabled:hover:text-white dark:enabled:hover:bg-[#18C6A0] dark:enabled:hover:text-[#071C17] text-[#17211D] dark:text-[#F4F7F5] disabled:opacity-35 disabled:cursor-not-allowed flex items-center justify-center transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0]"
               >
                 <PrevIcon className="w-5 h-5" />
               </button>
               <button
                 type="button"
                 onClick={handleNext}
+                disabled={!canScrollNext}
                 aria-label={locale === 'ar' ? 'الخدمة التالية' : 'Next service'}
-                className="w-12 h-12 rounded-full border border-[#C5D3D3] dark:border-[#153C40] bg-white dark:bg-[#04191B] hover:bg-[#001517] hover:text-white dark:hover:bg-[#2DD4A4] dark:hover:text-[#001517] text-[#001517] dark:text-[#F2F6F6] flex items-center justify-center transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2DD4A4]"
+                className="w-12 h-12 rounded-full border border-[#DCE3DF] dark:border-[#174B3E] bg-white dark:bg-[#0B2922] enabled:hover:bg-[#174B3E] enabled:hover:text-white dark:enabled:hover:bg-[#18C6A0] dark:enabled:hover:text-[#071C17] text-[#17211D] dark:text-[#F4F7F5] disabled:opacity-35 disabled:cursor-not-allowed flex items-center justify-center transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0]"
               >
                 <NextIcon className="w-5 h-5" />
               </button>
@@ -155,7 +239,7 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
 
         {/* Direct Practice Selector Pills / Index Strip (Keyboard Accessible) */}
         <div
-          className="pt-8 pb-4 flex items-center gap-2 overflow-x-auto no-scrollbar"
+          className="reveal-item reveal-delay-2 pt-8 pb-4 flex items-center gap-2 overflow-x-auto no-scrollbar"
           role="tablist"
           aria-label={locale === 'ar' ? 'فهرس الممارسات الاستشارية' : 'Practice area index'}
         >
@@ -168,10 +252,10 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => scrollToPanel(idx)}
-                className={`px-4 py-2.5 rounded-md text-xs font-medium transition-all duration-200 whitespace-nowrap cursor-pointer flex items-center gap-2 shrink-0 ${
+                className={`px-4 py-2.5 rounded-md text-xs font-medium transition-all duration-200 whitespace-nowrap cursor-pointer flex items-center gap-2 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] ${
                   isActive
-                    ? 'bg-[#001517] text-[#F2F6F6] dark:bg-[#2DD4A4] dark:text-[#001517] font-semibold shadow-sm'
-                    : 'bg-white/70 dark:bg-[#04191B] text-[#3E5456] dark:text-[#9CB2B4] hover:text-[#001517] dark:hover:text-[#F2F6F6] border border-[#D8E2E2] dark:border-[#0E2F33]'
+                    ? 'bg-[#071C17] text-[#F4F7F5] dark:bg-[#18C6A0] dark:text-[#071C17] font-semibold shadow-sm'
+                    : 'bg-white dark:bg-[#0B2922] text-[#3E544C] dark:text-[#A3B8B0] hover:text-[#17211D] dark:hover:text-[#F4F7F5] border border-[#DCE3DF] dark:border-[#174B3E]'
                 }`}
               >
                 <span className="font-mono text-[11px] opacity-80">{svc.number}</span>
@@ -181,18 +265,23 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
           })}
         </div>
 
-        {/* Horizontal Interactive Panels Track */}
+        {/* Horizontal Interactive Panels Track — Native Scroll-Snap + Trackpad + Touch + Mouse Drag */}
         <div
           ref={trackRef}
           tabIndex={0}
+          onScroll={handleTrackScroll}
           onKeyDown={handleKeyDown}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={finishDrag}
+          onMouseLeave={finishDrag}
           role="region"
           aria-roledescription="carousel"
           aria-label={locale === 'ar' ? 'قائمة الخدمات التفاعلية' : 'Interactive consulting services'}
-          className="mt-6 flex gap-6 lg:gap-8 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-6 pt-2 focus:outline-none"
+          style={{ touchAction: 'pan-x pan-y' }}
+          className={`reveal-item reveal-delay-3 mt-6 flex gap-6 lg:gap-8 overflow-x-auto no-scrollbar pb-6 pt-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-xl ${
+            isDragging ? 'cursor-grabbing select-none' : 'snap-x snap-mandatory cursor-grab'
+          }`}
         >
           {SERVICES_CATALOG.map((svc, idx) => {
             const isActive = idx === activeIndex;
@@ -205,13 +294,19 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
                 ref={(el) => {
                   panelRefs.current[idx] = el;
                 }}
-                onClick={() => setActiveIndex(idx)}
-                className={`snap-start shrink-0 w-[88vw] sm:w-[460px] lg:w-[540px] rounded-xl border p-8 sm:p-10 lg:p-12 flex flex-col justify-between min-h-[440px] sm:min-h-[480px] transition-all duration-300 ${
+                onClick={(e) => {
+                  if (dragStartRef.current.moved) {
+                    e.preventDefault();
+                    return;
+                  }
+                  setActiveIndex(idx);
+                }}
+                className={`snap-start shrink-0 w-[85vw] sm:w-[440px] lg:w-[520px] rounded-xl border p-7 sm:p-10 lg:p-11 flex flex-col justify-between min-h-[430px] sm:min-h-[470px] transition-all duration-300 ${
                   isDataAi
-                    ? 'bg-[#001517] text-[#F2F6F6] border-[#2DD4A4]/60 shadow-xl'
+                    ? 'bg-[#071C17] text-[#F4F7F5] border-[#18C6A0]/60 shadow-xl'
                     : isActive
-                    ? 'bg-white dark:bg-[#04191B] text-[#001517] dark:text-[#F2F6F6] border-[#6B1426] dark:border-[#2DD4A4] shadow-lg'
-                    : 'bg-[#F5F7F7]/90 dark:bg-[#04191B]/70 text-[#001517] dark:text-[#F2F6F6] border-[#D8E2E2] dark:border-[#0E2F33] hover:border-[#6B1426]/60 dark:hover:border-[#2DD4A4]/50'
+                    ? 'bg-white dark:bg-[#0B2922] text-[#17211D] dark:text-[#F4F7F5] border-[#174B3E] dark:border-[#18C6A0] shadow-lg'
+                    : 'bg-[#F7F5F0] dark:bg-[#0B2922]/75 text-[#17211D] dark:text-[#F4F7F5] border-[#DCE3DF] dark:border-[#174B3E] hover:border-[#174B3E] dark:hover:border-[#18C6A0]/60'
                 }`}
               >
                 {/* Top Row: Oversized Numeral & Practice Tag */}
@@ -220,10 +315,10 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
                     <span
                       className={`font-mono text-4xl sm:text-5xl font-bold tracking-tighter tabular-nums leading-none ${
                         isDataAi
-                          ? 'text-[#2DD4A4]'
+                          ? 'text-[#18C6A0]'
                           : isActive
-                          ? 'text-[#6B1426] dark:text-[#2DD4A4]'
-                          : 'text-[#647A7C]/60 dark:text-[#6C8587]'
+                          ? 'text-[#174B3E] dark:text-[#18C6A0]'
+                          : 'text-[#697671] dark:text-[#6E857D]'
                       }`}
                     >
                       {svc.number}
@@ -232,8 +327,8 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
                     <span
                       className={`text-xs font-mono uppercase tracking-wider px-3 py-1 rounded border ${
                         isDataAi
-                          ? 'border-[#2DD4A4]/40 text-[#2DD4A4] bg-[#2DD4A4]/10'
-                          : 'border-[#D8E2E2] dark:border-[#0E2F33] text-[#647A7C] dark:text-[#9CB2B4]'
+                          ? 'border-[#18C6A0]/40 text-[#18C6A0] bg-[#18C6A0]/10'
+                          : 'border-[#DCE3DF] dark:border-[#174B3E] text-[#697671] dark:text-[#A3B8B0]'
                       }`}
                     >
                       {isDataAi
@@ -249,7 +344,7 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
                   {/* Large Display Title */}
                   <h3
                     className={`text-2xl sm:text-3xl font-bold tracking-tight leading-[1.18] mb-4 ${
-                      isDataAi ? 'text-[#F2F6F6]' : 'text-[#001517] dark:text-[#F2F6F6]'
+                      isDataAi ? 'text-[#F4F7F5]' : 'text-[#17211D] dark:text-[#F4F7F5]'
                     }`}
                   >
                     {svc.title[locale]}
@@ -258,7 +353,7 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
                   {/* Editorial Narrative */}
                   <p
                     className={`text-base leading-relaxed mb-8 ${
-                      isDataAi ? 'text-[#B4C8CA]' : 'text-[#3E5456] dark:text-[#9CB2B4]'
+                      isDataAi ? 'text-[#A3B8B0]' : 'text-[#3E544C] dark:text-[#A3B8B0]'
                     }`}
                   >
                     {svc.shortDesc[locale]}
@@ -270,12 +365,12 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
                       <li
                         key={capIdx}
                         className={`flex items-start gap-2.5 text-xs sm:text-sm ${
-                          isDataAi ? 'text-[#D5E4E5]' : 'text-[#2C3E40] dark:text-[#B4C8CA]'
+                          isDataAi ? 'text-[#DCE6E2]' : 'text-[#17211D] dark:text-[#DCE6E2]'
                         }`}
                       >
                         <CheckCircle2
                           className={`w-4 h-4 shrink-0 mt-0.5 ${
-                            isDataAi ? 'text-[#2DD4A4]' : 'text-[#6B1426] dark:text-[#2DD4A4]'
+                            isDataAi ? 'text-[#18C6A0]' : 'text-[#174B3E] dark:text-[#18C6A0]'
                           }`}
                         />
                         <span>{cap[locale]}</span>
@@ -287,16 +382,21 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
                 {/* Bottom Action Link */}
                 <div
                   className={`pt-6 border-t flex items-center justify-between ${
-                    isDataAi ? 'border-[#123A3F]' : 'border-[#D8E2E2] dark:border-[#0E2F33]'
+                    isDataAi ? 'border-[#174B3E]' : 'border-[#DCE3DF] dark:border-[#174B3E]'
                   }`}
                 >
                   <Link
                     href={serviceHref}
                     prefetch={true}
-                    className={`btn-slide-trigger inline-flex items-center gap-2 text-sm font-semibold ${
+                    onClick={(e) => {
+                      if (dragStartRef.current.moved) {
+                        e.preventDefault();
+                      }
+                    }}
+                    className={`btn-slide-trigger inline-flex items-center gap-2 text-sm font-semibold focus:outline-none focus-visible:underline ${
                       isDataAi
-                        ? 'text-[#2DD4A4] hover:text-white'
-                        : 'text-[#6B1426] dark:text-[#2DD4A4] hover:underline'
+                        ? 'text-[#18C6A0] hover:text-white'
+                        : 'text-[#174B3E] dark:text-[#18C6A0] hover:underline'
                     }`}
                   >
                     <span>
@@ -314,17 +414,36 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
           })}
         </div>
 
-        {/* Bottom Summary & View All Services Bar */}
-        <div className="mt-8 pt-8 border-t border-[#D8E2E2] dark:border-[#0E2F33] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <p className="text-sm text-[#3E5456] dark:text-[#9CB2B4]">
-            {locale === 'ar'
-              ? 'جميع الممارسات الست مرخصة رسمياً ضمن رخصة أبوظبي الاقتصادية CN-2769971 ومعتمدة بشهادة ISO 9001:2015.'
-              : 'Helping government authorities and enterprises grow with clarity, ISO 9001:2015 governance, and measurable outcomes.'}
-          </p>
+        {/* Visual Pagination Progress Dots & Bottom Summary Bar */}
+        <div className="reveal-item reveal-delay-4 mt-8 pt-8 border-t border-[#DCE3DF] dark:border-[#174B3E] flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+          {/* Interactive Pagination Dots */}
+          <div className="flex items-center gap-2" role="group" aria-label={locale === 'ar' ? 'مؤشر شرائح الخدمات' : 'Service slide pagination'}>
+            {SERVICES_CATALOG.map((svc, idx) => {
+              const isActive = idx === activeIndex;
+              return (
+                <button
+                  key={svc.slug}
+                  type="button"
+                  onClick={() => scrollToPanel(idx)}
+                  aria-label={
+                    locale === 'ar'
+                      ? `الانتقال إلى خدمة ${svc.number}: ${svc.title.ar}`
+                      : `Go to service ${svc.number}: ${svc.title.en}`
+                  }
+                  aria-current={isActive ? 'true' : undefined}
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] ${
+                    isActive
+                      ? 'w-8 bg-[#174B3E] dark:bg-[#18C6A0]'
+                      : 'w-2 bg-[#697671]/40 dark:bg-[#174B3E] hover:bg-[#174B3E]/70 dark:hover:bg-[#18C6A0]/70'
+                  }`}
+                />
+              );
+            })}
+          </div>
 
           <Link
             href={servicesHref}
-            className="btn-slide-trigger inline-flex items-center gap-2 text-sm font-semibold text-[#001517] dark:text-[#2DD4A4] hover:underline whitespace-nowrap shrink-0"
+            className="btn-slide-trigger inline-flex items-center gap-2 text-sm font-semibold text-[#174B3E] dark:text-[#18C6A0] hover:underline whitespace-nowrap shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-xs"
           >
             <span>{t.viewAllServices}</span>
             <ArrowIcon className="w-4 h-4 btn-slide-arrow" />

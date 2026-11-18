@@ -46,7 +46,7 @@ export default function CompanyCredibilityBar({ locale }: CompanyCredibilityBarP
 
   return (
     <section
-      className="border-b border-[#D8E2E2] dark:border-[#0E2F33] bg-[#EAEFEF] dark:bg-[#021214] transition-colors"
+      className="border-b border-[#DCE3DF] dark:border-[#174B3E] bg-[#ECE9E2] dark:bg-[#051410] transition-colors"
       dir={isRtl ? 'rtl' : 'ltr'}
       aria-label={locale === 'ar' ? 'الاعتمادات والمؤشرات السيادية' : 'Sovereign Credentials & Accreditations'}
     >
@@ -56,14 +56,14 @@ export default function CompanyCredibilityBar({ locale }: CompanyCredibilityBarP
             const inner = (
               <div className="flex flex-col gap-1">
                 <div className="flex items-baseline gap-2">
-                  <span className="font-mono text-[11px] font-bold text-[#6B1426] dark:text-[#2DD4A4]">
+                  <span className="font-mono text-[11px] font-bold text-[#174B3E] dark:text-[#18C6A0]">
                     /{item.index}
                   </span>
-                  <span className="text-sm font-bold text-[#001517] dark:text-[#F2F6F6] font-mono tabular-nums truncate">
+                  <span className="text-sm font-bold text-[#17211D] dark:text-[#F4F7F5] font-mono tabular-nums truncate">
                     {item.primary}
                   </span>
                 </div>
-                <div className="text-xs text-[#3E5456] dark:text-[#9CB2B4] truncate">
+                <div className="text-xs text-[#3E544C] dark:text-[#A3B8B0] truncate">
                   {item.secondary}
                 </div>
               </div>
@@ -73,7 +73,7 @@ export default function CompanyCredibilityBar({ locale }: CompanyCredibilityBarP
               <Link
                 key={item.index}
                 href={item.href}
-                className="group block hover:opacity-80 transition-opacity"
+                className="group block hover:opacity-80 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-xs"
               >
                 {inner}
               </Link>

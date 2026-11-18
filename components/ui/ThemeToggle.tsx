@@ -56,14 +56,14 @@ export default function ThemeToggle({
       type="button"
       suppressHydrationWarning
       onClick={toggleTheme}
-      className={`inline-flex items-center justify-center gap-2 p-2 rounded-md text-[#2C3A34] dark:text-[#C8D4CE] hover:text-[#0B1713] dark:hover:text-white hover:bg-[#F3EFEA] dark:hover:bg-[#10221C] border border-[#E3DFD7] dark:border-[#1A2E26] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B1426] cursor-pointer shrink-0 ${className}`}
+      className={`inline-flex items-center justify-center gap-2 p-2 rounded-md text-[#17211D] dark:text-[#DCE6E2] hover:text-[#174B3E] dark:hover:text-[#18C6A0] hover:bg-[#ECE9E2] dark:hover:bg-[#10352C] border border-[#DCE3DF] dark:border-[#174B3E] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] cursor-pointer shrink-0 ${className}`}
       aria-label={label}
       title={label}
     >
       {isDark ? (
-        <Sun className="w-4 h-4 text-[#2DD4A4] transition-transform duration-200 hover:rotate-45" />
+        <Sun className="w-4 h-4 text-[#18C6A0] transition-transform duration-200 hover:rotate-45" />
       ) : (
-        <Moon className="w-4 h-4 text-[#2C3A34] transition-transform duration-200 hover:-rotate-12" />
+        <Moon className="w-4 h-4 text-[#174B3E] transition-transform duration-200 hover:-rotate-12" />
       )}
       {showLabel && (
         <span className="text-xs font-medium whitespace-nowrap">

@@ -118,7 +118,7 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
   return (
     <section
       id="data-ai"
-      className="py-24 md:py-36 bg-[#000D0E] text-[#F2F6F6] border-b border-[#0E2F33] relative overflow-hidden"
+      className="py-24 md:py-36 bg-[#071C17] text-[#F4F7F5] border-b border-[#174B3E] relative overflow-hidden"
       dir={isRtl ? 'rtl' : 'ltr'}
     >
       {/* Subtle Atmospheric Radial Glow */}
@@ -126,20 +126,20 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(circle at 80% 30%, rgba(45, 212, 164, 0.1) 0%, rgba(0, 13, 14, 0) 65%)',
+            'radial-gradient(circle at 80% 30%, rgba(24, 198, 160, 0.12) 0%, rgba(7, 28, 23, 0) 65%)',
         }}
         aria-hidden="true"
       />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Editorial Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-14 md:pb-18 border-b border-[#0E2F33]">
+        <div className="reveal-item reveal-delay-1 flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-14 md:pb-18 border-b border-[#174B3E]">
           <div className="max-w-3xl space-y-4">
-            <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#2DD4A4] block">
+            <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#18C6A0] block">
               03 / {locale === 'ar' ? 'البيانات، التحليلات والذكاء الاصطناعي' : 'Data, Analytics & AI Architecture'}
             </span>
             <h2
-              className="font-bold text-[#F2F6F6] tracking-[-0.03em] leading-[1.08] text-balance"
+              className="font-bold text-[#F4F7F5] tracking-[-0.03em] leading-[1.08] text-balance"
               style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
             >
               {locale === 'ar'
@@ -150,7 +150,7 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
 
           <Link
             href={dataAiHref}
-            className="btn-slide-trigger inline-flex items-center gap-2.5 px-5 py-3 rounded-md bg-[#04191B] hover:bg-[#072528] text-[#2DD4A4] border border-[#123A3F] hover:border-[#2DD4A4] text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap shrink-0"
+            className="btn-slide-trigger inline-flex items-center gap-2.5 px-5 py-3 rounded-md bg-[#0B2922] hover:bg-[#10352C] text-[#18C6A0] border border-[#174B3E] hover:border-[#18C6A0] text-xs sm:text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] whitespace-nowrap shrink-0"
           >
             <span>{locale === 'ar' ? 'استكشف ممارسة البيانات والذكاء الاصطناعي' : 'Explore Data & AI Practice'}</span>
             <ArrowIcon className="w-4 h-4 shrink-0 btn-slide-arrow" />
@@ -160,8 +160,8 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
         {/* Asymmetric Interactive Split: Left Progressive Accordion/Selector + Right Visual Telemetry Stage */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 pt-14 md:pt-18 items-stretch">
           {/* Left 6 Columns: Interactive Progressive Capability Selector */}
-          <div className="lg:col-span-6 flex flex-col justify-between">
-            <div className="divide-y divide-[#0E2F33] border-y border-[#0E2F33]">
+          <div className="reveal-item reveal-delay-2 lg:col-span-6 flex flex-col justify-between">
+            <div className="divide-y divide-[#174B3E] border-y border-[#174B3E]">
               {capabilities.map((cap, idx) => {
                 const isSelected = idx === activeStage;
                 return (
@@ -170,19 +170,19 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
                       type="button"
                       onClick={() => setActiveStage(idx)}
                       aria-expanded={isSelected}
-                      className="w-full py-6 px-2 text-start flex items-baseline justify-between gap-4 cursor-pointer group focus:outline-none"
+                      className="w-full py-6 px-2 text-start flex items-baseline justify-between gap-4 cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-xs"
                     >
                       <div className="flex items-baseline gap-4">
                         <span
                           className={`font-mono text-sm font-bold transition-colors ${
-                            isSelected ? 'text-[#2DD4A4]' : 'text-[#6C8587] group-hover:text-[#9CB2B4]'
+                            isSelected ? 'text-[#18C6A0]' : 'text-[#6E857D] group-hover:text-[#A3B8B0]'
                           }`}
                         >
                           {cap.num}
                         </span>
                         <h3
                           className={`text-lg sm:text-xl md:text-2xl font-bold tracking-tight transition-colors ${
-                            isSelected ? 'text-[#F2F6F6]' : 'text-[#8AA3A5] group-hover:text-[#F2F6F6]'
+                            isSelected ? 'text-[#F4F7F5]' : 'text-[#A3B8B0] group-hover:text-[#F4F7F5]'
                           }`}
                         >
                           {cap.title}
@@ -192,8 +192,8 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
                       <span
                         className={`font-mono text-xs px-2.5 py-1 rounded border transition-colors shrink-0 ${
                           isSelected
-                            ? 'border-[#2DD4A4]/50 text-[#2DD4A4] bg-[#2DD4A4]/10'
-                            : 'border-transparent text-[#6C8587]'
+                            ? 'border-[#18C6A0]/50 text-[#18C6A0] bg-[#18C6A0]/10'
+                            : 'border-transparent text-[#6E857D]'
                         }`}
                       >
                         {cap.metric}
@@ -203,14 +203,14 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
                     {/* Expandable Detail Drawer */}
                     {isSelected && (
                       <div className="pb-7 ps-9 pe-2 space-y-5 page-transition-enter">
-                        <p className="text-sm sm:text-base text-[#B4C8CA] leading-relaxed">
+                        <p className="text-sm sm:text-base text-[#A3B8B0] leading-relaxed">
                           {cap.desc}
                         </p>
 
                         <ul className="space-y-2">
                           {cap.deliverables.map((item, i) => (
-                            <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#D8E6E7]">
-                              <CheckCircle2 className="w-4 h-4 text-[#2DD4A4] shrink-0 mt-0.5" />
+                            <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#DCE6E2]">
+                              <CheckCircle2 className="w-4 h-4 text-[#18C6A0] shrink-0 mt-0.5" />
                               <span>{item}</span>
                             </li>
                           ))}
@@ -223,9 +223,9 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
             </div>
 
             {/* Bottom Sovereign Proof Callout */}
-            <div className="mt-8 pt-6 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[#6C8587]">
+            <div className="mt-8 pt-6 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[#A3B8B0]">
               <span>POWER BI · PYTHON · RPA · ENTERPRISE ETL</span>
-              <Link href={projectsHref} className="text-[#2DD4A4] hover:underline inline-flex items-center gap-1">
+              <Link href={projectsHref} className="text-[#18C6A0] hover:underline inline-flex items-center gap-1">
                 <span>{locale === 'ar' ? 'سجل مشاريع البيانات (17)' : 'View Delivered Data Mandates'}</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </Link>
@@ -233,8 +233,8 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
           </div>
 
           {/* Right 6 Columns: Large Architectural Telemetry Visual + Active Capability Readout */}
-          <div className="lg:col-span-6 flex flex-col">
-            <div className="group relative flex-1 min-h-[380px] sm:min-h-[460px] rounded-xl overflow-hidden border border-[#123A3F] bg-[#04191B] flex flex-col justify-between">
+          <div className="reveal-item reveal-delay-3 lg:col-span-6 flex flex-col">
+            <div className="group relative flex-1 min-h-[380px] sm:min-h-[460px] rounded-xl overflow-hidden border border-[#174B3E] bg-[#0B2922] flex flex-col justify-between">
               <Image
                 src="/images/data_ai_telemetry_architecture_1794979011520.jpg"
                 alt={
@@ -251,44 +251,44 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
                 className="absolute inset-0"
                 style={{
                   background:
-                    'linear-gradient(180deg, rgba(0,13,14,0.35) 0%, rgba(0,13,14,0.5) 45%, rgba(0,13,14,0.95) 100%)',
+                    'linear-gradient(180deg, rgba(7,28,23,0.35) 0%, rgba(7,28,23,0.5) 45%, rgba(7,28,23,0.95) 100%)',
                 }}
               />
 
               {/* Top Telemetry Header Overlay */}
               <div className="relative z-10 p-6 sm:p-8 flex items-center justify-between gap-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-[#000D0E]/80 backdrop-blur-md border border-white/10 font-mono text-xs text-[#2DD4A4]">
-                  <span className="w-2 h-2 rounded-full bg-[#2DD4A4] animate-pulse" />
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-[#071C17]/85 backdrop-blur-md border border-white/10 font-mono text-xs text-[#18C6A0]">
+                  <span className="w-2 h-2 rounded-full bg-[#18C6A0] animate-pulse" />
                   <span>{current.num} · {current.code}</span>
                 </div>
 
-                <span className="font-mono text-xs text-[#C6A355] bg-[#000D0E]/80 px-3 py-1.5 rounded border border-white/10">
+                <span className="font-mono text-xs text-[#F4F7F5] bg-[#071C17]/85 px-3 py-1.5 rounded border border-white/10">
                   DMT · ADCM · ADDA
                 </span>
               </div>
 
               {/* Bottom Active Capability & AED 10M Flagship Proof */}
               <div className="relative z-10 p-6 sm:p-8 lg:p-10 space-y-6">
-                <div className="p-5 sm:p-6 rounded-lg bg-[#000D0E]/85 backdrop-blur-md border border-white/15 space-y-3">
+                <div className="p-5 sm:p-6 rounded-lg bg-[#071C17]/85 backdrop-blur-md border border-white/15 space-y-3">
                   <div className="flex items-baseline justify-between gap-4">
-                    <span className="text-xs font-mono text-[#9CB2B4] uppercase">
+                    <span className="text-xs font-mono text-[#A3B8B0] uppercase">
                       {current.metricLabel}
                     </span>
-                    <span className="text-xl sm:text-2xl font-bold font-mono text-[#2DD4A4] tabular-nums">
+                    <span className="text-xl sm:text-2xl font-bold font-mono text-[#18C6A0] tabular-nums">
                       {current.metric}
                     </span>
                   </div>
-                  <div className="text-base sm:text-lg font-bold text-[#F2F6F6]">
+                  <div className="text-base sm:text-lg font-bold text-[#F4F7F5]">
                     {current.title}
                   </div>
                 </div>
 
                 <div className="pt-4 border-t border-white/15 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
-                    <div className="text-xs font-mono text-[#C6A355]">
+                    <div className="text-xs font-mono text-[#18C6A0]">
                       {locale === 'ar' ? 'مرجع عقد حكومي موثق · DMT' : 'Verified Flagship Mandate · DMT'}
                     </div>
-                    <div className="text-sm font-semibold text-[#F2F6F6] mt-0.5">
+                    <div className="text-sm font-semibold text-[#F4F7F5] mt-0.5">
                       {locale === 'ar'
                         ? 'أتمتة إجراءات برمجة الشبكات بالذكاء الاصطناعي (AED 10,000,000)'
                         : 'AI & RPA Network Programming Automation (AED 10,000,000)'}
@@ -297,7 +297,7 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
 
                   <Link
                     href={projectsHref}
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#2DD4A4] hover:underline shrink-0"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#18C6A0] hover:underline shrink-0"
                   >
                     <span>{locale === 'ar' ? 'عرض بالسجل' : 'Inspect Mandate'}</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />

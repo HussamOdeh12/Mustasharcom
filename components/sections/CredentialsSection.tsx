@@ -64,18 +64,18 @@ export default function CredentialsSection({ locale }: CredentialsSectionProps) 
 
   return (
     <section
-      className="py-24 md:py-36 bg-[#F5F7F7] dark:bg-[#000D0E] border-b border-[#D8E2E2] dark:border-[#0E2F33] transition-colors"
+      className="py-24 md:py-36 bg-[#F7F5F0] dark:bg-[#071C17] border-b border-[#DCE3DF] dark:border-[#174B3E] transition-colors"
       dir={isRtl ? 'rtl' : 'ltr'}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Editorial Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-14 md:pb-20 border-b border-[#D8E2E2] dark:border-[#0E2F33]">
+        <div className="reveal-item reveal-delay-1 flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-14 md:pb-20 border-b border-[#DCE3DF] dark:border-[#174B3E]">
           <div className="max-w-3xl space-y-4">
-            <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#6B1426] dark:text-[#2DD4A4] block">
+            <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#174B3E] dark:text-[#18C6A0] block">
               07 / {t.qualityCompliance}
             </span>
             <h2
-              className="font-bold text-[#001517] dark:text-[#F2F6F6] tracking-[-0.03em] leading-[1.08] text-balance"
+              className="font-bold text-[#17211D] dark:text-[#F4F7F5] tracking-[-0.03em] leading-[1.08] text-balance"
               style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
             >
               {locale === 'ar'
@@ -86,15 +86,15 @@ export default function CredentialsSection({ locale }: CredentialsSectionProps) 
 
           <Link
             href={complianceHref}
-            className="btn-slide-trigger inline-flex items-center gap-2 text-sm font-semibold text-[#6B1426] dark:text-[#2DD4A4] hover:underline whitespace-nowrap shrink-0"
+            className="btn-slide-trigger inline-flex items-center gap-2 text-sm font-semibold text-[#174B3E] dark:text-[#18C6A0] hover:underline whitespace-nowrap shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-xs"
           >
             <span>{locale === 'ar' ? 'عرض سجل الجودة والامتثال الكامل' : 'View Full Compliance Ledger'}</span>
             <ArrowIcon className="w-4 h-4 shrink-0 btn-slide-arrow" />
           </Link>
         </div>
 
-        {/* Full-Width Architectural Credential Rows (Eliminating Repetitive 3-Card Layout) */}
-        <div className="divide-y divide-[#D8E2E2] dark:divide-[#0E2F33] border-b border-[#D8E2E2] dark:border-[#0E2F33]">
+        {/* Full-Width Architectural Credential Rows */}
+        <div className="reveal-item reveal-delay-2 divide-y divide-[#DCE3DF] dark:divide-[#174B3E] border-b border-[#DCE3DF] dark:border-[#174B3E]">
           {sovereignLedgers.map((item) => (
             <div
               key={item.index}
@@ -102,40 +102,40 @@ export default function CredentialsSection({ locale }: CredentialsSectionProps) 
             >
               {/* Col 1: Index & Domain */}
               <div className="lg:col-span-3 space-y-1">
-                <span className="font-mono text-xs font-bold text-[#6B1426] dark:text-[#2DD4A4] block">
+                <span className="font-mono text-xs font-bold text-[#174B3E] dark:text-[#18C6A0] block">
                   /{item.index} · {item.domain}
                 </span>
               </div>
 
               {/* Col 2: Large Monospace Identifier & Scope */}
               <div className="lg:col-span-5 space-y-2">
-                <div className="text-3xl sm:text-4xl font-bold font-mono tabular-nums text-[#001517] dark:text-[#F2F6F6] tracking-tight">
+                <div className="text-3xl sm:text-4xl font-bold font-mono tabular-nums text-[#17211D] dark:text-[#F4F7F5] tracking-tight">
                   {item.primaryCode}
                 </div>
-                <p className="text-sm sm:text-base text-[#3E5456] dark:text-[#9CB2B4] leading-relaxed">
+                <p className="text-sm sm:text-base text-[#3E544C] dark:text-[#A3B8B0] leading-relaxed">
                   {item.title}
                 </p>
               </div>
 
               {/* Col 3: Verification Metadata Table */}
-              <div className="lg:col-span-4 grid grid-cols-2 gap-4 pt-4 lg:pt-0 border-t lg:border-t-0 border-[#D8E2E2] dark:border-[#0E2F33] text-xs">
+              <div className="lg:col-span-4 grid grid-cols-2 gap-4 pt-4 lg:pt-0 border-t lg:border-t-0 border-[#DCE3DF] dark:border-[#174B3E] text-xs">
                 <div>
-                  <div className="text-[#647A7C] dark:text-[#6C8587]">{item.metaLabel1}</div>
-                  <div className="font-mono font-bold text-[#001517] dark:text-[#F2F6F6] mt-1">
+                  <div className="text-[#697671] dark:text-[#A3B8B0]">{item.metaLabel1}</div>
+                  <div className="font-mono font-bold text-[#17211D] dark:text-[#F4F7F5] mt-1">
                     {item.metaValue1}
                   </div>
                 </div>
 
                 <div>
-                  <div className="text-[#647A7C] dark:text-[#6C8587]">{item.validityLabel}</div>
-                  <div className="font-mono font-bold text-[#008559] dark:text-[#2DD4A4] mt-1">
+                  <div className="text-[#697671] dark:text-[#A3B8B0]">{item.validityLabel}</div>
+                  <div className="font-mono font-bold text-[#174B3E] dark:text-[#18C6A0] mt-1">
                     {item.validityValue}
                   </div>
                 </div>
 
-                <div className="col-span-2 pt-2 border-t border-[#D8E2E2]/60 dark:border-[#0E2F33]/60 flex items-center justify-between">
-                  <span className="text-[#647A7C] dark:text-[#6C8587]">{item.metaLabel2}</span>
-                  <span className="font-medium text-[#001517] dark:text-[#F2F6F6]">{item.metaValue2}</span>
+                <div className="col-span-2 pt-2 border-t border-[#DCE3DF]/60 dark:border-[#174B3E]/60 flex items-center justify-between">
+                  <span className="text-[#697671] dark:text-[#A3B8B0]">{item.metaLabel2}</span>
+                  <span className="font-medium text-[#17211D] dark:text-[#F4F7F5]">{item.metaValue2}</span>
                 </div>
               </div>
             </div>
@@ -143,13 +143,13 @@ export default function CredentialsSection({ locale }: CredentialsSectionProps) 
         </div>
 
         {/* 7 Licensed Economic Activities Ledger */}
-        <div className="mt-14 p-8 sm:p-10 rounded-xl bg-white dark:bg-[#04191B] border border-[#D8E2E2] dark:border-[#0E2F33]">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-6 border-b border-[#D8E2E2] dark:border-[#0E2F33]">
+        <div className="reveal-item reveal-delay-3 mt-14 p-8 sm:p-10 rounded-xl bg-white dark:bg-[#0B2922] border border-[#DCE3DF] dark:border-[#174B3E]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-6 border-b border-[#DCE3DF] dark:border-[#174B3E]">
             <div>
-              <span className="text-xs font-mono text-[#6B1426] dark:text-[#2DD4A4] uppercase tracking-wider block">
+              <span className="text-xs font-mono text-[#174B3E] dark:text-[#18C6A0] uppercase tracking-wider block">
                 ADRA COMMERCIAL LICENCE CN-2769971
               </span>
-              <h3 className="text-lg sm:text-xl font-bold text-[#001517] dark:text-[#F2F6F6] mt-1">
+              <h3 className="text-lg sm:text-xl font-bold text-[#17211D] dark:text-[#F4F7F5] mt-1">
                 {locale === 'ar'
                   ? 'الأنشطة الاقتصادية والتقنية السبعة المرخصة رسمياً في إمارة أبوظبي'
                   : 'Seven Formally Licensed Economic & Informatics Activities'}
@@ -157,7 +157,7 @@ export default function CredentialsSection({ locale }: CredentialsSectionProps) 
             </div>
             <Link
               href={complianceHref}
-              className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[#6B1426] dark:text-[#2DD4A4] hover:underline shrink-0"
+              className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[#174B3E] dark:text-[#18C6A0] hover:underline shrink-0"
             >
               <span>{locale === 'ar' ? 'التفاصيل القانونية' : 'VERIFY LICENCE'}</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -166,8 +166,8 @@ export default function CredentialsSection({ locale }: CredentialsSectionProps) 
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-4">
             {COMPANY_PROFILE.licence.activities[locale].map((act, index) => (
-              <div key={index} className="flex items-baseline gap-3 text-xs sm:text-sm text-[#001517] dark:text-[#D8E6E7]">
-                <span className="font-mono text-xs font-bold text-[#6B1426] dark:text-[#2DD4A4] shrink-0">
+              <div key={index} className="flex items-baseline gap-3 text-xs sm:text-sm text-[#17211D] dark:text-[#DCE6E2]">
+                <span className="font-mono text-xs font-bold text-[#174B3E] dark:text-[#18C6A0] shrink-0">
                   0{index + 1}.
                 </span>
                 <span>{act}</span>
