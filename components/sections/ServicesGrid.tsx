@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, ArrowLeft, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowLeft, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { Locale, SERVICES_CATALOG } from '@/lib/company-data';
 import { UI_STRINGS } from '@/lib/translations';
 
@@ -16,18 +16,21 @@ export default function ServicesGrid({ locale }: ServicesGridProps) {
 
   return (
     <section
-      id="services"
-      className="py-20 md:py-28 bg-[#F3EFEA]/60 dark:bg-[#0A1612] border-b border-[#E3DFD7] dark:border-[#1A2E26] transition-colors"
+      id="services-directory"
+      className="py-24 md:py-32 bg-[#F5F7F7] dark:bg-[#000D0E] border-b border-[#D8E2E2] dark:border-[#0E2F33] transition-colors"
       dir={isRtl ? 'rtl' : 'ltr'}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Consilio-inspired Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-[#E3DFD7] dark:border-[#1A2E26]">
-          <div className="max-w-2xl space-y-3">
-            <span className="text-xs font-semibold text-[#6B1426] dark:text-[#2DD4A4] tracking-wide block">
-              02 · {locale === 'ar' ? 'الممارسات الاستشارية والحلول التقنية' : 'Consulting Practices & Capabilities'}
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-14 border-b border-[#D8E2E2] dark:border-[#0E2F33]">
+          <div className="max-w-3xl space-y-4">
+            <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#6B1426] dark:text-[#2DD4A4] block">
+              01 — 06 / {locale === 'ar' ? 'دليل الممارسات الاستشارية والتقنية' : 'Complete Practice Directory'}
             </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0B1713] dark:text-[#F4F6F5] tracking-tight leading-tight text-balance">
+            <h2
+              className="font-bold text-[#001517] dark:text-[#F2F6F6] tracking-[-0.03em] leading-[1.08] text-balance"
+              style={{ fontSize: 'clamp(1.85rem, 3.6vw, 3.25rem)' }}
+            >
               {locale === 'ar'
                 ? 'ست ممارسات تخصصية متكاملة للقطاع الحكومي والمؤسسات'
                 : 'Six Specialized Practice Areas Engineered for Institutional Impact'}
@@ -35,103 +38,127 @@ export default function ServicesGrid({ locale }: ServicesGridProps) {
           </div>
 
           <Link
-            href={locale === 'ar' ? '/ar/services' : '/services'}
-            className="inline-flex items-center gap-2 text-xs font-semibold text-[#6B1426] dark:text-[#2DD4A4] hover:underline whitespace-nowrap shrink-0"
+            href={locale === 'ar' ? '/ar/contact' : '/contact'}
+            className="btn-slide-trigger inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#6B1426] dark:text-[#2DD4A4] hover:underline whitespace-nowrap shrink-0"
           >
-            <span>{t.viewAllServices}</span>
-            <ArrowIcon className="w-3.5 h-3.5" />
+            <span>{t.requestRfp}</span>
+            <ArrowIcon className="w-4 h-4 btn-slide-arrow" />
           </Link>
         </div>
 
-        {/* 6 Practice Cards in Refined Architectural Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-12">
+        {/* Full-Width Editorial Practice Chapters (Replacing the 3x2 Small Card Grid) */}
+        <div className="divide-y divide-[#D8E2E2] dark:divide-[#0E2F33]">
           {SERVICES_CATALOG.map((svc) => {
             const serviceHref = locale === 'ar' ? `/ar/services/${svc.slug}` : `/services/${svc.slug}`;
             const isDataAi = svc.slug === 'data-ai';
 
             return (
-              <Link
+              <article
                 key={svc.slug}
-                href={serviceHref}
-                prefetch={true}
-                className={`group flex flex-col justify-between p-7 sm:p-8 rounded-lg border transition-all duration-200 hover-card-lift ${
+                className={`py-12 md:py-16 transition-colors ${
                   isDataAi
-                    ? 'bg-[#07130F] text-[#F4F6F5] border-[#1E362D] hover:border-[#2DD4A4]'
-                    : 'bg-[#FAF8F5] dark:bg-[#0C1A15] text-[#0B1713] dark:text-[#F4F6F5] border-[#E3DFD7] dark:border-[#1A2E26] hover:border-[#6B1426] dark:hover:border-[#2DD4A4]'
+                    ? 'my-6 px-6 sm:px-10 rounded-xl bg-[#001517] text-[#F2F6F6] border border-[#123A3F]'
+                    : ''
                 }`}
               >
-                <div>
-                  {/* Top Editorial Index & Arrow */}
-                  <div className="flex items-center justify-between gap-2 mb-6">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                  {/* Left 2 Columns: Oversized Numeral */}
+                  <div className="lg:col-span-2 flex lg:flex-col justify-between items-baseline gap-2">
                     <span
-                      className={`font-mono text-sm font-semibold ${
-                        isDataAi
-                          ? 'text-[#2DD4A4]'
-                          : 'text-[#6B1426] dark:text-[#2DD4A4]'
+                      className={`font-mono text-4xl sm:text-5xl font-bold tracking-tighter tabular-nums leading-none ${
+                        isDataAi ? 'text-[#2DD4A4]' : 'text-[#6B1426] dark:text-[#2DD4A4]'
                       }`}
                     >
-                      {svc.number}.
+                      {svc.number}
                     </span>
-
                     <span
-                      className={`inline-flex items-center gap-1.5 text-xs font-medium ${
-                        isDataAi
-                          ? 'text-[#2DD4A4]'
-                          : 'text-[#687670] dark:text-[#8FA19A] group-hover:text-[#6B1426] dark:group-hover:text-[#2DD4A4]'
-                      } transition-colors`}
+                      className={`font-mono text-xs uppercase tracking-wider ${
+                        isDataAi ? 'text-[#2DD4A4]' : 'text-[#647A7C] dark:text-[#6C8587]'
+                      }`}
                     >
-                      {isDataAi && (
-                        <span>{locale === 'ar' ? 'ممارسة محورية' : 'Core Focus'}</span>
-                      )}
-                      <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      {isDataAi
+                        ? locale === 'ar'
+                          ? 'ممارسة محورية'
+                          : 'Flagship Practice'
+                        : `PRACTICE ${svc.number}`}
                     </span>
                   </div>
 
-                  {/* Large Practice Heading */}
-                  <h3
-                    className={`text-xl font-bold mb-3 leading-snug ${
-                      isDataAi
-                        ? 'text-[#F4F6F5] group-hover:text-[#2DD4A4]'
-                        : 'text-[#0B1713] dark:text-[#F4F6F5] group-hover:text-[#6B1426] dark:group-hover:text-[#2DD4A4]'
-                    } transition-colors`}
-                  >
-                    {svc.title[locale]}
-                  </h3>
+                  {/* Center 5 Columns: Practice Title & Overview */}
+                  <div className="lg:col-span-5 space-y-4">
+                    <h3
+                      className={`text-2xl sm:text-3xl font-bold tracking-tight leading-snug ${
+                        isDataAi ? 'text-[#F2F6F6]' : 'text-[#001517] dark:text-[#F2F6F6]'
+                      }`}
+                    >
+                      <Link
+                        href={serviceHref}
+                        className="hover:text-[#6B1426] dark:hover:text-[#2DD4A4] transition-colors"
+                      >
+                        {svc.title[locale]}
+                      </Link>
+                    </h3>
+                    <p
+                      className={`text-sm sm:text-base leading-relaxed ${
+                        isDataAi ? 'text-[#B4C8CA]' : 'text-[#3E5456] dark:text-[#9CB2B4]'
+                      }`}
+                    >
+                      {svc.overview[locale]}
+                    </p>
 
-                  {/* Meaningful Description */}
-                  <p
-                    className={`text-sm leading-relaxed mb-6 ${
-                      isDataAi
-                        ? 'text-[#B8C7C0]'
-                        : 'text-[#485650] dark:text-[#A6B5AF]'
-                    }`}
-                  >
-                    {svc.shortDesc[locale]}
-                  </p>
-                </div>
+                    <div className="pt-2">
+                      <Link
+                        href={serviceHref}
+                        prefetch={true}
+                        className={`btn-slide-trigger inline-flex items-center gap-2 text-sm font-semibold ${
+                          isDataAi
+                            ? 'text-[#2DD4A4] hover:text-white'
+                            : 'text-[#6B1426] dark:text-[#2DD4A4] hover:underline'
+                        }`}
+                      >
+                        <span>
+                          {locale === 'ar' ? 'استعراض تفاصيل الممارسة والمخرجات' : 'Inspect Practice Capabilities & Deliverables'}
+                        </span>
+                        <ArrowUpRight className="w-4 h-4 shrink-0" />
+                      </Link>
+                    </div>
+                  </div>
 
-                {/* Unboxed Key Capabilities List */}
-                <div
-                  className={`pt-5 border-t ${
-                    isDataAi
-                      ? 'border-[#1E362D]'
-                      : 'border-[#E3DFD7] dark:border-[#1A2E26]'
-                  }`}
-                >
+                  {/* Right 5 Columns: Core Capabilities Checklist */}
                   <div
-                    className={`text-xs leading-relaxed ${
+                    className={`lg:col-span-5 p-6 sm:p-7 rounded-xl border ${
                       isDataAi
-                        ? 'text-[#8FA19A]'
-                        : 'text-[#687670] dark:text-[#8FA19A]'
+                        ? 'bg-[#04191B] border-[#123A3F]'
+                        : 'bg-white dark:bg-[#04191B] border-[#D8E2E2] dark:border-[#0E2F33]'
                     }`}
                   >
-                    {svc.capabilities
-                      .slice(0, 3)
-                      .map((cap) => cap[locale].split(':')[0])
-                      .join(' · ')}
+                    <div
+                      className={`text-xs font-mono uppercase tracking-wider mb-4 ${
+                        isDataAi ? 'text-[#2DD4A4]' : 'text-[#647A7C] dark:text-[#6C8587]'
+                      }`}
+                    >
+                      {t.coreCapabilities}
+                    </div>
+                    <ul className="space-y-3">
+                      {svc.capabilities.slice(0, 4).map((cap, idx) => (
+                        <li
+                          key={idx}
+                          className={`flex items-start gap-2.5 text-xs sm:text-sm ${
+                            isDataAi ? 'text-[#D8E6E7]' : 'text-[#001517] dark:text-[#D8E6E7]'
+                          }`}
+                        >
+                          <CheckCircle2
+                            className={`w-4 h-4 shrink-0 mt-0.5 ${
+                              isDataAi ? 'text-[#2DD4A4]' : 'text-[#6B1426] dark:text-[#2DD4A4]'
+                            }`}
+                          />
+                          <span>{cap[locale]}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
-              </Link>
+              </article>
             );
           })}
         </div>

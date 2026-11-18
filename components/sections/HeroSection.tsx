@@ -21,126 +21,130 @@ export default function HeroSection({ locale }: HeroSectionProps) {
 
   return (
     <section
-      className="relative bg-[#060E0B] text-[#F4F6F5] border-b border-[#1A2E26] overflow-hidden"
+      className="relative bg-[#000D0E] text-[#F2F6F6] border-b border-[#0E2F33] overflow-hidden"
       dir={isRtl ? 'rtl' : 'ltr'}
     >
-      {/* Consilio-inspired Subtle Contour Wave & Grid Geometry */}
+      {/* Consilio-inspired Atmospheric Radial Depth & Luminous Contour Waves */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 80% 60% at 75% 20%, rgba(45, 212, 164, 0.14) 0%, rgba(1, 43, 48, 0.25) 45%, rgba(0, 13, 14, 0) 100%)',
+        }}
+        aria-hidden="true"
+      />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 65% 50% at 15% 85%, rgba(107, 20, 38, 0.18) 0%, rgba(0, 13, 14, 0) 75%)',
+        }}
+        aria-hidden="true"
+      />
+
       <svg
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-25"
-        viewBox="0 0 1440 800"
+        className="absolute inset-0 w-full h-full pointer-events-none opacity-35"
+        viewBox="0 0 1440 960"
         fill="none"
         preserveAspectRatio="xMidYMid slice"
         aria-hidden="true"
       >
         <path
-          d="M-100 620 C 320 460, 780 740, 1540 480"
+          d="M-120 340 C 360 140, 880 540, 1560 220"
           stroke="#2DD4A4"
-          strokeWidth="1"
-          strokeOpacity="0.35"
+          strokeWidth="1.2"
+          strokeOpacity="0.32"
         />
         <path
-          d="M-100 680 C 380 520, 840 780, 1540 540"
+          d="M-120 420 C 420 220, 940 620, 1560 300"
+          stroke="#014D55"
+          strokeWidth="1"
+          strokeOpacity="0.6"
+        />
+        <path
+          d="M-120 740 C 340 560, 860 860, 1560 580"
           stroke="#C6A355"
-          strokeWidth="1"
-          strokeOpacity="0.22"
-        />
-        <path
-          d="M-100 220 C 420 380, 920 80, 1540 280"
-          stroke="#2DD4A4"
-          strokeWidth="0.75"
-          strokeOpacity="0.18"
+          strokeWidth="0.9"
+          strokeOpacity="0.24"
         />
       </svg>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16 md:pt-20 md:pb-24">
-        {/* Unboxed Editorial Kicker (Zero-Pill Discipline) */}
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-medium text-[#A6B5AF] mb-8">
-          <span className="text-[#2DD4A4] font-semibold">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-20 md:pt-24 md:pb-28 lg:pt-28 lg:pb-32">
+        {/* Stage 1: Editorial Sovereign Kicker */}
+        <div className="hero-stagger-1 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs sm:text-sm font-medium text-[#9CB2B4] mb-8 md:mb-12">
+          <span className="inline-flex items-center gap-2 text-[#2DD4A4] font-semibold tracking-wide">
+            <span className="w-2 h-2 rounded-full bg-[#2DD4A4]" aria-hidden="true" />
             {COMPANY_PROFILE.ownership[locale]}
           </span>
-          <span aria-hidden="true" className="text-[#3A4F46]">·</span>
-          <span>{COMPANY_PROFILE.location.city[locale]}, {COMPANY_PROFILE.location.country[locale]}</span>
-          <span aria-hidden="true" className="text-[#3A4F46]">·</span>
-          <Link href={complianceHref} className="hover:text-[#F4F6F5] transition-colors font-mono">
+          <span aria-hidden="true" className="text-[#1A4247]">/</span>
+          <span>
+            {COMPANY_PROFILE.location.city[locale]}, {COMPANY_PROFILE.location.country[locale]} · Est. {COMPANY_PROFILE.established}
+          </span>
+          <span aria-hidden="true" className="text-[#1A4247]">/</span>
+          <Link href={complianceHref} className="hover:text-[#2DD4A4] transition-colors font-mono">
             ICV {COMPANY_PROFILE.certifications.icv.score}
           </Link>
-          <span aria-hidden="true" className="text-[#3A4F46]">·</span>
-          <Link href={complianceHref} className="hover:text-[#F4F6F5] transition-colors font-mono">
+          <span aria-hidden="true" className="text-[#1A4247]">/</span>
+          <Link href={complianceHref} className="hover:text-[#2DD4A4] transition-colors font-mono">
             {COMPANY_PROFILE.certifications.iso.standard}
           </Link>
         </div>
 
-        {/* Main 2-Column Editorial Split */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-stretch">
-          {/* Left Column: High-Impact Editorial Proposition */}
-          <div className="lg:col-span-7 flex flex-col justify-between gap-8">
-            <div className="space-y-6">
-              <h1
-                className="font-bold tracking-tight text-[#F4F6F5] leading-[1.1] text-balance"
-                style={{ fontSize: 'clamp(2.25rem, 4vw, 3.75rem)' }}
-              >
-                {locale === 'ar' ? (
-                  <>
-                    استشارات تقنية المعلومات،{' '}
-                    <span className="text-[#2DD4A4]">حلول البيانات والذكاء الاصطناعي</span>
-                    ، والتحول الرقمي للقطاع الحكومي
-                  </>
-                ) : (
-                  <>
-                    IT Consultancy,{' '}
-                    <span className="text-[#2DD4A4]">Data &amp; AI Solutions</span>, and Digital
-                    Transformation for Government
-                  </>
-                )}
-              </h1>
+        {/* Stage 2: Full-Width Commanding Display Headline (Consilio Scale & Tracking) */}
+        <div className="hero-stagger-2 max-w-6xl">
+          <h1
+            className="font-bold text-[#F2F6F6] tracking-[-0.035em] leading-[1.04] text-balance"
+            style={{ fontSize: 'clamp(2.65rem, 5.8vw, 5.25rem)' }}
+          >
+            {locale === 'ar' ? (
+              <>
+                استشارات تقنية المعلومات،{' '}
+                <span className="text-[#2DD4A4]">البيانات والذكاء الاصطناعي</span>
+                ، والتحول الرقمي للقطاع الحكومي.
+              </>
+            ) : (
+              <>
+                IT Consultancy,{' '}
+                <span className="text-[#2DD4A4]">Data &amp; AI Solutions</span>, and Digital
+                Transformation for Government.
+              </>
+            )}
+          </h1>
+        </div>
 
-              <p className="text-base sm:text-lg text-[#B8C7C0] max-w-2xl leading-relaxed font-normal">
-                {locale === 'ar'
-                  ? 'شريك استشاري وتقني معتمد لدوائر وهيئات حكومة أبوظبي منذ عام 2019. نطوّر وننفذ حلول الأعمال المعقدة بأبسط الطرق الممكنة — من تحليلات البيانات ولوحات Power BI التنفيذية إلى أتمتة العمليات بالذكاء الاصطناعي (RPA) ودعم الأنظمة المؤسسية.'
-                  : 'An established advisory and engineering partner to Abu Dhabi government authorities since 2019. We architect and deliver mission-critical informatics — spanning executive Power BI telemetry, AI-driven RPA workflow automation, enterprise applications, and smart contact center operations.'}
-              </p>
-            </div>
-
-            {/* Primary & Secondary Actions */}
-            <div className="space-y-6 pt-2">
-              <div className="flex flex-wrap items-center gap-3.5">
-                <Link
-                  href={contactHref}
-                  className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-md bg-[#2DD4A4] hover:bg-[#24B88D] text-[#05100C] text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2DD4A4] cursor-pointer whitespace-nowrap shrink-0"
-                >
-                  <span>{t.requestRfp}</span>
-                  <ArrowIcon className="w-4 h-4 shrink-0" />
-                </Link>
-
-                <Link
-                  href={projectsHref}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-md bg-[#0C1A15] hover:bg-[#12261F] text-[#F4F6F5] border border-[#1E362D] hover:border-[#2DD4A4]/50 text-sm font-medium transition-colors cursor-pointer whitespace-nowrap shrink-0"
-                >
-                  <span>{t.viewProjects}</span>
-                  <ArrowUpRight className="w-4 h-4 opacity-75 shrink-0" />
-                </Link>
-
-                <Link
-                  href={servicesHref}
-                  className="inline-flex items-center gap-1.5 px-3 py-3.5 text-sm font-medium text-[#A6B5AF] hover:text-[#2DD4A4] transition-colors whitespace-nowrap shrink-0"
-                >
-                  <span>{t.exploreServices}</span>
-                  <ArrowIcon className="w-3.5 h-3.5 shrink-0" />
-                </Link>
-              </div>
-
-              {/* Unboxed Executive Quote */}
-              <div className="pt-6 border-t border-[#1A2E26]">
-                <p className="text-xs sm:text-sm text-[#8FA19A] italic leading-relaxed max-w-xl">
-                  &ldquo;{COMPANY_PROFILE.quote[locale]}&rdquo;
-                </p>
-              </div>
-            </div>
+        {/* Stage 3: Asymmetric Lead Narrative & High-Contrast Actions Row */}
+        <div className="hero-stagger-3 mt-10 md:mt-14 pt-8 md:pt-10 border-t border-[#0E2F33] grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
+          <div className="lg:col-span-7">
+            <p className="text-lg sm:text-xl md:text-[22px] text-[#B4C8CA] leading-[1.55] font-normal max-w-3xl">
+              {locale === 'ar'
+                ? 'شريك استشاري وهندسي معتمد لدوائر وهيئات حكومة أبوظبي منذ عام 2019. نبسّط أعقد منظومات الأعمال عبر تحليلات البيانات ولوحات Power BI التنفيذية، وأتمتة العمليات بالذكاء الاصطناعي (RPA)، وتشغيل المراكز الذكية.'
+                : 'Trusted advisory and engineering partner to Abu Dhabi government authorities since 2019. We simplify institutional complexity across executive Power BI intelligence, AI-driven RPA workflow automation, enterprise applications, and Smart Hub operations.'}
+            </p>
           </div>
 
-          {/* Right Column: Architectural Media Carrier */}
-          <div className="lg:col-span-5 flex flex-col">
-            <div className="relative flex-1 min-h-[280px] sm:min-h-[340px] lg:min-h-full rounded-lg overflow-hidden border border-[#1E362D] bg-gradient-to-br from-[#0C1A15] to-[#07110E] flex flex-col justify-end">
+          <div className="lg:col-span-5 flex flex-wrap items-center lg:justify-end gap-4">
+            <Link
+              href={contactHref}
+              className="btn-slide-trigger group inline-flex items-center justify-center gap-3 px-7 py-4 rounded-md bg-[#2DD4A4] hover:bg-[#24B88D] text-[#001517] text-sm sm:text-base font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2DD4A4] cursor-pointer whitespace-nowrap"
+            >
+              <span>{t.requestRfp}</span>
+              <ArrowIcon className="w-4 h-4 shrink-0 btn-slide-arrow" />
+            </Link>
+
+            <Link
+              href={projectsHref}
+              className="group inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-md bg-[#04191B] hover:bg-[#072528] text-[#F2F6F6] border border-[#123A3F] hover:border-[#2DD4A4]/60 text-sm sm:text-base font-medium transition-all duration-200 cursor-pointer whitespace-nowrap"
+            >
+              <span>{t.viewProjects}</span>
+              <ArrowUpRight className="w-4 h-4 opacity-80 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
+          </div>
+        </div>
+
+        {/* Stage 4: Expansive Cinematic Architectural Stage with Integrated Sovereign Telemetry */}
+        <div className="hero-media-reveal mt-12 md:mt-16">
+          <div className="group relative rounded-xl overflow-hidden border border-[#123A3F] bg-[#04191B]">
+            <div className="relative h-[340px] sm:h-[440px] md:h-[520px] lg:h-[580px] w-full overflow-hidden">
               <Image
                 src="/images/hero_abu_dhabi_advisory_1794979008017.jpg"
                 alt={
@@ -150,66 +154,90 @@ export default function HeroSection({ locale }: HeroSectionProps) {
                 }
                 fill
                 priority
-                sizes="(max-width: 1024px) 100vw, 42vw"
+                sizes="(max-width: 1280px) 100vw, 1280px"
                 referrerPolicy="no-referrer"
-                className="object-cover object-center"
+                className="object-cover object-center img-zoom-transition"
               />
-              {/* Measured Contrast Scrim */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050C0A]/90 via-[#050C0A]/35 to-transparent" />
+              {/* Cinematic Multi-Stop Atmospheric Scrim */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    'linear-gradient(180deg, rgba(0,13,14,0.15) 0%, rgba(0,13,14,0.45) 55%, rgba(0,13,14,0.94) 100%)',
+                }}
+              />
 
-              {/* Quiet Bottom Caption Inside Media Frame */}
-              <div className="relative z-10 p-5 sm:p-6 flex items-end justify-between gap-4 border-t border-white/10 bg-[#050C0A]/60 backdrop-blur-xs">
-                <div>
-                  <div className="text-xs font-medium text-[#2DD4A4]">
-                    {locale === 'ar' ? 'أبوظبي · تأسست 2019' : 'Abu Dhabi Headquarters · Est. 2019'}
+              {/* Top Floating Architectural Coordinate Header inside Frame */}
+              <div className="absolute top-0 inset-x-0 p-5 sm:p-8 flex flex-wrap items-center justify-between gap-4">
+                <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded bg-[#000D0E]/75 backdrop-blur-md border border-white/10 text-xs font-mono text-[#E0ECEC]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#2DD4A4]" />
+                  <span>
+                    {locale === 'ar'
+                      ? 'أبوظبي · رخصة اقتصادية CN-2769971'
+                      : 'ABU DHABI HQ · ADRA LICENCE CN-2769971'}
+                  </span>
+                </div>
+
+                <Link
+                  href={servicesHref}
+                  className="inline-flex items-center gap-2 px-4 py-1.5 rounded bg-[#000D0E]/75 hover:bg-[#000D0E] backdrop-blur-md border border-white/15 hover:border-[#2DD4A4]/60 text-xs font-medium text-[#F2F6F6] transition-colors"
+                >
+                  <span>{t.exploreServices} (01 — 06)</span>
+                  <ArrowIcon className="w-3.5 h-3.5 text-[#2DD4A4]" />
+                </Link>
+              </div>
+
+              {/* Bottom Integrated Editorial Quote & Sovereign Telemetry Strip inside Cinema Frame */}
+              <div className="absolute bottom-0 inset-x-0 p-6 sm:p-8 lg:p-10">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end pt-6 border-t border-white/15">
+                  <div className="lg:col-span-5 space-y-2">
+                    <div className="text-xs font-mono uppercase tracking-wider text-[#2DD4A4]">
+                      {locale === 'ar' ? 'الفلسفة الاستشارية' : 'Advisory Mandate'}
+                    </div>
+                    <p className="text-sm sm:text-base text-[#E4EFEF] font-medium leading-relaxed">
+                      &ldquo;{COMPANY_PROFILE.quote[locale]}&rdquo;
+                    </p>
                   </div>
-                  <div className="text-sm font-semibold text-[#F4F6F5] mt-0.5">
-                    {COMPANY_PROFILE.name[locale]}
+
+                  <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-6 lg:gap-8">
+                    <div>
+                      <div className="text-2xl sm:text-3xl lg:text-[34px] font-bold font-mono tabular-nums text-[#F2F6F6] tracking-tight">
+                        {COMPANY_PROFILE.metrics.quantifiableValue}
+                      </div>
+                      <div className="text-xs text-[#9CB2B4] mt-1">
+                        {t.statValue}
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="text-2xl sm:text-3xl lg:text-[34px] font-bold font-mono tabular-nums text-[#2DD4A4] tracking-tight">
+                        {COMPANY_PROFILE.metrics.engagements}
+                      </div>
+                      <div className="text-xs text-[#9CB2B4] mt-1">
+                        {t.statEngagements}
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="text-2xl sm:text-3xl lg:text-[34px] font-bold font-mono tabular-nums text-[#C6A355] tracking-tight">
+                        {COMPANY_PROFILE.metrics.govPercentage}
+                      </div>
+                      <div className="text-xs text-[#9CB2B4] mt-1">
+                        {t.statGov}
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="text-2xl sm:text-3xl lg:text-[34px] font-bold font-mono tabular-nums text-[#F2F6F6] tracking-tight">
+                        {COMPANY_PROFILE.certifications.icv.score}
+                      </div>
+                      <div className="text-xs text-[#9CB2B4] mt-1">
+                        {t.statIcv}
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <span className="font-mono text-xs text-[#C6A355] shrink-0">
-                  CN-2769971
-                </span>
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Full-Width 4-Column Sovereign Telemetry Row Below Hero Split */}
-        <div className="mt-12 pt-10 border-t border-[#1A2E26] grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          <div>
-            <div className="text-2xl sm:text-3xl md:text-4xl font-bold font-mono tabular-nums text-[#F4F6F5]">
-              {COMPANY_PROFILE.metrics.quantifiableValue}
-            </div>
-            <div className="text-xs text-[#8FA19A] mt-1.5">
-              {t.statValue} · {locale === 'ar' ? 'عقود موثقة' : 'Verified Mandates'}
-            </div>
-          </div>
-
-          <div>
-            <div className="text-2xl sm:text-3xl md:text-4xl font-bold font-mono tabular-nums text-[#2DD4A4]">
-              {COMPANY_PROFILE.metrics.engagements}
-            </div>
-            <div className="text-xs text-[#8FA19A] mt-1.5">
-              {t.statEngagements} (2019 – 2026)
-            </div>
-          </div>
-
-          <div>
-            <div className="text-2xl sm:text-3xl md:text-4xl font-bold font-mono tabular-nums text-[#C6A355]">
-              {COMPANY_PROFILE.metrics.govPercentage}
-            </div>
-            <div className="text-xs text-[#8FA19A] mt-1.5">
-              {t.statGov}
-            </div>
-          </div>
-
-          <div>
-            <div className="text-2xl sm:text-3xl md:text-4xl font-bold font-mono tabular-nums text-[#F4F6F5]">
-              {COMPANY_PROFILE.certifications.icv.score}
-            </div>
-            <div className="text-xs text-[#8FA19A] mt-1.5">
-              {t.statIcv} · Cert. 153777
             </div>
           </div>
         </div>

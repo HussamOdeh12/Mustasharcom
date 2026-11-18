@@ -3,31 +3,31 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --bg-canvas: #FAF8F5;
+  --bg-canvas: #F5F7F7;
   --bg-surface: #FFFFFF;
-  --bg-subtle: #F3EFEA;
-  --bg-dark-hero: #07110E;
-  --bg-dark-card: #0C1A15;
-  --text-primary: #0B1713;
-  --text-secondary: #485650;
-  --text-muted: #687670;
-  --border-hairline: #E3DFD7;
+  --bg-subtle: #EAEFEF;
+  --bg-dark-hero: #000D0E;
+  --bg-dark-card: #04191B;
+  --text-primary: #001517;
+  --text-secondary: #3E5456;
+  --text-muted: #647A7C;
+  --border-hairline: #D8E2E2;
   --accent-burgundy: #6B1426;
-  --accent-teal: #007A4D;
+  --accent-teal: #008559;
   --accent-luminous: #2DD4A4;
   --accent-gold: #C6A355;
 }
 
 .dark {
-  --bg-canvas: #07110E;
-  --bg-surface: #0C1A15;
-  --bg-subtle: #10221C;
-  --bg-dark-hero: #050C0A;
-  --bg-dark-card: #0C1A15;
-  --text-primary: #F4F6F5;
-  --text-secondary: #A6B5AF;
-  --text-muted: #768780;
-  --border-hairline: #1A2E26;
+  --bg-canvas: #000D0E;
+  --bg-surface: #04191B;
+  --bg-subtle: #072225;
+  --bg-dark-hero: #00090A;
+  --bg-dark-card: #04191B;
+  --text-primary: #F2F6F6;
+  --text-secondary: #9CB2B4;
+  --text-muted: #6C8587;
+  --border-hairline: #0E2F33;
   --accent-burgundy: #E64866;
   --accent-teal: #2DD4A4;
   --accent-luminous: #2DD4A4;
@@ -54,11 +54,16 @@ html {
   font-variant-numeric: tabular-nums;
 }
 
-/* Page Transition Animation (Lightweight, Non-blocking CSS) */
+/* ============================================================================
+   CONSILIO-INSPIRED EDITORIAL MOTION & REVEAL SYSTEM
+   Lightweight CSS + IntersectionObserver (Zero main-thread frame loop overhead)
+   ============================================================================ */
+
+/* Page Transition Animation */
 @keyframes pageTransitionEnter {
   0% {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(6px);
   }
   100% {
     opacity: 1;
@@ -67,19 +72,121 @@ html {
 }
 
 .page-transition-enter {
-  animation: pageTransitionEnter 220ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: pageTransitionEnter 280ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
   will-change: opacity, transform;
 }
 
-/* Consilio-style Restrained Card & Row Transitions */
+/* Staggered Hero Entrance Reveals */
+@keyframes heroFadeUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes heroMediaReveal {
+  0% {
+    opacity: 0;
+    transform: scale(1.035) translate3d(0, 18px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+.hero-stagger-1 {
+  animation: heroFadeUp 650ms cubic-bezier(0.16, 1, 0.3, 1) 40ms both;
+}
+
+.hero-stagger-2 {
+  animation: heroFadeUp 750ms cubic-bezier(0.16, 1, 0.3, 1) 140ms both;
+}
+
+.hero-stagger-3 {
+  animation: heroFadeUp 750ms cubic-bezier(0.16, 1, 0.3, 1) 240ms both;
+}
+
+.hero-stagger-4 {
+  animation: heroFadeUp 750ms cubic-bezier(0.16, 1, 0.3, 1) 340ms both;
+}
+
+.hero-media-reveal {
+  animation: heroMediaReveal 950ms cubic-bezier(0.16, 1, 0.3, 1) 180ms both;
+}
+
+/* Scroll-Triggered Section Reveal */
+.section-reveal {
+  transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.section-reveal-hidden {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+}
+
+.section-reveal-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Consilio-style Card Lift & Editorial Image Zoom */
 .hover-card-lift {
-  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), border-color 200ms cubic-bezier(0.16, 1, 0.3, 1), background-color 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 260ms cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 260ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.img-zoom-transition {
+  transition: transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .hover-card-lift:hover {
-    transform: translateY(-2px);
+    transform: translateY(-4px);
   }
+  .group:hover .img-zoom-transition {
+    transform: scale(1.045);
+  }
+}
+
+/* Consilio Dual-Layer Button / Link Sliding Text Micro-interaction */
+.btn-slide-text {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-slide-arrow {
+  transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .btn-slide-arrow,
+  .btn-slide-trigger:hover .btn-slide-arrow {
+    transform: translateX(4px);
+  }
+  [dir="rtl"] .group:hover .btn-slide-arrow,
+  [dir="rtl"] .btn-slide-trigger:hover .btn-slide-arrow {
+    transform: translateX(-4px);
+  }
+}
+
+/* Custom Hide Scrollbar for Horizontal Carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Accessibility: Respect Reduced Motion */
@@ -87,13 +194,28 @@ html {
   html {
     scroll-behavior: auto;
   }
-  .page-transition-enter {
+  .page-transition-enter,
+  .hero-stagger-1,
+  .hero-stagger-2,
+  .hero-stagger-3,
+  .hero-stagger-4,
+  .hero-media-reveal {
     animation: none !important;
     transform: none !important;
     opacity: 1 !important;
   }
+  .section-reveal,
+  .section-reveal-hidden,
+  .section-reveal-visible {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
   .hover-card-lift,
-  .hover-card-lift:hover {
+  .hover-card-lift:hover,
+  .img-zoom-transition,
+  .group:hover .img-zoom-transition,
+  .btn-slide-arrow {
     transform: none !important;
     transition: none !important;
   }

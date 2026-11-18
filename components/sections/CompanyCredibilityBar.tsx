@@ -15,7 +15,7 @@ export default function CompanyCredibilityBar({ locale }: CompanyCredibilityBarP
     {
       index: '01',
       primary: COMPANY_PROFILE.ownership[locale],
-      secondary: locale === 'ar' ? 'أبوظبي، دولة الإمارات' : 'Sovereign UAE Enterprise',
+      secondary: locale === 'ar' ? 'شركة وطنية — أبوظبي' : 'Sovereign UAE Enterprise',
       href: null,
     },
     {
@@ -27,26 +27,26 @@ export default function CompanyCredibilityBar({ locale }: CompanyCredibilityBarP
     {
       index: '03',
       primary: COMPANY_PROFILE.certifications.iso.standard,
-      secondary: locale === 'ar' ? 'نظام إدارة الجودة (UAF140791497)' : 'Quality Management (UAF140791497)',
+      secondary: locale === 'ar' ? 'إدارة الجودة (UAF140791497)' : 'Quality System (UAF140791497)',
       href: complianceHref,
     },
     {
       index: '04',
       primary: `ADRA ${COMPANY_PROFILE.licence.number}`,
-      secondary: locale === 'ar' ? 'اقتصادية أبوظبي (حتى 2031)' : 'Abu Dhabi DED (Valid to 2031)',
+      secondary: locale === 'ar' ? 'رخصة أبوظبي (حتى 2031)' : 'Abu Dhabi DED (Valid to 2031)',
       href: complianceHref,
     },
     {
       index: '05',
       primary: COMPANY_PROFILE.metrics.quantifiableValue,
-      secondary: locale === 'ar' ? '17 عقداً حكومياً موثقاً' : '17 Public Sector Contracts',
+      secondary: locale === 'ar' ? '17 عقداً حكومياً موثقاً' : '17 Public Sector Mandates',
       href: projectsHref,
     },
   ];
 
   return (
     <section
-      className="border-b border-[#E3DFD7] dark:border-[#1A2E26] bg-[#F3EFEA] dark:bg-[#0A1612] transition-colors"
+      className="border-b border-[#D8E2E2] dark:border-[#0E2F33] bg-[#EAEFEF] dark:bg-[#021214] transition-colors"
       dir={isRtl ? 'rtl' : 'ltr'}
       aria-label={locale === 'ar' ? 'الاعتمادات والمؤشرات السيادية' : 'Sovereign Credentials & Accreditations'}
     >
@@ -56,14 +56,14 @@ export default function CompanyCredibilityBar({ locale }: CompanyCredibilityBarP
             const inner = (
               <div className="flex flex-col gap-1">
                 <div className="flex items-baseline gap-2">
-                  <span className="font-mono text-[11px] text-[#6B1426] dark:text-[#2DD4A4]">
-                    {item.index}.
+                  <span className="font-mono text-[11px] font-bold text-[#6B1426] dark:text-[#2DD4A4]">
+                    /{item.index}
                   </span>
-                  <span className="text-sm font-bold text-[#0B1713] dark:text-[#F4F6F5] font-mono tabular-nums truncate">
+                  <span className="text-sm font-bold text-[#001517] dark:text-[#F2F6F6] font-mono tabular-nums truncate">
                     {item.primary}
                   </span>
                 </div>
-                <div className="text-xs text-[#485650] dark:text-[#8FA19A] truncate">
+                <div className="text-xs text-[#3E5456] dark:text-[#9CB2B4] truncate">
                   {item.secondary}
                 </div>
               </div>

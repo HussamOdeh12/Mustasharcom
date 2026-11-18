@@ -1,5 +1,6 @@
 import React from 'react';
 import Breadcrumbs from '../ui/Breadcrumbs';
+import ServicesCarousel from '../sections/ServicesCarousel';
 import ServicesGrid from '../sections/ServicesGrid';
 import DataAiSpotlight from '../sections/DataAiSpotlight';
 import CtaBanner from '../sections/CtaBanner';
@@ -18,7 +19,7 @@ export default function ServicesPageView({ locale }: ServicesPageViewProps) {
   return (
     <main id="main-content" className="flex-1" dir={isRtl ? 'rtl' : 'ltr'}>
       {/* Breadcrumbs */}
-      <div className="border-b border-[#E3DFD7] dark:border-[#1A2E26] bg-[#F3EFEA]/70 dark:bg-[#0A1612]">
+      <div className="border-b border-[#D8E2E2] dark:border-[#0E2F33] bg-[#EAEFEF] dark:bg-[#021214]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
           <Breadcrumbs
             locale={locale}
@@ -28,35 +29,51 @@ export default function ServicesPageView({ locale }: ServicesPageViewProps) {
       </div>
 
       {/* Consilio-style Dark Hero */}
-      <section className="py-16 md:py-24 bg-[#060E0B] text-[#F4F6F5] border-b border-[#1A2E26]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl space-y-5">
-            <span className="text-xs font-semibold text-[#2DD4A4] tracking-wide block">
+      <section className="py-20 md:py-28 bg-[#000D0E] text-[#F2F6F6] border-b border-[#0E2F33] relative overflow-hidden">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(ellipse 70% 55% at 75% 25%, rgba(45, 212, 164, 0.13) 0%, rgba(0, 13, 14, 0) 75%)',
+          }}
+          aria-hidden="true"
+        />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl space-y-6">
+            <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#2DD4A4] block hero-stagger-1">
               {locale === 'ar' ? 'الممارسات الاستشارية والتقنية (01 — 06)' : 'Consulting & Engineering Practices (01 — 06)'}
             </span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#F4F6F5] leading-[1.12] text-balance">
+            <h1
+              className="font-bold tracking-[-0.035em] text-[#F2F6F6] leading-[1.06] text-balance hero-stagger-2"
+              style={{ fontSize: 'clamp(2.35rem, 5vw, 4.5rem)' }}
+            >
               {locale === 'ar'
                 ? 'خدمات استشارية وهندسية متكاملة لمؤسسات أبوظبي'
                 : 'Comprehensive Consulting & Informatics Engineering Practices'}
             </h1>
-            <p className="text-base sm:text-lg text-[#B8C7C0] leading-relaxed">
+            <p className="text-lg sm:text-xl text-[#B4C8CA] leading-relaxed max-w-3xl hero-stagger-3">
               {locale === 'ar'
                 ? 'تقدم مستشاركم منظومة خدمات تخصصية تغطي كامل دورة حياة التكنولوجيا في المؤسسات: من الاستشارات الاستراتيجية وتحليل البيانات، إلى تطوير الأنظمة، وحلول البنية التحتية، والدعم الفني، وتشغيل مراكز الاتصال.'
                 : 'Mustasharcom delivers an integrated practice ecosystem spanning the complete institutional technology lifecycle — from strategic IT advisory and executive data analytics to ERP platforms, sovereign infrastructure, SLA technical support, and Smart Hub contact center operations.'}
             </p>
-            <div className="pt-2 text-xs font-mono text-[#8FA19A]">
-              ADRA Licence {COMPANY_PROFILE.licence.number} · {COMPANY_PROFILE.certifications.iso.standard} · ICV {COMPANY_PROFILE.certifications.icv.score}
+            <div className="pt-4 text-xs font-mono text-[#6C8587] hero-stagger-4">
+              ADRA LICENCE {COMPANY_PROFILE.licence.number} · {COMPANY_PROFILE.certifications.iso.standard} · ICV {COMPANY_PROFILE.certifications.icv.score}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Services 6-Practice Grid */}
+      {/* Interactive Services Carousel */}
+      <SectionReveal>
+        <ServicesCarousel locale={locale} />
+      </SectionReveal>
+
+      {/* Full-Width Editorial Practice Chapter Index */}
       <SectionReveal>
         <ServicesGrid locale={locale} />
       </SectionReveal>
 
-      {/* Data & AI Spotlight */}
+      {/* Interactive Data & AI Spotlight */}
       <SectionReveal>
         <DataAiSpotlight locale={locale} />
       </SectionReveal>

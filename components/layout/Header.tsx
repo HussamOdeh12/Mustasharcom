@@ -31,10 +31,10 @@ export default function Header({ locale }: HeaderProps) {
 
       {/* Main Server Header Shell — Strict 3-Zone Editorial Contract */}
       <header
-        className="sticky top-0 left-0 right-0 z-50 bg-[#FAF8F5]/95 dark:bg-[#07110E]/95 backdrop-blur-md border-b border-[#E3DFD7] dark:border-[#1A2E26] transition-colors"
+        className="sticky top-0 left-0 right-0 z-50 bg-[#F5F7F7]/95 dark:bg-[#000D0E]/95 backdrop-blur-md border-b border-[#D8E2E2] dark:border-[#0E2F33] transition-colors"
         dir={isRtl ? 'rtl' : 'ltr'}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-[72px] flex items-center justify-between gap-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-[76px] flex items-center justify-between gap-8">
           {/* Zone 1: Single-line Brand Wordmark */}
           <div className="shrink-0">
             <Logo locale={locale} />
@@ -42,7 +42,7 @@ export default function Header({ locale }: HeaderProps) {
 
           {/* Zone 2: Clean Typographic Navigation Links (Server HTML + CSS Dropdown) */}
           <nav
-            className="hidden lg:flex items-center gap-6 xl:gap-8"
+            className="hidden lg:flex items-center gap-7 xl:gap-9"
             aria-label="Main Navigation"
           >
             {NAVIGATION_ITEMS.map((item) => {
@@ -51,7 +51,7 @@ export default function Header({ locale }: HeaderProps) {
                   <div key={item.key} className="relative group py-2">
                     <Link
                       href={item.href[locale]}
-                      className="inline-flex items-center gap-1.5 text-sm font-medium text-[#2C3A34] dark:text-[#C8D4CE] hover:text-[#6B1426] dark:hover:text-[#2DD4A4] transition-colors whitespace-nowrap shrink-0"
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-[#001517] dark:text-[#D8E6E7] hover:text-[#6B1426] dark:hover:text-[#2DD4A4] transition-colors whitespace-nowrap shrink-0"
                     >
                       <span>{item.label[locale]}</span>
                       <ChevronDown className="w-3.5 h-3.5 opacity-70 transition-transform duration-200 group-hover:rotate-180" />
@@ -59,29 +59,29 @@ export default function Header({ locale }: HeaderProps) {
 
                     {/* Editorial Dropdown for 6 Practice Areas */}
                     <div className="absolute top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-150 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto z-50 ltr:left-0 rtl:right-0">
-                      <div className="w-[380px] p-3 rounded-lg bg-[#FAF8F5] dark:bg-[#0C1A15] border border-[#E3DFD7] dark:border-[#1A2E26] shadow-xl">
-                        <div className="px-3 py-2 border-b border-[#E3DFD7] dark:border-[#1A2E26] flex items-center justify-between">
-                          <span className="text-xs font-medium text-[#687670] dark:text-[#82948C]">
+                      <div className="w-[390px] p-3 rounded-xl bg-white dark:bg-[#04191B] border border-[#D8E2E2] dark:border-[#0E2F33] shadow-2xl">
+                        <div className="px-3 py-2 border-b border-[#D8E2E2] dark:border-[#0E2F33] flex items-center justify-between">
+                          <span className="text-xs font-mono text-[#647A7C] dark:text-[#9CB2B4]">
                             {locale === 'ar' ? 'الممارسات الاستشارية المعتمدة' : 'Advisory & Engineering Practices'}
                           </span>
-                          <span className="font-mono text-xs text-[#687670] dark:text-[#82948C]">01 — 06</span>
+                          <span className="font-mono text-xs text-[#6B1426] dark:text-[#2DD4A4]">01 — 06</span>
                         </div>
 
-                        <div className="divide-y divide-[#E3DFD7]/60 dark:divide-[#1A2E26]/60 my-1">
+                        <div className="divide-y divide-[#D8E2E2]/60 dark:divide-[#0E2F33]/60 my-1">
                           {SERVICES_CATALOG.map((svc) => (
                             <Link
                               key={svc.slug}
                               href={locale === 'ar' ? `/ar/services/${svc.slug}` : `/services/${svc.slug}`}
-                              className="flex items-baseline gap-3 px-3 py-2.5 rounded-md hover:bg-[#F3EFEA] dark:hover:bg-[#12261F] transition-colors group/item"
+                              className="flex items-baseline gap-3 px-3 py-2.5 rounded-lg hover:bg-[#F5F7F7] dark:hover:bg-[#072528] transition-colors group/item"
                             >
-                              <span className="font-mono text-xs text-[#6B1426] dark:text-[#2DD4A4] shrink-0">
+                              <span className="font-mono text-xs font-bold text-[#6B1426] dark:text-[#2DD4A4] shrink-0">
                                 {svc.number}.
                               </span>
                               <div className="min-w-0 flex-1">
-                                <div className="text-xs font-semibold text-[#0B1713] dark:text-[#F4F6F5] group-hover/item:text-[#6B1426] dark:group-hover/item:text-[#2DD4A4] transition-colors truncate">
+                                <div className="text-xs font-bold text-[#001517] dark:text-[#F2F6F6] group-hover/item:text-[#6B1426] dark:group-hover/item:text-[#2DD4A4] transition-colors truncate">
                                   {svc.title[locale]}
                                 </div>
-                                <div className="text-[11px] text-[#687670] dark:text-[#8FA19A] truncate mt-0.5">
+                                <div className="text-[11px] text-[#647A7C] dark:text-[#9CB2B4] truncate mt-0.5">
                                   {svc.shortDesc[locale]}
                                 </div>
                               </div>
@@ -89,7 +89,7 @@ export default function Header({ locale }: HeaderProps) {
                           ))}
                         </div>
 
-                        <div className="pt-2 border-t border-[#E3DFD7] dark:border-[#1A2E26]">
+                        <div className="pt-2 border-t border-[#D8E2E2] dark:border-[#0E2F33]">
                           <Link
                             href={item.href[locale]}
                             className="flex items-center justify-between px-3 py-1.5 text-xs font-semibold text-[#6B1426] dark:text-[#2DD4A4] hover:underline whitespace-nowrap"
@@ -108,7 +108,7 @@ export default function Header({ locale }: HeaderProps) {
                 <Link
                   key={item.key}
                   href={item.href[locale]}
-                  className="text-sm font-medium text-[#2C3A34] dark:text-[#C8D4CE] hover:text-[#6B1426] dark:hover:text-[#2DD4A4] transition-colors whitespace-nowrap shrink-0"
+                  className="text-sm font-medium text-[#001517] dark:text-[#D8E6E7] hover:text-[#6B1426] dark:hover:text-[#2DD4A4] transition-colors whitespace-nowrap shrink-0"
                 >
                   {item.label[locale]}
                 </Link>
@@ -124,10 +124,10 @@ export default function Header({ locale }: HeaderProps) {
 
             <Link
               href={contactHref}
-              className="hidden sm:inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-[#6B1426] hover:bg-[#82182E] dark:bg-[#2DD4A4] dark:hover:bg-[#24B88D] text-white dark:text-[#06110D] text-xs font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B1426] cursor-pointer whitespace-nowrap shrink-0"
+              className="btn-slide-trigger hidden sm:inline-flex items-center justify-center gap-2 px-4.5 py-2.5 rounded-md bg-[#001517] hover:bg-[#6B1426] dark:bg-[#2DD4A4] dark:hover:bg-[#24B88D] text-white dark:text-[#001517] text-xs font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2DD4A4] cursor-pointer whitespace-nowrap shrink-0"
             >
               <span>{t.requestRfp}</span>
-              <ArrowIcon className="w-3.5 h-3.5 shrink-0" />
+              <ArrowIcon className="w-3.5 h-3.5 shrink-0 btn-slide-arrow" />
             </Link>
 
             <MobileMenu locale={locale} />
