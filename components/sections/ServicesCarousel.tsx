@@ -220,7 +220,7 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
                 onClick={handlePrev}
                 disabled={!canScrollPrev}
                 aria-label={locale === 'ar' ? 'الخدمة السابقة' : 'Previous service'}
-                className="w-12 h-12 rounded-full border border-[#DCE3DF] dark:border-[#174B3E] bg-white dark:bg-[#0B2922] enabled:hover:bg-[#174B3E] enabled:hover:text-white dark:enabled:hover:bg-[#18C6A0] dark:enabled:hover:text-[#071C17] text-[#17211D] dark:text-[#F4F7F5] disabled:opacity-35 disabled:cursor-not-allowed flex items-center justify-center transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0]"
+                className="btn-press w-12 h-12 rounded-full border border-[#DCE3DF] dark:border-[#174B3E] bg-white dark:bg-[#0B2922] enabled:hover:bg-[#174B3E] enabled:hover:text-white dark:enabled:hover:bg-[#18C6A0] dark:enabled:hover:text-[#071C17] enabled:hover:border-[#174B3E] dark:enabled:hover:border-[#18C6A0] text-[#17211D] dark:text-[#F4F7F5] disabled:opacity-35 disabled:cursor-not-allowed flex items-center justify-center cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0]"
               >
                 <PrevIcon className="w-5 h-5" />
               </button>
@@ -229,7 +229,7 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
                 onClick={handleNext}
                 disabled={!canScrollNext}
                 aria-label={locale === 'ar' ? 'الخدمة التالية' : 'Next service'}
-                className="w-12 h-12 rounded-full border border-[#DCE3DF] dark:border-[#174B3E] bg-white dark:bg-[#0B2922] enabled:hover:bg-[#174B3E] enabled:hover:text-white dark:enabled:hover:bg-[#18C6A0] dark:enabled:hover:text-[#071C17] text-[#17211D] dark:text-[#F4F7F5] disabled:opacity-35 disabled:cursor-not-allowed flex items-center justify-center transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0]"
+                className="btn-press w-12 h-12 rounded-full border border-[#DCE3DF] dark:border-[#174B3E] bg-white dark:bg-[#0B2922] enabled:hover:bg-[#174B3E] enabled:hover:text-white dark:enabled:hover:bg-[#18C6A0] dark:enabled:hover:text-[#071C17] enabled:hover:border-[#174B3E] dark:enabled:hover:border-[#18C6A0] text-[#17211D] dark:text-[#F4F7F5] disabled:opacity-35 disabled:cursor-not-allowed flex items-center justify-center cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0]"
               >
                 <NextIcon className="w-5 h-5" />
               </button>
@@ -239,7 +239,7 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
 
         {/* Direct Practice Selector Pills / Index Strip (Keyboard Accessible) */}
         <div
-          className="reveal-item reveal-delay-2 pt-8 pb-4 flex items-center gap-2 overflow-x-auto no-scrollbar"
+          className="reveal-item reveal-delay-2 pt-8 pb-3 flex items-center gap-2 overflow-x-auto no-scrollbar"
           role="tablist"
           aria-label={locale === 'ar' ? 'فهرس الممارسات الاستشارية' : 'Practice area index'}
         >
@@ -252,7 +252,7 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => scrollToPanel(idx)}
-                className={`px-4 py-2.5 rounded-md text-xs font-medium transition-all duration-200 whitespace-nowrap cursor-pointer flex items-center gap-2 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] ${
+                className={`btn-press px-4 py-2.5 rounded-md text-xs font-medium whitespace-nowrap cursor-pointer flex items-center gap-2 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] ${
                   isActive
                     ? 'bg-[#071C17] text-[#F4F7F5] dark:bg-[#18C6A0] dark:text-[#071C17] font-semibold shadow-sm'
                     : 'bg-white dark:bg-[#0B2922] text-[#3E544C] dark:text-[#A3B8B0] hover:text-[#17211D] dark:hover:text-[#F4F7F5] border border-[#DCE3DF] dark:border-[#174B3E]'
@@ -263,6 +263,18 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
               </button>
             );
           })}
+        </div>
+
+        {/* Smooth Active Track Progress Line */}
+        <div className="reveal-line h-[2px] w-full bg-[#DCE3DF] dark:bg-[#174B3E]/60 rounded-full overflow-hidden mb-2">
+          <div
+            className="h-full bg-[#174B3E] dark:bg-[#18C6A0] transition-transform duration-300 ease-out"
+            style={{
+              width: '100%',
+              transformOrigin: isRtl ? 'right center' : 'left center',
+              transform: `scaleX(${(activeIndex + 1) / total})`,
+            }}
+          />
         </div>
 
         {/* Horizontal Interactive Panels Track — Native Scroll-Snap + Trackpad + Touch + Mouse Drag */}
@@ -279,7 +291,7 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
           aria-roledescription="carousel"
           aria-label={locale === 'ar' ? 'قائمة الخدمات التفاعلية' : 'Interactive consulting services'}
           style={{ touchAction: 'pan-x pan-y' }}
-          className={`reveal-item reveal-delay-3 mt-6 flex gap-6 lg:gap-8 overflow-x-auto no-scrollbar pb-6 pt-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-xl ${
+          className={`reveal-item reveal-delay-3 mt-5 flex gap-6 lg:gap-8 overflow-x-auto no-scrollbar pb-6 pt-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-xl ${
             isDragging ? 'cursor-grabbing select-none' : 'snap-x snap-mandatory cursor-grab'
           }`}
         >
@@ -301,31 +313,54 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
                   }
                   setActiveIndex(idx);
                 }}
-                className={`snap-start shrink-0 w-[85vw] sm:w-[440px] lg:w-[520px] rounded-xl border p-7 sm:p-10 lg:p-11 flex flex-col justify-between min-h-[430px] sm:min-h-[470px] transition-all duration-300 ${
+                className={`service-card-item group relative overflow-hidden snap-start shrink-0 w-[85vw] sm:w-[440px] lg:w-[520px] rounded-xl border p-7 sm:p-10 lg:p-11 flex flex-col justify-between min-h-[430px] sm:min-h-[470px] transition-all duration-300 ${
+                  isActive ? 'service-card-active opacity-100 scale-100' : 'opacity-90 scale-[0.988] hover:opacity-100'
+                } ${
                   isDataAi
-                    ? 'bg-[#071C17] text-[#F4F7F5] border-[#18C6A0]/60 shadow-xl'
+                    ? 'bg-[#071C17] text-[#F4F7F5] border-[#18C6A0]/65 shadow-xl'
                     : isActive
                     ? 'bg-white dark:bg-[#0B2922] text-[#17211D] dark:text-[#F4F7F5] border-[#174B3E] dark:border-[#18C6A0] shadow-lg'
-                    : 'bg-[#F7F5F0] dark:bg-[#0B2922]/75 text-[#17211D] dark:text-[#F4F7F5] border-[#DCE3DF] dark:border-[#174B3E] hover:border-[#174B3E] dark:hover:border-[#18C6A0]/60'
+                    : 'bg-[#F7F5F0] dark:bg-[#0B2922]/75 text-[#17211D] dark:text-[#F4F7F5] border-[#DCE3DF] dark:border-[#174B3E] hover:border-[#174B3E] dark:hover:border-[#18C6A0]/65'
                 }`}
               >
+                {/* Top Animated Accent Line */}
+                <span
+                  aria-hidden="true"
+                  className={`service-accent-bar absolute top-0 inset-x-0 h-[3px] ${
+                    isDataAi || isActive ? 'bg-[#18C6A0]' : 'bg-[#174B3E] dark:bg-[#18C6A0]/70'
+                  }`}
+                />
+
+                {/* Subtle Radial Corner Illumination on Active / Hover */}
+                <div
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute -top-24 -end-24 w-56 h-56 rounded-full transition-opacity duration-500 ${
+                    isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-80'
+                  }`}
+                  style={{
+                    background: isDataAi
+                      ? 'radial-gradient(circle, rgba(24, 198, 160, 0.16) 0%, rgba(24, 198, 160, 0) 70%)'
+                      : 'radial-gradient(circle, rgba(24, 198, 160, 0.10) 0%, rgba(24, 198, 160, 0) 70%)',
+                  }}
+                />
+
                 {/* Top Row: Oversized Numeral & Practice Tag */}
-                <div>
+                <div className="relative z-10">
                   <div className="flex items-start justify-between gap-4 mb-8">
                     <span
-                      className={`font-mono text-4xl sm:text-5xl font-bold tracking-tighter tabular-nums leading-none ${
+                      className={`font-mono text-4xl sm:text-5xl font-bold tracking-tighter tabular-nums leading-none transition-colors duration-300 ${
                         isDataAi
                           ? 'text-[#18C6A0]'
                           : isActive
                           ? 'text-[#174B3E] dark:text-[#18C6A0]'
-                          : 'text-[#697671] dark:text-[#6E857D]'
+                          : 'text-[#697671] dark:text-[#6E857D] group-hover:text-[#174B3E] dark:group-hover:text-[#18C6A0]'
                       }`}
                     >
                       {svc.number}
                     </span>
 
                     <span
-                      className={`text-xs font-mono uppercase tracking-wider px-3 py-1 rounded border ${
+                      className={`text-xs font-mono uppercase tracking-wider px-3 py-1 rounded border transition-colors ${
                         isDataAi
                           ? 'border-[#18C6A0]/40 text-[#18C6A0] bg-[#18C6A0]/10'
                           : 'border-[#DCE3DF] dark:border-[#174B3E] text-[#697671] dark:text-[#A3B8B0]'
@@ -381,7 +416,7 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
 
                 {/* Bottom Action Link */}
                 <div
-                  className={`pt-6 border-t flex items-center justify-between ${
+                  className={`relative z-10 pt-6 border-t flex items-center justify-between ${
                     isDataAi ? 'border-[#174B3E]' : 'border-[#DCE3DF] dark:border-[#174B3E]'
                   }`}
                 >

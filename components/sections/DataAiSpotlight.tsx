@@ -1,13 +1,44 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, ArrowLeft, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { Locale } from '@/lib/company-data';
+import { useViewportObserver } from '@/lib/motion';
+
+// Dynamically load the Data & AI Network Canvas only once the section approaches the viewport
+const DataAiNetworkCanvas = dynamic(() => import('../motion/DataAiNetworkCanvas'), {
+  ssr: false,
+});
 
 interface DataAiSpotlightProps {
   locale: Locale;
+}
+
+function StaticNetworkFallback() {
+  return (
+    <div
+      className="relative w-full h-[260px] sm:h-[310px] rounded-lg border border-white/10 bg-[#071C17]/75 overflow-hidden flex items-center justify-center"
+      aria-hidden="true"
+    >
+      <svg className="w-full h-full opacity-55" viewBox="0 0 560 310" fill="none">
+        <path d="M106 86 Q 198 48 291 56" stroke="#18C6A0" strokeWidth="1.2" strokeOpacity="0.45" />
+        <path d="M291 56 Q 370 46 448 93" stroke="#18C6A0" strokeWidth="1.2" strokeOpacity="0.45" />
+        <path d="M106 86 Q 112 162 128 224" stroke="#174B3E" strokeWidth="1.2" />
+        <path d="M128 224 Q 220 220 313 192" stroke="#18C6A0" strokeWidth="1.2" strokeOpacity="0.4" />
+        <path d="M313 192 Q 392 225 464 235" stroke="#18C6A0" strokeWidth="1.2" strokeOpacity="0.45" />
+        <path d="M448 93 Q 468 164 464 235" stroke="#174B3E" strokeWidth="1.2" />
+        <circle cx="106" cy="86" r="5.5" fill="#18C6A0" />
+        <circle cx="291" cy="56" r="6" fill="#18C6A0" />
+        <circle cx="448" cy="93" r="6.5" fill="#18C6A0" />
+        <circle cx="128" cy="224" r="5.5" fill="#12A989" />
+        <circle cx="313" cy="192" r="6" fill="#18C6A0" />
+        <circle cx="464" cy="235" r="6" fill="#18C6A0" />
+      </svg>
+    </div>
+  );
 }
 
 export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
@@ -15,6 +46,12 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
   const ArrowIcon = isRtl ? ArrowLeft : ArrowRight;
   const dataAiHref = locale === 'ar' ? '/ar/services/data-ai' : '/services/data-ai';
   const projectsHref = locale === 'ar' ? '/ar/projects' : '/projects';
+
+  const sectionRef = useRef<HTMLElement>(null);
+  const { hasEntered } = useViewportObserver(sectionRef, {
+    rootMargin: '240px 0px',
+    threshold: 0.01,
+  });
 
   const [activeStage, setActiveStage] = useState(0);
 
@@ -38,19 +75,19 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
             ]
           : [
               'Municipal & institutional dataset taxonomy and classification',
-              'Digital service adoption and citizen channel utilization telemetry',
+              'Digital service adoption and citizen channel utilization analysis',
               'Statistical performance auditing and operational bottleneck modeling',
             ],
     },
     {
       num: '02',
-      code: 'POWER-BI-TELEMETRY',
+      code: 'POWER-BI-SUITE',
       title: locale === 'ar' ? 'لوحات وتقارير Power BI التنفيذية' : 'Executive Power BI Dashboards & Reporting',
-      metric: 'Real-Time KPI',
-      metricLabel: locale === 'ar' ? 'منظومات قياس الأداء القيادية' : 'Executive Decision Telemetry',
+      metric: 'Executive KPI',
+      metricLabel: locale === 'ar' ? 'منظومات قياس الأداء القيادية' : 'Executive Decision Intelligence',
       desc:
         locale === 'ar'
-          ? 'تصميم وبناء منظومات تقارير ولوحات Power BI تفاعلية للقيادات العليا في دائرة البلديات والنقل لمتابعة مؤشرات الأداء الاستراتيجية والتشغيلية لحظياً.'
+          ? 'تصميم وبناء منظومات تقارير ولوحات Power BI تفاعلية للقيادات العليا في دائرة البلديات والنقل لمتابعة مؤشرات الأداء الاستراتيجية والتشغيلية.'
           : 'Bespoke Power BI dashboard ecosystems engineered for senior leadership at DMT and municipal authorities to monitor strategic KPIs and SLA compliance.',
       deliverables:
         locale === 'ar'
@@ -117,6 +154,7 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
 
   return (
     <section
+      ref={sectionRef}
       id="data-ai"
       className="py-24 md:py-36 bg-[#071C17] text-[#F4F7F5] border-b border-[#174B3E] relative overflow-hidden"
       dir={isRtl ? 'rtl' : 'ltr'}
@@ -150,14 +188,14 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
 
           <Link
             href={dataAiHref}
-            className="btn-slide-trigger inline-flex items-center gap-2.5 px-5 py-3 rounded-md bg-[#0B2922] hover:bg-[#10352C] text-[#18C6A0] border border-[#174B3E] hover:border-[#18C6A0] text-xs sm:text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] whitespace-nowrap shrink-0"
+            className="btn-slide-trigger btn-press inline-flex items-center gap-2.5 px-5 py-3 rounded-md bg-[#0B2922] hover:bg-[#10352C] text-[#18C6A0] border border-[#174B3E] hover:border-[#18C6A0] text-xs sm:text-sm font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] whitespace-nowrap shrink-0"
           >
             <span>{locale === 'ar' ? 'استكشف ممارسة البيانات والذكاء الاصطناعي' : 'Explore Data & AI Practice'}</span>
             <ArrowIcon className="w-4 h-4 shrink-0 btn-slide-arrow" />
           </Link>
         </div>
 
-        {/* Asymmetric Interactive Split: Left Progressive Accordion/Selector + Right Visual Telemetry Stage */}
+        {/* Asymmetric Interactive Split: Left Progressive Accordion/Selector + Right Animated Data Network Stage */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 pt-14 md:pt-18 items-stretch">
           {/* Left 6 Columns: Interactive Progressive Capability Selector */}
           <div className="reveal-item reveal-delay-2 lg:col-span-6 flex flex-col justify-between">
@@ -225,16 +263,16 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
             {/* Bottom Sovereign Proof Callout */}
             <div className="mt-8 pt-6 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[#A3B8B0]">
               <span>POWER BI · PYTHON · RPA · ENTERPRISE ETL</span>
-              <Link href={projectsHref} className="text-[#18C6A0] hover:underline inline-flex items-center gap-1">
+              <Link href={projectsHref} className="text-[#18C6A0] hover:underline inline-flex items-center gap-1 focus:outline-none focus-visible:underline">
                 <span>{locale === 'ar' ? 'سجل مشاريع البيانات (17)' : 'View Delivered Data Mandates'}</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>
 
-          {/* Right 6 Columns: Large Architectural Telemetry Visual + Active Capability Readout */}
+          {/* Right 6 Columns: Lazy-Activated Architectural Data & AI Network Stage */}
           <div className="reveal-item reveal-delay-3 lg:col-span-6 flex flex-col">
-            <div className="group relative flex-1 min-h-[380px] sm:min-h-[460px] rounded-xl overflow-hidden border border-[#174B3E] bg-[#0B2922] flex flex-col justify-between">
+            <div className="relative flex-1 rounded-xl overflow-hidden border border-[#174B3E] bg-[#0B2922] flex flex-col justify-between">
               <Image
                 src="/images/data_ai_telemetry_architecture_1794979011520.jpg"
                 alt={
@@ -245,36 +283,47 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 referrerPolicy="no-referrer"
-                className="object-cover object-center img-zoom-transition"
+                className="object-cover object-center opacity-35"
               />
               <div
                 className="absolute inset-0"
                 style={{
                   background:
-                    'linear-gradient(180deg, rgba(7,28,23,0.35) 0%, rgba(7,28,23,0.5) 45%, rgba(7,28,23,0.95) 100%)',
+                    'linear-gradient(180deg, rgba(7,28,23,0.72) 0%, rgba(7,28,23,0.82) 55%, rgba(7,28,23,0.96) 100%)',
                 }}
               />
 
-              {/* Top Telemetry Header Overlay */}
-              <div className="relative z-10 p-6 sm:p-8 flex items-center justify-between gap-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-[#071C17]/85 backdrop-blur-md border border-white/10 font-mono text-xs text-[#18C6A0]">
-                  <span className="w-2 h-2 rounded-full bg-[#18C6A0] animate-pulse" />
-                  <span>{current.num} · {current.code}</span>
-                </div>
-
-                <span className="font-mono text-xs text-[#F4F7F5] bg-[#071C17]/85 px-3 py-1.5 rounded border border-white/10">
+              {/* Top Stage Header */}
+              <div className="relative z-10 p-6 sm:p-8 pb-4 flex items-center justify-between gap-4">
+                <span className="font-mono text-xs text-[#18C6A0] tracking-wider">
+                  {current.num} · {current.code}
+                </span>
+                <span className="font-mono text-xs text-[#A3B8B0]">
                   DMT · ADCM · ADDA
                 </span>
               </div>
 
-              {/* Bottom Active Capability & AED 10M Flagship Proof */}
-              <div className="relative z-10 p-6 sm:p-8 lg:p-10 space-y-6">
-                <div className="p-5 sm:p-6 rounded-lg bg-[#071C17]/85 backdrop-blur-md border border-white/15 space-y-3">
+              {/* Center Interactive Domain Network Visualization (Lazy-loaded on viewport entry) */}
+              <div className="relative z-10 px-5 sm:px-7">
+                {hasEntered ? (
+                  <DataAiNetworkCanvas
+                    locale={locale}
+                    activeStage={activeStage}
+                    onSelectStage={setActiveStage}
+                  />
+                ) : (
+                  <StaticNetworkFallback />
+                )}
+              </div>
+
+              {/* Bottom Active Capability & AED 10M Flagship Contract Readout */}
+              <div className="relative z-10 p-6 sm:p-8 pt-5 space-y-5">
+                <div className="p-5 rounded-lg bg-[#071C17]/88 backdrop-blur-md border border-white/12 space-y-2.5">
                   <div className="flex items-baseline justify-between gap-4">
                     <span className="text-xs font-mono text-[#A3B8B0] uppercase">
                       {current.metricLabel}
                     </span>
-                    <span className="text-xl sm:text-2xl font-bold font-mono text-[#18C6A0] tabular-nums">
+                    <span className="text-lg sm:text-xl font-bold font-mono text-[#18C6A0] tabular-nums">
                       {current.metric}
                     </span>
                   </div>
@@ -297,7 +346,7 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
 
                   <Link
                     href={projectsHref}
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#18C6A0] hover:underline shrink-0"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#18C6A0] hover:underline shrink-0 focus:outline-none focus-visible:underline"
                   >
                     <span>{locale === 'ar' ? 'عرض بالسجل' : 'Inspect Mandate'}</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />

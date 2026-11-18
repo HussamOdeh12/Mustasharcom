@@ -16,8 +16,8 @@ export default function SectionReveal({
   id,
 }: SectionRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
-  // Start visible on SSR/initial render so content is 100% visible if JS is disabled,
-  // then animate below-the-fold sections smoothly when entering the viewport.
+  // Start visible on SSR/initial render so content is 100% accessible without JS,
+  // then arm below-the-fold sections for smooth viewport entrance transitions.
   const [revealState, setRevealState] = useState<'initial' | 'hidden' | 'visible'>('initial');
 
   useEffect(() => {
@@ -34,9 +34,8 @@ export default function SectionReveal({
     }
 
     const rect = el.getBoundingClientRect();
-    // If section is already well inside the viewport on initial load, keep it visible immediately.
-    // Otherwise prepare it for scroll-triggered entrance reveal.
-    if (rect.top < window.innerHeight * 0.78 && rect.bottom > 0) {
+    // Keep sections already in or above the viewport immediately visible
+    if (rect.top < window.innerHeight * 0.86) {
       setRevealState('visible');
       return;
     }
@@ -45,21 +44,33 @@ export default function SectionReveal({
 
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
+        for (const entry of entries) {
           if (entry.isIntersecting) {
             setRevealState('visible');
             observer.unobserve(entry.target);
           }
-        });
+        }
       },
       {
-        threshold: 0.08,
-        rootMargin: '0px 0px -48px 0px',
+        threshold: 0.06,
+        rootMargin: '0px 0px -36px 0px',
       }
     );
 
     observer.observe(el);
-    return () => observer.disconnect();
+
+    // Safety fallback: ensure content never remains trapped hidden on ultra-short viewports
+    const safetyTimer = window.setTimeout(() => {
+      const currentRect = el.getBoundingClientRect();
+      if (currentRect.top < window.innerHeight) {
+        setRevealState('visible');
+      }
+    }, 900);
+
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(safetyTimer);
+    };
   }, []);
 
   const stateClass =

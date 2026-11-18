@@ -169,3 +169,66 @@ test('Priority 5 & 7: Live HTTP SSR verification across English and Arabic route
     assert.ok(!html.includes('#82182E'), `Rendered HTML for ${route} must not contain legacy #82182E`);
   }
 });
+
+test('Priority 8: Motion foundation (lib/motion.ts) provides reduced-motion, viewport, and tab visibility hooks without hydration mismatches', () => {
+  const motionLib = fs.readFileSync(path.join(ROOT, 'lib/motion.ts'), 'utf8');
+  assert.ok(motionLib.includes('export function useReducedMotion'), 'Must export useReducedMotion');
+  assert.ok(motionLib.includes('export function useViewportObserver'), 'Must export useViewportObserver');
+  assert.ok(motionLib.includes('export function useDocumentVisible'), 'Must export useDocumentVisible');
+  assert.ok(motionLib.includes('useSyncExternalStore'), 'Must use useSyncExternalStore for SSR-safe subscriptions');
+  assert.ok(motionLib.includes('IntersectionObserver'), 'Must use IntersectionObserver for viewport visibility');
+});
+
+test('Priority 9: Hero & Data-AI Canvas visualizations are original, lazy-loaded, offscreen-suspended, cleaned up, and free of fake telemetry', () => {
+  const heroSection = fs.readFileSync(path.join(ROOT, 'components/sections/HeroSection.tsx'), 'utf8');
+  const heroLayer = fs.readFileSync(path.join(ROOT, 'components/motion/HeroTechLayer.tsx'), 'utf8');
+  const heroCanvas = fs.readFileSync(path.join(ROOT, 'components/motion/HeroTechCanvas.tsx'), 'utf8');
+  const spotlight = fs.readFileSync(path.join(ROOT, 'components/sections/DataAiSpotlight.tsx'), 'utf8');
+  const networkCanvas = fs.readFileSync(path.join(ROOT, 'components/motion/DataAiNetworkCanvas.tsx'), 'utf8');
+
+  // HeroSection must remain a Server Component (no 'use client') and render static SVG + HeroTechLayer
+  assert.ok(!heroSection.includes("'use client'"), 'HeroSection.tsx must remain a Server Component');
+  assert.ok(heroSection.includes('<HeroTechLayer'), 'HeroSection must include idle-deferred HeroTechLayer');
+
+  // HeroTechLayer defers mounting and lazy loads HeroTechCanvas client-only
+  assert.ok(heroLayer.includes('dynamic(() => import('), 'HeroTechLayer must dynamically import HeroTechCanvas');
+  assert.ok(heroLayer.includes('ssr: false'), 'HeroTechCanvas must use ssr: false');
+  assert.ok(heroLayer.includes('requestIdleCallback'), 'HeroTechLayer must defer initialization with requestIdleCallback');
+
+  // DataAiSpotlight lazy loads DataAiNetworkCanvas only when approaching viewport, with StaticNetworkFallback
+  assert.ok(spotlight.includes('dynamic(() => import('), 'DataAiSpotlight must dynamically import DataAiNetworkCanvas');
+  assert.ok(spotlight.includes('hasEntered'), 'DataAiSpotlight must gate DataAiNetworkCanvas on viewport hasEntered');
+  assert.ok(spotlight.includes('<StaticNetworkFallback />'), 'DataAiSpotlight must render static fallback prior to entry');
+
+  // Both canvases check reducedMotion, isInView, docVisible and perform full cleanup
+  for (const [name, code] of [
+    ['HeroTechCanvas', heroCanvas],
+    ['DataAiNetworkCanvas', networkCanvas],
+  ]) {
+    assert.ok(code.includes('useReducedMotion'), `${name} must use useReducedMotion`);
+    assert.ok(code.includes('useViewportObserver'), `${name} must use useViewportObserver`);
+    assert.ok(code.includes('useDocumentVisible'), `${name} must use useDocumentVisible`);
+    assert.ok(code.includes('!reducedMotion && isInView && docVisible'), `${name} must suspend loop when reduced-motion/offscreen/hidden`);
+    assert.ok(code.includes('cancelAnimationFrame'), `${name} must cancel rAF on cleanup`);
+    assert.ok(code.includes('resizeObserver.disconnect'), `${name} must disconnect ResizeObserver on cleanup`);
+    assert.ok(code.includes('removeEventListener'), `${name} must remove event listeners on cleanup`);
+    assert.ok(!/#6B1426|#82182E/i.test(code), `${name} must not contain legacy red/burgundy colors`);
+    assert.ok(!/THREE|WebGLRenderer/i.test(code), `${name} must use lightweight Canvas 2D without Three.js dependency bloat`);
+  }
+
+  // Ensure Data & AI Network Canvas uses domain-authentic labels and zero fabricated telemetry strings
+  const domainLabels = [
+    'Data Engineering',
+    'Analytics & Power BI',
+    'Artificial Intelligence',
+    'RPA Automation',
+    'Enterprise Systems',
+    'Digital Transformation',
+  ];
+  for (const label of domainLabels) {
+    assert.ok(networkCanvas.includes(label), `DataAiNetworkCanvas must include domain node: ${label}`);
+  }
+  const strippedUi = (networkCanvas + spotlight).replace(/\/\/.*$/gm, '');
+  assert.ok(!/\b(FPS|LATENCY|UPTIME|LIVE TELEMETRY)\b|99\.9%/i.test(strippedUi), 'Must not include fabricated operational telemetry');
+});
+

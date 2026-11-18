@@ -57,7 +57,7 @@ export default function MobileMenu({ locale }: MobileMenuProps) {
 
       {isOpen && (
         <div
-          className="fixed inset-x-0 top-16 sm:top-[76px] bottom-0 z-50 bg-[#F7F5F0] dark:bg-[#071C17] border-t border-[#DCE3DF] dark:border-[#174B3E] overflow-y-auto px-4 sm:px-6 py-6 flex flex-col justify-between shadow-2xl"
+          className="mobile-drawer-enter fixed inset-x-0 top-16 sm:top-[76px] bottom-0 z-50 bg-[#F7F5F0] dark:bg-[#071C17] border-t border-[#DCE3DF] dark:border-[#174B3E] overflow-y-auto px-4 sm:px-6 py-6 flex flex-col justify-between shadow-2xl"
           dir={isRtl ? 'rtl' : 'ltr'}
         >
           <div className="flex flex-col gap-5">
@@ -90,7 +90,7 @@ export default function MobileMenu({ locale }: MobileMenuProps) {
                       </button>
 
                       {servicesExpanded && (
-                        <div className="mt-2 py-2 px-3 rounded-md bg-[#ECE9E2]/70 dark:bg-[#0B2922] border border-[#DCE3DF] dark:border-[#174B3E] flex flex-col gap-2">
+                        <div className="page-transition-enter mt-2 py-2 px-3 rounded-md bg-[#ECE9E2]/70 dark:bg-[#0B2922] border border-[#DCE3DF] dark:border-[#174B3E] flex flex-col gap-2">
                           <Link
                             href={item.href[locale]}
                             className="text-xs font-bold text-[#174B3E] dark:text-[#18C6A0] py-1"

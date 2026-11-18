@@ -67,7 +67,7 @@ export default function Footer({ locale }: FooterProps) {
                   <Link
                     href={item.href[locale]}
                     prefetch={true}
-                    className="text-[#A5B8B1] hover:text-[#18C6A0] transition-colors inline-flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-sm"
+                    className="nav-link-underline text-[#A5B8B1] hover:text-[#18C6A0] transition-colors inline-flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-sm"
                   >
                     <span>{item.label[locale]}</span>
                   </Link>
@@ -89,7 +89,7 @@ export default function Footer({ locale }: FooterProps) {
                     prefetch={true}
                     className="group flex items-baseline gap-2.5 text-[#A5B8B1] hover:text-[#F4F7F5] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-sm"
                   >
-                    <span className="font-mono text-xs text-[#18C6A0] shrink-0">/{svc.number}</span>
+                    <span className="font-mono text-xs text-[#18C6A0] shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5">/{svc.number}</span>
                     <span className="line-clamp-1 group-hover:text-[#18C6A0] transition-colors">{svc.title[locale]}</span>
                   </Link>
                 </li>
@@ -120,10 +120,10 @@ export default function Footer({ locale }: FooterProps) {
                 <Mail className="w-4 h-4 text-[#18C6A0] shrink-0" />
                 <a
                   href={`mailto:${COMPANY_PROFILE.office.email}`}
-                  className="hover:text-[#18C6A0] transition-colors inline-flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-sm"
+                  className="group hover:text-[#18C6A0] transition-colors inline-flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-sm"
                 >
                   <span>{COMPANY_PROFILE.office.email}</span>
-                  <ArrowUpRight className="w-3 h-3 opacity-60" />
+                  <ArrowUpRight className="w-3 h-3 opacity-60 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
               </div>
               <div className="text-[11px] font-mono text-[#7E968E] pt-1">
@@ -139,13 +139,13 @@ export default function Footer({ locale }: FooterProps) {
             © {new Date().getFullYear()} {COMPANY_PROFILE.name[locale]}. {t.rightsReserved}
           </p>
           <div className="flex flex-wrap items-center gap-6">
-            <Link href={privacyHref} prefetch={true} className="hover:text-[#18C6A0] transition-colors whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-sm">
+            <Link href={privacyHref} prefetch={true} className="nav-link-underline hover:text-[#18C6A0] transition-colors whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-sm">
               {t.privacyPolicy}
             </Link>
-            <Link href={termsHref} prefetch={true} className="hover:text-[#18C6A0] transition-colors whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-sm">
+            <Link href={termsHref} prefetch={true} className="nav-link-underline hover:text-[#18C6A0] transition-colors whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-sm">
               {t.termsOfService}
             </Link>
-            <Link href={complianceHref} prefetch={true} className="hover:text-[#18C6A0] transition-colors whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-sm">
+            <Link href={complianceHref} prefetch={true} className="nav-link-underline hover:text-[#18C6A0] transition-colors whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] rounded-sm">
               {t.qualityCompliance}
             </Link>
           </div>

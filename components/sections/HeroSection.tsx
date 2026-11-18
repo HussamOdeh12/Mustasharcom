@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { ArrowRight, ArrowLeft, ArrowUpRight } from 'lucide-react';
 import { Locale, COMPANY_PROFILE } from '@/lib/company-data';
 import { UI_STRINGS } from '@/lib/translations';
+import HeroTechLayer from '../motion/HeroTechLayer';
 
 interface HeroSectionProps {
   locale: Locale;
@@ -42,8 +43,9 @@ export default function HeroSection({ locale }: HeroSectionProps) {
         aria-hidden="true"
       />
 
+      {/* Server-rendered crisp static architectural contour SVG (visible immediately at FCP/LCP) */}
       <svg
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-35"
+        className="absolute inset-0 w-full h-full pointer-events-none opacity-30"
         viewBox="0 0 1440 960"
         fill="none"
         preserveAspectRatio="xMidYMid slice"
@@ -69,11 +71,13 @@ export default function HeroSection({ locale }: HeroSectionProps) {
         />
       </svg>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-20 md:pt-24 md:pb-28 lg:pt-28 lg:pb-32">
+      {/* Idle-deferred Canvas 2D architectural node & signal field */}
+      <HeroTechLayer />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-20 md:pt-24 md:pb-28 lg:pt-28 lg:pb-32">
         {/* Stage 1: Editorial Sovereign Kicker */}
         <div className="hero-stagger-1 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs sm:text-sm font-medium text-[#A3B8B0] mb-8 md:mb-12">
-          <span className="inline-flex items-center gap-2 text-[#18C6A0] font-semibold tracking-wide">
-            <span className="w-2 h-2 rounded-full bg-[#18C6A0]" aria-hidden="true" />
+          <span className="text-[#18C6A0] font-semibold tracking-wide">
             {COMPANY_PROFILE.ownership[locale]}
           </span>
           <span aria-hidden="true" className="text-[#174B3E]">/</span>
@@ -81,11 +85,11 @@ export default function HeroSection({ locale }: HeroSectionProps) {
             {COMPANY_PROFILE.location.city[locale]}, {COMPANY_PROFILE.location.country[locale]} · Est. {COMPANY_PROFILE.established}
           </span>
           <span aria-hidden="true" className="text-[#174B3E]">/</span>
-          <Link href={complianceHref} className="hover:text-[#18C6A0] transition-colors font-mono">
+          <Link href={complianceHref} className="hover:text-[#18C6A0] transition-colors font-mono focus:outline-none focus-visible:underline">
             ICV {COMPANY_PROFILE.certifications.icv.score}
           </Link>
           <span aria-hidden="true" className="text-[#174B3E]">/</span>
-          <Link href={complianceHref} className="hover:text-[#18C6A0] transition-colors font-mono">
+          <Link href={complianceHref} className="hover:text-[#18C6A0] transition-colors font-mono focus:outline-none focus-visible:underline">
             {COMPANY_PROFILE.certifications.iso.standard}
           </Link>
         </div>
@@ -125,7 +129,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
           <div className="lg:col-span-5 flex flex-wrap items-center lg:justify-end gap-4">
             <Link
               href={contactHref}
-              className="btn-slide-trigger group inline-flex items-center justify-center gap-3 px-7 py-4 rounded-md bg-[#18C6A0] hover:bg-[#12A989] text-[#071C17] text-sm sm:text-base font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] cursor-pointer whitespace-nowrap"
+              className="btn-slide-trigger btn-press group inline-flex items-center justify-center gap-3 px-7 py-4 rounded-md bg-[#18C6A0] hover:bg-[#12A989] text-[#071C17] text-sm sm:text-base font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] focus-visible:ring-offset-2 focus-visible:ring-offset-[#071C17] cursor-pointer whitespace-nowrap"
             >
               <span>{t.requestRfp}</span>
               <ArrowIcon className="w-4 h-4 shrink-0 btn-slide-arrow" />
@@ -133,7 +137,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
 
             <Link
               href={projectsHref}
-              className="group inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-md bg-[#0B2922] hover:bg-[#10352C] text-[#F4F7F5] border border-[#174B3E] hover:border-[#18C6A0] text-sm sm:text-base font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] cursor-pointer whitespace-nowrap"
+              className="btn-press group inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-md bg-[#0B2922] hover:bg-[#10352C] text-[#F4F7F5] border border-[#174B3E] hover:border-[#18C6A0] text-sm sm:text-base font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] cursor-pointer whitespace-nowrap"
             >
               <span>{t.viewProjects}</span>
               <ArrowUpRight className="w-4 h-4 opacity-80 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -141,7 +145,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
           </div>
         </div>
 
-        {/* Stage 4: Expansive Cinematic Architectural Stage with Integrated Sovereign Telemetry */}
+        {/* Stage 4: Expansive Cinematic Architectural Stage with Integrated Sovereign Credentials */}
         <div className="hero-media-reveal mt-12 md:mt-16">
           <div className="group relative rounded-xl overflow-hidden border border-[#174B3E] bg-[#0B2922]">
             <div className="relative h-[340px] sm:h-[440px] md:h-[520px] lg:h-[580px] w-full overflow-hidden">
@@ -170,7 +174,6 @@ export default function HeroSection({ locale }: HeroSectionProps) {
               {/* Top Floating Architectural Coordinate Header inside Frame */}
               <div className="absolute top-0 inset-x-0 p-5 sm:p-8 flex flex-wrap items-center justify-between gap-4">
                 <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded bg-[#071C17]/80 backdrop-blur-md border border-white/10 text-xs font-mono text-[#F4F7F5]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#18C6A0]" />
                   <span>
                     {locale === 'ar'
                       ? 'أبوظبي · رخصة اقتصادية CN-2769971'
@@ -180,14 +183,14 @@ export default function HeroSection({ locale }: HeroSectionProps) {
 
                 <Link
                   href={servicesHref}
-                  className="inline-flex items-center gap-2 px-4 py-1.5 rounded bg-[#071C17]/80 hover:bg-[#071C17] backdrop-blur-md border border-white/15 hover:border-[#18C6A0] text-xs font-medium text-[#F4F7F5] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0]"
+                  className="btn-slide-trigger inline-flex items-center gap-2 px-4 py-1.5 rounded bg-[#071C17]/80 hover:bg-[#071C17] backdrop-blur-md border border-white/15 hover:border-[#18C6A0] text-xs font-medium text-[#F4F7F5] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0]"
                 >
                   <span>{t.exploreServices} (01 — 06)</span>
-                  <ArrowIcon className="w-3.5 h-3.5 text-[#18C6A0]" />
+                  <ArrowIcon className="w-3.5 h-3.5 text-[#18C6A0] btn-slide-arrow" />
                 </Link>
               </div>
 
-              {/* Bottom Integrated Editorial Quote & Sovereign Telemetry Strip inside Cinema Frame */}
+              {/* Bottom Integrated Editorial Quote & Sovereign Figures inside Cinema Frame */}
               <div className="absolute bottom-0 inset-x-0 p-6 sm:p-8 lg:p-10">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end pt-6 border-t border-white/15">
                   <div className="lg:col-span-5 space-y-2">

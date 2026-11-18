@@ -149,16 +149,16 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
                       className="object-cover object-center img-zoom-transition"
                     />
                     <div
-                      className="absolute inset-0"
+                      className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-90"
                       style={{
                         background:
-                          'linear-gradient(180deg, rgba(7,28,23,0.12) 0%, rgba(7,28,23,0.32) 60%, rgba(7,28,23,0.9) 100%)',
+                          'linear-gradient(180deg, rgba(7,28,23,0.12) 0%, rgba(7,28,23,0.34) 58%, rgba(7,28,23,0.92) 100%)',
                       }}
                     />
 
                     {/* Top Category & Period Tag */}
                     <div className="absolute top-0 inset-x-0 p-5 sm:p-6 flex items-center justify-between gap-4">
-                      <span className="px-3 py-1 rounded bg-[#071C17]/80 backdrop-blur-md border border-white/10 text-xs font-mono text-[#18C6A0]">
+                      <span className="px-3 py-1 rounded bg-[#071C17]/80 backdrop-blur-md border border-white/10 text-xs font-mono text-[#18C6A0] transition-colors group-hover:border-[#18C6A0]/50">
                         {item.category}
                       </span>
                       <span className="px-3 py-1 rounded bg-[#071C17]/80 backdrop-blur-md border border-white/10 text-xs font-mono text-[#F4F7F5]">
@@ -177,8 +177,8 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
                         </div>
                       </div>
 
-                      <span className="w-11 h-11 rounded-full bg-[#18C6A0] text-[#071C17] flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-                        <ArrowUpRight className="w-5 h-5" />
+                      <span className="w-11 h-11 rounded-full bg-[#18C6A0] text-[#071C17] flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:bg-[#12A989]">
+                        <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                       </span>
                     </div>
                   </Link>
@@ -191,7 +191,7 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
                   }`}
                 >
                   <div className="space-y-5">
-                    <div className="flex items-center justify-between border-b border-[#DCE3DF] dark:border-[#174B3E] pb-4">
+                    <div className="reveal-line flex items-center justify-between border-b border-[#DCE3DF] dark:border-[#174B3E] pb-4">
                       <span className="font-mono text-sm font-bold text-[#174B3E] dark:text-[#18C6A0]">
                         CASE STUDY {item.index}
                       </span>

@@ -204,7 +204,7 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
                   role="tab"
                   aria-selected={isSelected}
                   onClick={() => setActivePhase(idx)}
-                  className={`p-6 sm:p-7 text-start transition-all duration-200 cursor-pointer border-b md:border-b-0 md:border-e last:border-0 border-[#DCE3DF] dark:border-[#174B3E] flex items-center justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#18C6A0] ${
+                  className={`btn-press p-6 sm:p-7 text-start transition-all duration-200 cursor-pointer border-b md:border-b-0 md:border-e last:border-0 border-[#DCE3DF] dark:border-[#174B3E] flex items-center justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#18C6A0] ${
                     isSelected
                       ? 'bg-[#071C17] text-[#F4F7F5] dark:bg-[#18C6A0] dark:text-[#071C17]'
                       : 'hover:bg-white dark:hover:bg-[#10352C] text-[#3E544C] dark:text-[#A3B8B0]'
@@ -214,12 +214,15 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
                     {phase.tabLabel}
                   </span>
                   <span
-                    className={`w-2.5 h-2.5 rounded-full ${
+                    className={`font-mono text-xs ${
                       isSelected
-                        ? 'bg-[#18C6A0] dark:bg-[#071C17]'
-                        : 'bg-[#DCE3DF] dark:bg-[#174B3E]'
+                        ? 'text-[#18C6A0] dark:text-[#071C17]'
+                        : 'text-[#697671] dark:text-[#6E857D]'
                     }`}
-                  />
+                    aria-hidden="true"
+                  >
+                    {phase.step}
+                  </span>
                 </button>
               );
             })}
@@ -301,8 +304,7 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
             {/* With Mustasharcom (High-Contrast Dark Editorial Panel) */}
             <div className="lg:col-span-7 p-8 sm:p-12 rounded-xl border border-[#174B3E] bg-[#071C17] text-[#F4F7F5] flex flex-col justify-between relative overflow-hidden">
               <div className="space-y-6 relative z-10">
-                <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#18C6A0]">
-                  <span className="w-2 h-2 rounded-full bg-[#18C6A0]" />
+                <div className="text-xs font-mono uppercase tracking-wider text-[#18C6A0]">
                   <span>{locale === 'ar' ? 'مع مستشاركم للحلول المعلوماتية' : 'With Mustasharcom'}</span>
                 </div>
                 <h3 className="text-2xl sm:text-3xl font-bold text-[#F4F7F5] tracking-tight leading-snug">
@@ -345,7 +347,7 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
             {clientEntities.map((entity) => (
               <div
                 key={entity.idx}
-                className="p-7 sm:p-8 border-e border-b border-[#DCE3DF] dark:border-[#174B3E] bg-white/80 dark:bg-[#0B2922]/80 hover:bg-white dark:hover:bg-[#0B2922] transition-colors flex flex-col justify-between gap-4"
+                className="group p-7 sm:p-8 border-e border-b border-[#DCE3DF] dark:border-[#174B3E] bg-white/80 dark:bg-[#0B2922]/80 hover:bg-white dark:hover:bg-[#0B2922] transition-colors flex flex-col justify-between gap-4"
               >
                 <div className="space-y-2.5">
                   <span className="font-mono text-xs font-bold text-[#174B3E] dark:text-[#18C6A0]">

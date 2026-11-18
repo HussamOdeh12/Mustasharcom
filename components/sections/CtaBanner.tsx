@@ -52,10 +52,9 @@ export default function CtaBanner({ locale }: CtaBannerProps) {
       </svg>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end justify-between pb-16 border-b border-[#174B3E]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end justify-between pb-16">
           <div className="reveal-item reveal-delay-1 lg:col-span-8 space-y-6">
-            <div className="inline-flex items-center gap-2.5 text-xs font-mono uppercase tracking-widest text-[#18C6A0]">
-              <span className="w-2 h-2 rounded-full bg-[#18C6A0]" />
+            <div className="text-xs font-mono uppercase tracking-widest text-[#18C6A0]">
               <span>
                 {COMPANY_PROFILE.ownership[locale]} · {COMPANY_PROFILE.location.city[locale]} · ADRA {COMPANY_PROFILE.licence.number}
               </span>
@@ -86,7 +85,7 @@ export default function CtaBanner({ locale }: CtaBannerProps) {
           <div className="reveal-item reveal-delay-2 lg:col-span-4 flex flex-col sm:flex-row lg:flex-col items-stretch sm:items-center lg:items-end gap-4">
             <Link
               href={contactHref}
-              className="btn-slide-trigger inline-flex items-center justify-center gap-3 px-8 py-4.5 rounded-md bg-[#18C6A0] hover:bg-[#12A989] text-[#071C17] text-base font-bold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] cursor-pointer whitespace-nowrap"
+              className="btn-slide-trigger btn-press inline-flex items-center justify-center gap-3 px-8 py-4.5 rounded-md bg-[#18C6A0] hover:bg-[#12A989] text-[#071C17] text-base font-bold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] cursor-pointer whitespace-nowrap"
             >
               <span>{t.requestRfp}</span>
               <ArrowIcon className="w-4 h-4 shrink-0 btn-slide-arrow" />
@@ -94,13 +93,15 @@ export default function CtaBanner({ locale }: CtaBannerProps) {
 
             <Link
               href={projectsHref}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md bg-[#0B2922] hover:bg-[#10352C] text-[#F4F7F5] border border-[#174B3E] hover:border-[#18C6A0] text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] whitespace-nowrap"
+              className="btn-press inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md bg-[#0B2922] hover:bg-[#10352C] text-[#F4F7F5] border border-[#174B3E] hover:border-[#18C6A0] text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] whitespace-nowrap"
             >
               <span>{t.viewProjects} (17)</span>
               <ArrowUpRight className="w-4 h-4 text-[#18C6A0]" />
             </Link>
           </div>
         </div>
+
+        <div className="reveal-line h-px bg-[#174B3E]" aria-hidden="true" />
 
         {/* Bottom Direct Executive Contact & Trust Strip */}
         <div className="reveal-item reveal-delay-3 pt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6 text-xs sm:text-sm text-[#A3B8B0]">

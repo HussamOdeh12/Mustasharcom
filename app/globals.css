@@ -61,25 +61,40 @@ html {
 }
 
 /* ============================================================================
-   CONSILIO-INSPIRED EDITORIAL MOTION & REVEAL SYSTEM
-   Suggested duration: 450-800ms | Easing: cubic-bezier(0.22, 1, 0.36, 1)
+   ADVANCED EDITORIAL MOTION & INTERACTION SYSTEM
+   Compositor-only transforms & opacity | Easing: cubic-bezier(0.22, 1, 0.36, 1)
    ============================================================================ */
 
-/* Page Transition Animation */
+/* Page / Drawer / Panel Entrance */
 @keyframes pageTransitionEnter {
   0% {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translate3d(0, 10px, 0);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 .page-transition-enter {
   animation: pageTransitionEnter 320ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
   will-change: opacity, transform;
+}
+
+@keyframes mobileDrawerEnter {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -10px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.mobile-drawer-enter {
+  animation: mobileDrawerEnter 240ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 /* Staggered Hero Entrance Reveals */
@@ -97,7 +112,7 @@ html {
 @keyframes heroMediaReveal {
   0% {
     opacity: 0;
-    transform: scale(1.035) translate3d(0, 22px, 0);
+    transform: scale(1.03) translate3d(0, 20px, 0);
   }
   100% {
     opacity: 1;
@@ -106,35 +121,35 @@ html {
 }
 
 .hero-stagger-1 {
-  animation: heroFadeUp 650ms cubic-bezier(0.22, 1, 0.36, 1) 40ms both;
+  animation: heroFadeUp 600ms cubic-bezier(0.22, 1, 0.36, 1) 40ms both;
 }
 
 .hero-stagger-2 {
-  animation: heroFadeUp 750ms cubic-bezier(0.22, 1, 0.36, 1) 140ms both;
+  animation: heroFadeUp 700ms cubic-bezier(0.22, 1, 0.36, 1) 130ms both;
 }
 
 .hero-stagger-3 {
-  animation: heroFadeUp 750ms cubic-bezier(0.22, 1, 0.36, 1) 240ms both;
+  animation: heroFadeUp 700ms cubic-bezier(0.22, 1, 0.36, 1) 220ms both;
 }
 
 .hero-stagger-4 {
-  animation: heroFadeUp 750ms cubic-bezier(0.22, 1, 0.36, 1) 340ms both;
+  animation: heroFadeUp 700ms cubic-bezier(0.22, 1, 0.36, 1) 310ms both;
 }
 
 .hero-media-reveal {
-  animation: heroMediaReveal 800ms cubic-bezier(0.22, 1, 0.36, 1) 200ms both;
+  animation: heroMediaReveal 800ms cubic-bezier(0.22, 1, 0.36, 1) 180ms both;
 }
 
 /* Scroll-Triggered Section Reveal & Nested Stagger System */
 .section-reveal {
-  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
-              transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 680ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
 
 .section-reveal-hidden {
   opacity: 0;
-  transform: translate3d(0, 28px, 0);
+  transform: translate3d(0, 24px, 0);
 }
 
 .section-reveal-visible {
@@ -144,14 +159,14 @@ html {
 
 /* Nested Staggered Child Items inside SectionReveal */
 .reveal-item {
-  transition: opacity 650ms cubic-bezier(0.22, 1, 0.36, 1),
-              transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 620ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
 
 .section-reveal-hidden .reveal-item {
   opacity: 0;
-  transform: translate3d(0, 22px, 0);
+  transform: translate3d(0, 20px, 0);
 }
 
 .section-reveal-visible .reveal-item {
@@ -159,35 +174,72 @@ html {
   transform: translate3d(0, 0, 0);
 }
 
-.reveal-delay-1 { transition-delay: 80ms; }
-.reveal-delay-2 { transition-delay: 160ms; }
-.reveal-delay-3 { transition-delay: 240ms; }
-.reveal-delay-4 { transition-delay: 320ms; }
+.reveal-delay-1 { transition-delay: 70ms; }
+.reveal-delay-2 { transition-delay: 140ms; }
+.reveal-delay-3 { transition-delay: 210ms; }
+.reveal-delay-4 { transition-delay: 280ms; }
 
-/* Consilio-style Card Lift & Editorial Image Zoom */
+/* Animated Horizontal Accent Line Reveal (RTL/LTR aware) */
+.reveal-line {
+  transform-origin: left center;
+  transition: transform 720ms cubic-bezier(0.22, 1, 0.36, 1) 120ms,
+              opacity 520ms cubic-bezier(0.22, 1, 0.36, 1) 120ms;
+}
+
+[dir="rtl"] .reveal-line {
+  transform-origin: right center;
+}
+
+.section-reveal-hidden .reveal-line {
+  opacity: 0;
+  transform: scaleX(0.18);
+}
+
+.section-reveal-visible .reveal-line {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* Consilio-style Card Lift, Illumination & Editorial Image Zoom */
 .hover-card-lift {
-  transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
-              border-color 280ms cubic-bezier(0.22, 1, 0.36, 1),
-              background-color 280ms cubic-bezier(0.22, 1, 0.36, 1),
-              box-shadow 350ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 260ms cubic-bezier(0.22, 1, 0.36, 1),
+              background-color 260ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .img-zoom-transition {
-  transition: transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .hover-card-lift:hover {
     transform: translateY(-4px);
+    box-shadow: 0 18px 36px -18px rgba(7, 28, 23, 0.24);
+  }
+  .dark .hover-card-lift:hover {
+    box-shadow: 0 18px 36px -16px rgba(24, 198, 160, 0.16);
   }
   .group:hover .img-zoom-transition {
     transform: scale(1.045);
   }
 }
 
-/* Consilio Button / Link Sliding Arrow & Nav Underline Micro-interaction */
+/* Consilio Button / Link Sliding Arrow & Press Feedback */
 .btn-slide-arrow {
-  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-press {
+  transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1),
+              background-color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+              color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-press:active {
+  transform: scale(0.985);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -201,6 +253,7 @@ html {
   }
 }
 
+/* Directional Navigation & Footer Link Underline Micro-interaction */
 .nav-link-underline {
   position: relative;
 }
@@ -214,12 +267,35 @@ html {
   height: 2px;
   background-color: #18C6A0;
   transform: scaleX(0);
-  transform-origin: center;
+  transform-origin: left center;
   transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+[dir="rtl"] .nav-link-underline::after {
+  transform-origin: right center;
+}
+
 .nav-link-underline:hover::after,
+.nav-link-underline:focus-visible::after,
 .nav-link-underline[data-active="true"]::after {
+  transform: scaleX(1);
+}
+
+/* Service Card Accent Bar Transition */
+.service-accent-bar {
+  transform: scaleX(0.22);
+  transform-origin: left center;
+  transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[dir="rtl"] .service-accent-bar {
+  transform-origin: right center;
+}
+
+.service-card-active .service-accent-bar,
+.service-card-item:hover .service-accent-bar,
+.service-card-item:focus-within .service-accent-bar {
   transform: scaleX(1);
 }
 
@@ -238,6 +314,7 @@ html {
     scroll-behavior: auto;
   }
   .page-transition-enter,
+  .mobile-drawer-enter,
   .hero-stagger-1,
   .hero-stagger-2,
   .hero-stagger-3,
@@ -252,7 +329,10 @@ html {
   .section-reveal-visible,
   .reveal-item,
   .section-reveal-hidden .reveal-item,
-  .section-reveal-visible .reveal-item {
+  .section-reveal-visible .reveal-item,
+  .reveal-line,
+  .section-reveal-hidden .reveal-line,
+  .section-reveal-visible .reveal-line {
     transition: none !important;
     transform: none !important;
     opacity: 1 !important;
@@ -261,7 +341,11 @@ html {
   .hover-card-lift:hover,
   .img-zoom-transition,
   .group:hover .img-zoom-transition,
-  .btn-slide-arrow {
+  .btn-slide-arrow,
+  .btn-press,
+  .btn-press:active,
+  .nav-link-underline::after,
+  .service-accent-bar {
     transform: none !important;
     transition: none !important;
   }
