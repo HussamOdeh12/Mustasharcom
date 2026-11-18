@@ -24,7 +24,6 @@ export default function Breadcrumbs({ locale, items }: BreadcrumbsProps) {
     ...items,
   ];
 
-  // Generate Schema.org BreadcrumbList JSON-LD
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -44,7 +43,7 @@ export default function Breadcrumbs({ locale, items }: BreadcrumbsProps) {
       />
       <nav
         aria-label="Breadcrumbs"
-        className="flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 py-2.5 overflow-x-auto whitespace-nowrap"
+        className="flex items-center gap-1.5 text-xs text-[#687670] dark:text-[#8FA19A] py-2.5 overflow-x-auto whitespace-nowrap"
         dir={isRtl ? 'rtl' : 'ltr'}
       >
         {allItems.map((item, idx) => {
@@ -52,16 +51,16 @@ export default function Breadcrumbs({ locale, items }: BreadcrumbsProps) {
 
           return (
             <React.Fragment key={idx}>
-              {idx > 0 && <Separator className="w-3.5 h-3.5 text-zinc-600 dark:text-zinc-400 shrink-0" />}
+              {idx > 0 && <Separator className="w-3.5 h-3.5 text-[#687670] dark:text-[#8FA19A] shrink-0" />}
               {item.href && !isLast ? (
                 <Link
                   href={item.href}
-                  className="hover:text-[#6B1426] dark:hover:text-zinc-200 transition-colors"
+                  className="hover:text-[#0B1713] dark:hover:text-[#F4F6F5] transition-colors"
                 >
                   {item.label}
                 </Link>
               ) : (
-                <span className="font-semibold text-zinc-900 dark:text-zinc-200" aria-current={isLast ? 'page' : undefined}>
+                <span className="font-medium text-[#0B1713] dark:text-[#F4F6F5]" aria-current={isLast ? 'page' : undefined}>
                   {item.label}
                 </span>
               )}

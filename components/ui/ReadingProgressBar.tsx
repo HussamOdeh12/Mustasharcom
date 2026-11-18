@@ -51,12 +51,12 @@ export default function ReadingProgressBar({ locale = 'en' }: ReadingProgressBar
 
   return (
     <div
-      className="fixed top-0 left-0 right-0 z-[60] h-[3px] bg-transparent pointer-events-none select-none"
+      className="fixed top-0 left-0 right-0 z-[60] h-[2px] bg-transparent pointer-events-none select-none"
       aria-hidden="true"
     >
       <div
         ref={barRef}
-        className="h-full w-full bg-[#6B1426] dark:bg-[#F38C9C] shadow-xs will-change-transform"
+        className="h-full w-full bg-[#6B1426] dark:bg-[#2DD4A4] will-change-transform"
         style={{
           transform: 'scaleX(0)',
           transformOrigin: isRtl ? 'right' : 'left',

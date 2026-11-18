@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import { Shield, Award, Building2, CheckCircle2, FileCheck } from 'lucide-react';
 import { Locale, COMPANY_PROFILE } from '@/lib/company-data';
 
 interface CompanyCredibilityBarProps {
@@ -10,75 +9,76 @@ interface CompanyCredibilityBarProps {
 export default function CompanyCredibilityBar({ locale }: CompanyCredibilityBarProps) {
   const isRtl = locale === 'ar';
   const complianceHref = locale === 'ar' ? '/ar/quality-compliance' : '/quality-compliance';
+  const projectsHref = locale === 'ar' ? '/ar/projects' : '/projects';
 
   const items = [
     {
-      icon: <CheckCircle2 className="w-4 h-4 text-[#008751] shrink-0" />,
+      index: '01',
       primary: COMPANY_PROFILE.ownership[locale],
-      secondary: locale === 'ar' ? 'أبوظبي، دولة الإمارات' : 'Abu Dhabi, UAE',
+      secondary: locale === 'ar' ? 'أبوظبي، دولة الإمارات' : 'Sovereign UAE Enterprise',
       href: null,
     },
     {
-      icon: <Award className="w-4 h-4 text-[#008751] shrink-0" />,
+      index: '02',
       primary: `ICV ${COMPANY_PROFILE.certifications.icv.score}`,
-      secondary: locale === 'ar' ? 'شهادة القيمة المحلية المضافة' : 'In-Country Value Certified',
+      secondary: locale === 'ar' ? 'شهادة القيمة المحلية (153777)' : 'In-Country Value (Cert. 153777)',
       href: complianceHref,
     },
     {
-      icon: <Shield className="w-4 h-4 text-[#6B1426] dark:text-[#F38C9C] shrink-0" />,
+      index: '03',
       primary: COMPANY_PROFILE.certifications.iso.standard,
-      secondary: locale === 'ar' ? 'نظام إدارة الجودة المعتمد' : 'Quality Management System',
+      secondary: locale === 'ar' ? 'نظام إدارة الجودة (UAF140791497)' : 'Quality Management (UAF140791497)',
       href: complianceHref,
     },
     {
-      icon: <FileCheck className="w-4 h-4 text-zinc-700 dark:text-zinc-300 shrink-0" />,
-      primary: `ADRA Lic. ${COMPANY_PROFILE.licence.number}`,
-      secondary: locale === 'ar' ? 'اقتصادية أبوظبي (سارية حتى 2031)' : 'Abu Dhabi DED (Valid to 2031)',
+      index: '04',
+      primary: `ADRA ${COMPANY_PROFILE.licence.number}`,
+      secondary: locale === 'ar' ? 'اقتصادية أبوظبي (حتى 2031)' : 'Abu Dhabi DED (Valid to 2031)',
       href: complianceHref,
     },
     {
-      icon: <Building2 className="w-4 h-4 text-[#6B1426] dark:text-[#F38C9C] shrink-0" />,
+      index: '05',
       primary: COMPANY_PROFILE.metrics.quantifiableValue,
-      secondary: locale === 'ar' ? 'قيمة عقود حكومية منفذة ومعتمدة' : 'Verified Gov. Contract Value',
-      href: locale === 'ar' ? '/ar/projects' : '/projects',
+      secondary: locale === 'ar' ? '17 عقداً حكومياً موثقاً' : '17 Public Sector Contracts',
+      href: projectsHref,
     },
   ];
 
   return (
     <section
-      className="border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#0E1322] transition-colors"
+      className="border-b border-[#E3DFD7] dark:border-[#1A2E26] bg-[#F3EFEA] dark:bg-[#0A1612] transition-colors"
       dir={isRtl ? 'rtl' : 'ltr'}
       aria-label={locale === 'ar' ? 'الاعتمادات والمؤشرات السيادية' : 'Sovereign Credentials & Accreditations'}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6 divide-y sm:divide-y-0 divide-zinc-100 dark:divide-zinc-800">
-          {items.map((item, index) => {
-            const content = (
-              <div className="flex items-center gap-3 py-1">
-                <div className="p-2 rounded-lg bg-zinc-50 dark:bg-zinc-800/70 border border-zinc-200/60 dark:border-zinc-700/60 shrink-0">
-                  {item.icon}
-                </div>
-                <div className="min-w-0">
-                  <div className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-zinc-100 truncate">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          {items.map((item) => {
+            const inner = (
+              <div className="flex flex-col gap-1">
+                <div className="flex items-baseline gap-2">
+                  <span className="font-mono text-[11px] text-[#6B1426] dark:text-[#2DD4A4]">
+                    {item.index}.
+                  </span>
+                  <span className="text-sm font-bold text-[#0B1713] dark:text-[#F4F6F5] font-mono tabular-nums truncate">
                     {item.primary}
-                  </div>
-                  <div className="text-[11px] text-zinc-600 dark:text-zinc-400 truncate">
-                    {item.secondary}
-                  </div>
+                  </span>
+                </div>
+                <div className="text-xs text-[#485650] dark:text-[#8FA19A] truncate">
+                  {item.secondary}
                 </div>
               </div>
             );
 
             return item.href ? (
               <Link
-                key={index}
+                key={item.index}
                 href={item.href}
-                className="group block hover:opacity-85 transition-opacity"
+                className="group block hover:opacity-80 transition-opacity"
               >
-                {content}
+                {inner}
               </Link>
             ) : (
-              <div key={index}>{content}</div>
+              <div key={item.index}>{inner}</div>
             );
           })}
         </div>

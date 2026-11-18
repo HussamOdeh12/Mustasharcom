@@ -56,14 +56,14 @@ export default function ThemeToggle({
       type="button"
       suppressHydrationWarning
       onClick={toggleTheme}
-      className={`inline-flex items-center justify-center gap-2 p-2 rounded-lg text-zinc-700 dark:text-zinc-200 hover:text-[#6B1426] dark:hover:text-[#F38C9C] hover:bg-zinc-100 dark:hover:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-800 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B1426] cursor-pointer shrink-0 ${className}`}
+      className={`inline-flex items-center justify-center gap-2 p-2 rounded-md text-[#2C3A34] dark:text-[#C8D4CE] hover:text-[#0B1713] dark:hover:text-white hover:bg-[#F3EFEA] dark:hover:bg-[#10221C] border border-[#E3DFD7] dark:border-[#1A2E26] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B1426] cursor-pointer shrink-0 ${className}`}
       aria-label={label}
       title={label}
     >
       {isDark ? (
-        <Sun className="w-4 h-4 text-amber-400 transition-transform duration-200 hover:rotate-45" />
+        <Sun className="w-4 h-4 text-[#2DD4A4] transition-transform duration-200 hover:rotate-45" />
       ) : (
-        <Moon className="w-4 h-4 text-zinc-700 dark:text-zinc-300 transition-transform duration-200 hover:-rotate-12" />
+        <Moon className="w-4 h-4 text-[#2C3A34] transition-transform duration-200 hover:-rotate-12" />
       )}
       {showLabel && (
         <span className="text-xs font-medium whitespace-nowrap">

@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { Target, Compass, Award, ArrowRight, ArrowLeft } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowRight, ArrowLeft } from 'lucide-react';
 import { Locale, COMPANY_PROFILE } from '@/lib/company-data';
 import { UI_STRINGS } from '@/lib/translations';
 
@@ -14,99 +15,113 @@ export default function WhoWeAreSection({ locale }: WhoWeAreSectionProps) {
   const ArrowIcon = isRtl ? ArrowLeft : ArrowRight;
   const aboutHref = locale === 'ar' ? '/ar/about' : '/about';
 
+  const pillars = [
+    {
+      num: '01',
+      title: t.ourMission,
+      body: COMPANY_PROFILE.mission[locale],
+    },
+    {
+      num: '02',
+      title: t.ourApproach,
+      body: COMPANY_PROFILE.consultancyApproach[locale],
+    },
+    {
+      num: '03',
+      title: locale === 'ar' ? 'فريق كفاءات متعدد التخصصات' : 'Multi-Disciplinary Delivery Team',
+      body:
+        locale === 'ar'
+          ? 'فريق متمرس يضم مدراء مشاريع، ومبرمجين، وخبراء جودة يعملون جنباً إلى جنب مع عملائنا في أبوظبي لضمان استدامة الحلول والالتزام بأعلى معايير الحوكمة.'
+          : 'A seasoned team of project managers, software engineers, and quality assurance specialists working alongside Abu Dhabi institutions to guarantee durable technical execution.',
+    },
+  ];
+
   return (
     <section
       id="who-we-are"
-      className="py-16 md:py-24 bg-[#FBF9F5] dark:bg-[#090D16] border-b border-zinc-200/80 dark:border-zinc-800/80 transition-colors"
+      className="py-20 md:py-28 bg-[#FAF8F5] dark:bg-[#07110E] border-b border-[#E3DFD7] dark:border-[#1A2E26] transition-colors"
       dir={isRtl ? 'rtl' : 'ltr'}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-          {/* Left Column: Mission & Identity */}
-          <div className="lg:col-span-6 space-y-6">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[#6B1426] dark:text-[#F38C9C] block mb-2">
-                {t.whoWeAre}
-              </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight leading-tight">
+        {/* Consilio-style Editorial Statement Header */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pb-16 border-b border-[#E3DFD7] dark:border-[#1A2E26]">
+          <div className="lg:col-span-3">
+            <span className="text-xs font-semibold text-[#6B1426] dark:text-[#2DD4A4] tracking-wide">
+              01 · {t.whoWeAre}
+            </span>
+          </div>
+
+          <div className="lg:col-span-9 space-y-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold text-[#0B1713] dark:text-[#F4F6F5] tracking-tight leading-[1.18] text-balance">
+              &ldquo;{COMPANY_PROFILE.quote[locale]}&rdquo;
+            </h2>
+
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+              <p className="text-sm sm:text-base text-[#485650] dark:text-[#A6B5AF] max-w-2xl leading-relaxed">
                 {locale === 'ar'
-                  ? 'شريك استشاري وتقني متخصص لمؤسسات أبوظبي منذ 2019'
-                  : 'A Trusted IT Advisory & Technical Partner in Abu Dhabi Since 2019'}
-              </h2>
-            </div>
-
-            {/* Official Profile Quote Banner */}
-            <div className="p-5 rounded-2xl bg-white dark:bg-[#111726] border border-zinc-200 dark:border-zinc-800 shadow-xs">
-              <p className="text-sm sm:text-base text-zinc-800 dark:text-zinc-200 font-medium italic leading-relaxed">
-                &ldquo;{COMPANY_PROFILE.quote[locale]}&rdquo;
+                  ? 'تأسست شركة مستشاركم للحلول المعلوماتية ذ.م.م في العاصمة أبوظبي عام 2019 كشركة وطنية إماراتية بنسبة 100%، لتكون شريكاً استشارياً وتقنياً للجهات الحكومية والمؤسسات الكبرى.'
+                  : 'Established in Abu Dhabi in 2019 as a 100% UAE national-owned consultancy, Mustasharcom for Informatics Solutions bridges institutional strategy with disciplined software and data engineering.'}
               </p>
-              <span className="text-xs text-zinc-600 dark:text-zinc-400 mt-2 block font-semibold">
-                — {COMPANY_PROFILE.name[locale]}
-              </span>
-            </div>
 
-            <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              {locale === 'ar'
-                ? 'تأسست شركة مستشاركم للحلول المعلوماتية ذ.م.م في العاصمة أبوظبي كشركة وطنية إماراتية بنسبة 100%. نلتزم بتقديم استشارات برمجية وتقنية متكاملة بأسهل الطرق الممكنة للتنفيذ، مع التركيز على فهم عميق لدورات عمل المؤسسات وتحقيق أعلى كفاءة تشغيلية بأقل تكلفة ممكنة.'
-                : 'Mustasharcom for Informatics Solutions LLC was established in Abu Dhabi as a 100% UAE national-owned enterprise. We are dedicated to delivering integrated software consultancy in the most easily implemented way, bridging organizational strategy with disciplined technical execution to maximize institutional value while optimizing operational cost.'}
-            </p>
-
-            <div className="pt-2">
               <Link
                 href={aboutHref}
-                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#6B1426] dark:text-[#F38C9C] hover:underline"
+                className="inline-flex items-center gap-2 text-xs font-semibold text-[#6B1426] dark:text-[#2DD4A4] hover:underline whitespace-nowrap shrink-0"
               >
-                <span>{locale === 'ar' ? 'تعرف على فلسفة مستشاركم وفريق القيادة' : 'Learn More About Our Philosophy & Leadership'}</span>
+                <span>{locale === 'ar' ? 'تعرف على الشركة والقيادة' : 'About Mustasharcom & Leadership'}</span>
                 <ArrowIcon className="w-3.5 h-3.5 shrink-0" />
               </Link>
             </div>
           </div>
+        </div>
 
-          {/* Right Column: 3 Structured Value Cards */}
-          <div className="lg:col-span-6 space-y-4">
-            <div className="p-6 rounded-2xl bg-white dark:bg-[#111726] border border-zinc-200 dark:border-zinc-800 shadow-xs flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-[#6B1426]/10 text-[#6B1426] dark:bg-[#6B1426]/20 dark:text-[#F38C9C] flex items-center justify-center shrink-0">
-                <Target className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-100 mb-1">
-                  {t.ourMission}
-                </h3>
-                <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  {COMPANY_PROFILE.mission[locale]}
-                </p>
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-white dark:bg-[#111726] border border-zinc-200 dark:border-zinc-800 shadow-xs flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 text-[#008751] dark:bg-emerald-950/60 dark:text-[#34D399] flex items-center justify-center shrink-0">
-                <Compass className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-100 mb-1">
-                  {t.ourApproach}
-                </h3>
-                <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  {COMPANY_PROFILE.consultancyApproach[locale]}
-                </p>
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-white dark:bg-[#111726] border border-zinc-200 dark:border-zinc-800 shadow-xs flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 flex items-center justify-center shrink-0">
-                <Award className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-100 mb-1">
-                  {locale === 'ar' ? 'فريق كفاءات متعدد التخصصات' : 'Multi-Disciplinary Delivery Team'}
-                </h3>
-                <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+        {/* Lower Split: Documentary Editorial Photography + 3 Numbered Pillars */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 pt-14 items-stretch">
+          {/* Documentary Boardroom Visual */}
+          <div className="lg:col-span-5 flex flex-col">
+            <div className="relative flex-1 min-h-[280px] sm:min-h-[340px] rounded-lg overflow-hidden border border-[#E3DFD7] dark:border-[#1A2E26] bg-[#0C1A15]">
+              <Image
+                src="/images/about_executive_boardroom_1794979011521.jpg"
+                alt={
+                  locale === 'ar'
+                    ? 'اجتماع استشاري تنفيذي لشركة مستشاركم في أبوظبي'
+                    : 'Mustasharcom executive consulting advisory session in Abu Dhabi'
+                }
+                fill
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                referrerPolicy="no-referrer"
+                className="object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050C0A]/80 via-transparent to-transparent" />
+              <div className="absolute bottom-0 inset-x-0 p-5 text-[#F4F6F5]">
+                <div className="text-xs font-mono text-[#2DD4A4]">
+                  {COMPANY_PROFILE.ownership[locale]}
+                </div>
+                <div className="text-sm font-semibold mt-0.5">
                   {locale === 'ar'
-                    ? 'فريق متمرس يضم مدراء مشاريع، ومبرمجين، وخبراء جودة يعملون جنباً إلى جنب مع عملائنا في أبوظبي لضمان استدامة الحلول والالتزام بأعلى معايير الحوكمة.'
-                    : 'A seasoned team of project managers, programmers, and quality assurance specialists working closely with our clients in Abu Dhabi to ensure durable solutions and global best practices.'}
-                </p>
+                    ? 'مكتب 02، مبنى شرق 22_2، آل نهيان، أبوظبي'
+                    : 'Al Nahyan, Abu Dhabi · Corporate Advisory Practice'}
+                </div>
               </div>
             </div>
+          </div>
+
+          {/* 3 Editorial Pillars (Separated by Hairlines, No Nested Card-in-Card Clutter) */}
+          <div className="lg:col-span-7 flex flex-col justify-between divide-y divide-[#E3DFD7] dark:divide-[#1A2E26]">
+            {pillars.map((pillar) => (
+              <div key={pillar.num} className="py-6 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-baseline gap-4 sm:gap-8">
+                <span className="font-mono text-sm font-semibold text-[#6B1426] dark:text-[#2DD4A4] shrink-0">
+                  {pillar.num}.
+                </span>
+                <div className="space-y-2">
+                  <h3 className="text-lg font-bold text-[#0B1713] dark:text-[#F4F6F5]">
+                    {pillar.title}
+                  </h3>
+                  <p className="text-sm text-[#485650] dark:text-[#A6B5AF] leading-relaxed">
+                    {pillar.body}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

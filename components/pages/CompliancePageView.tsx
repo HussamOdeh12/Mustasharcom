@@ -4,7 +4,6 @@ import CtaBanner from '../sections/CtaBanner';
 import SectionReveal from '../ui/SectionReveal';
 import { Locale, COMPANY_PROFILE } from '@/lib/company-data';
 import { UI_STRINGS } from '@/lib/translations';
-import { Shield, Award, FileCheck, CheckCircle2, Building, Calendar, Scale } from 'lucide-react';
 
 interface CompliancePageViewProps {
   locale: Locale;
@@ -15,182 +14,154 @@ export default function CompliancePageView({ locale }: CompliancePageViewProps) 
   const isRtl = locale === 'ar';
 
   return (
-    <main id="main-content" className="flex-1 pt-24 md:pt-28" dir={isRtl ? 'rtl' : 'ltr'}>
-        {/* Breadcrumbs */}
-        <div className="border-b border-zinc-200/80 dark:border-zinc-800/80 bg-zinc-50/50 dark:bg-zinc-900/30">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-            <Breadcrumbs
-              locale={locale}
-              items={[{ label: t.breadcrumbsQuality }]}
-            />
+    <main id="main-content" className="flex-1" dir={isRtl ? 'rtl' : 'ltr'}>
+      {/* Breadcrumbs */}
+      <div className="border-b border-[#E3DFD7] dark:border-[#1A2E26] bg-[#F3EFEA]/70 dark:bg-[#0A1612]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+          <Breadcrumbs
+            locale={locale}
+            items={[{ label: t.breadcrumbsQuality }]}
+          />
+        </div>
+      </div>
+
+      {/* Consilio-style Dark Hero */}
+      <section className="py-16 md:py-24 bg-[#060E0B] text-[#F4F6F5] border-b border-[#1A2E26]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl space-y-5">
+            <span className="text-xs font-semibold text-[#2DD4A4] tracking-wide block">
+              {t.qualityCompliance}
+            </span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#F4F6F5] leading-[1.12] text-balance">
+              {locale === 'ar'
+                ? 'منظومة الجودة، الامتثال والاعتماديات السيادية'
+                : 'Sovereign Quality, Procurement & Governance Standards'}
+            </h1>
+            <p className="text-base sm:text-lg text-[#B8C7C0] leading-relaxed">
+              {locale === 'ar'
+                ? 'تلتزم مستشاركم بأعلى المعايير التنظيمية الصادرة عن حكومة أبوظبي والمواصفات الدولية، مما يمنح شركاءنا الثقة التامة في أمن المعلومات وحوكمة المشاريع.'
+                : 'Mustasharcom operates under rigorous governance guidelines recognized by Abu Dhabi public authorities and international standardization bodies, providing government entities with certified delivery assurance.'}
+            </p>
           </div>
         </div>
+      </section>
 
-        {/* Page Hero */}
-        <section className="py-14 md:py-20 border-b border-zinc-200/80 dark:border-zinc-800/80 bg-[#FBF9F5] dark:bg-[#090D16]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#6B1426] dark:text-[#F38C9C] mb-2 block">
-                {t.qualityCompliance}
-              </span>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 mb-4">
-                {locale === 'ar'
-                  ? 'منظومة الجودة، الامتثال والاعتماديات السيادية'
-                  : 'Sovereign Quality, Procurement & Governance Standards'}
-              </h1>
-              <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                {locale === 'ar'
-                  ? 'تلتزم مستشاركم بأعلى المعايير التنظيمية الصادرة عن حكومة أبوظبي والمواصفات الدولية، مما يمنح شركاءنا الثقة التامة في أمن المعلومات وحوكمة المشاريع.'
-                  : 'Mustasharcom operates under rigorous governance guidelines recognized by Abu Dhabi public authorities and global standardization bodies, providing government entities with certified delivery assurance.'}
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* 3 Main Compliance Cards */}
-        <SectionReveal>
-          <section className="py-16 bg-white dark:bg-[#0B0F19]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-            {/* Card 1: ISO 9001:2015 */}
-            <div className="p-8 rounded-3xl bg-[#FDFCFB] dark:bg-[#111726] border border-zinc-200 dark:border-zinc-800 shadow-sm flex flex-col lg:flex-row gap-8 items-start justify-between">
-              <div className="flex-1 space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-3 rounded-xl bg-[#6B1426]/10 text-[#6B1426] dark:bg-[#6B1426]/20 dark:text-[#F38C9C]">
-                    <Shield className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">INTERNATIONAL STANDARD</span>
-                    <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-                      {COMPANY_PROFILE.certifications.iso.standard}
-                    </h2>
-                  </div>
-                </div>
-
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+      {/* 3 Architectural Compliance Dossiers */}
+      <SectionReveal>
+        <section className="py-20 bg-[#FAF8F5] dark:bg-[#07110E]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+            {/* Dossier 1: ISO 9001:2015 */}
+            <div className="p-8 sm:p-10 rounded-lg bg-[#F3EFEA]/60 dark:bg-[#0C1A15] border border-[#E3DFD7] dark:border-[#1A2E26] grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              <div className="lg:col-span-8 space-y-4">
+                <span className="font-mono text-xs font-semibold text-[#6B1426] dark:text-[#2DD4A4] block">
+                  01 · INTERNATIONAL QUALITY MANAGEMENT
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-bold text-[#0B1713] dark:text-[#F4F6F5] font-mono">
+                  {COMPANY_PROFILE.certifications.iso.standard}
+                </h2>
+                <p className="text-sm sm:text-base text-[#485650] dark:text-[#A6B5AF] leading-relaxed">
                   {locale === 'ar'
                     ? 'شهادة نظام إدارة الجودة المعترف بها دولياً لضمان اتساق الخدمات، والتحسين المستمر، وإدارة المخاطر في مشاريع البرمجيات والاستشارات.'
                     : 'Internationally recognized Quality Management System (QMS) ensuring procedural rigor, continuous operational review, and systematic risk management across all IT projects.'}
                 </p>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                  <div className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300">
-                    <CheckCircle2 className="w-4 h-4 text-[#008751]" shrink-0 />
-                    <span>{locale === 'ar' ? 'إجراءات تدقيق موثقة' : 'Standardized Delivery Frameworks'}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300">
-                    <CheckCircle2 className="w-4 h-4 text-[#008751]" shrink-0 />
-                    <span>{locale === 'ar' ? 'متابعة مؤشرات الأداء SLA' : 'Contractual SLA Telemetry'}</span>
-                  </div>
+                <div className="pt-2 text-xs text-[#687670] dark:text-[#8FA19A]">
+                  {locale === 'ar'
+                    ? 'إجراءات تدقيق موثقة · متابعة مؤشرات الأداء SLA · مراجعة دورية للجودة'
+                    : 'Standardized Delivery Frameworks · Contractual SLA Telemetry · Continuous Quality Audits'}
                 </div>
               </div>
 
-              <div className="w-full lg:w-80 p-5 rounded-2xl bg-white dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700 space-y-3 text-xs">
-                <div className="flex justify-between pb-2 border-b border-zinc-100 dark:border-zinc-700">
-                  <span className="text-zinc-600 dark:text-zinc-400">{locale === 'ar' ? 'رقم الشهادة' : 'Certificate No.'}</span>
-                  <span className="font-mono font-bold text-zinc-900 dark:text-zinc-100">
+              <div className="lg:col-span-4 p-6 rounded-lg bg-white dark:bg-[#07110E] border border-[#E3DFD7] dark:border-[#1A2E26] space-y-3 text-xs">
+                <div className="flex justify-between pb-2.5 border-b border-[#E3DFD7] dark:border-[#1A2E26]">
+                  <span className="text-[#687670] dark:text-[#8FA19A]">{locale === 'ar' ? 'رقم الشهادة' : 'Certificate No.'}</span>
+                  <span className="font-mono font-bold text-[#0B1713] dark:text-[#F4F6F5]">
                     {COMPANY_PROFILE.certifications.iso.certificateNumber}
                   </span>
                 </div>
-                <div className="flex justify-between pb-2 border-b border-zinc-100 dark:border-zinc-700">
-                  <span className="text-zinc-600 dark:text-zinc-400">{locale === 'ar' ? 'النظام المعتمد' : 'System Standard'}</span>
-                  <span className="font-medium text-zinc-900 dark:text-zinc-100">
+                <div className="flex justify-between pb-2.5 border-b border-[#E3DFD7] dark:border-[#1A2E26]">
+                  <span className="text-[#687670] dark:text-[#8FA19A]">{locale === 'ar' ? 'النظام المعتمد' : 'System Standard'}</span>
+                  <span className="font-mono font-medium text-[#0B1713] dark:text-[#F4F6F5]">
                     {COMPANY_PROFILE.certifications.iso.standard}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-zinc-600 dark:text-zinc-400">{locale === 'ar' ? 'تاريخ الصلاحية' : 'Valid Until'}</span>
-                  <span className="font-semibold text-emerald-600 dark:text-emerald-400">
-                    {COMPANY_PROFILE.certifications.iso.validity}
+                  <span className="text-[#687670] dark:text-[#8FA19A]">{locale === 'ar' ? 'تاريخ الصلاحية' : 'Valid Until'}</span>
+                  <span className="font-mono font-semibold text-[#007A4D] dark:text-[#2DD4A4]">
+                    {locale === 'ar' ? COMPANY_PROFILE.certifications.iso.validityAr : COMPANY_PROFILE.certifications.iso.validity}
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* Card 2: In-Country Value (ICV) */}
-            <div className="p-8 rounded-3xl bg-[#FDFCFB] dark:bg-[#111726] border border-zinc-200 dark:border-zinc-800 shadow-sm flex flex-col lg:flex-row gap-8 items-start justify-between">
-              <div className="flex-1 space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-3 rounded-xl bg-emerald-100 text-[#008751] dark:bg-emerald-950/60 dark:text-[#34D399]">
-                    <Award className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">NATIONAL PROCUREMENT VALUE</span>
-                    <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-                      In-Country Value (ICV) {COMPANY_PROFILE.certifications.icv.score}
-                    </h2>
-                  </div>
-                </div>
-
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+            {/* Dossier 2: In-Country Value (ICV) */}
+            <div className="p-8 sm:p-10 rounded-lg bg-[#F3EFEA]/60 dark:bg-[#0C1A15] border border-[#E3DFD7] dark:border-[#1A2E26] grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              <div className="lg:col-span-8 space-y-4">
+                <span className="font-mono text-xs font-semibold text-[#6B1426] dark:text-[#2DD4A4] block">
+                  02 · NATIONAL PROCUREMENT VALUE
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-bold text-[#0B1713] dark:text-[#F4F6F5] font-mono">
+                  In-Country Value (ICV) {COMPANY_PROFILE.certifications.icv.score}
+                </h2>
+                <p className="text-sm sm:text-base text-[#485650] dark:text-[#A6B5AF] leading-relaxed">
                   {locale === 'ar'
                     ? 'شهادة برنامج القيمة المحلية المضافة الوطنية بنسبة 55.03%، مما يمنح شركاءنا ميزة تنافسية وأولوية في المناقصات الحكومية وشبه الحكومية في دولة الإمارات.'
-                    : 'Certified under the UAE National In-Country Value (ICV) program with an exceptional score of 55.03%, empowering public sector clients with maximum procurement compliance and domestic economic contribution.'}
+                    : 'Certified under the UAE National In-Country Value (ICV) program with a verified score of 55.03%, empowering public sector clients with procurement compliance and domestic economic contribution.'}
                 </p>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                  <div className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300">
-                    <CheckCircle2 className="w-4 h-4 text-[#008751] shrink-0" />
-                    <span>{COMPANY_PROFILE.certifications.icv.category[locale]}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300">
-                    <CheckCircle2 className="w-4 h-4 text-[#008751] shrink-0" />
-                    <span>{locale === 'ar' ? 'أولوية في المناقصات الاتحادية والمحلية' : 'Preferred Procurement Priority'}</span>
-                  </div>
+                <div className="pt-2 text-xs text-[#687670] dark:text-[#8FA19A]">
+                  {COMPANY_PROFILE.certifications.icv.category[locale]} · {locale === 'ar' ? 'أولوية في المناقصات الاتحادية والمحلية' : 'Preferred Public Procurement Priority'}
                 </div>
               </div>
 
-              <div className="w-full lg:w-80 p-5 rounded-2xl bg-white dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700 space-y-3 text-xs">
-                <div className="flex justify-between pb-2 border-b border-zinc-100 dark:border-zinc-700">
-                  <span className="text-zinc-600 dark:text-zinc-400">{locale === 'ar' ? 'نسبة القيمة المضافة' : 'ICV Score'}</span>
-                  <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400 text-sm">
+              <div className="lg:col-span-4 p-6 rounded-lg bg-white dark:bg-[#07110E] border border-[#E3DFD7] dark:border-[#1A2E26] space-y-3 text-xs">
+                <div className="flex justify-between pb-2.5 border-b border-[#E3DFD7] dark:border-[#1A2E26]">
+                  <span className="text-[#687670] dark:text-[#8FA19A]">{locale === 'ar' ? 'نسبة القيمة المضافة' : 'ICV Score'}</span>
+                  <span className="font-mono font-bold text-[#007A4D] dark:text-[#2DD4A4] text-sm">
                     {COMPANY_PROFILE.certifications.icv.score}
                   </span>
                 </div>
-                <div className="flex justify-between pb-2 border-b border-zinc-100 dark:border-zinc-700">
-                  <span className="text-zinc-600 dark:text-zinc-400">{locale === 'ar' ? 'رقم الشهادة' : 'Certificate No.'}</span>
-                  <span className="font-mono font-bold text-zinc-900 dark:text-zinc-100">
+                <div className="flex justify-between pb-2.5 border-b border-[#E3DFD7] dark:border-[#1A2E26]">
+                  <span className="text-[#687670] dark:text-[#8FA19A]">{locale === 'ar' ? 'رقم الشهادة' : 'Certificate No.'}</span>
+                  <span className="font-mono font-bold text-[#0B1713] dark:text-[#F4F6F5]">
                     {COMPANY_PROFILE.certifications.icv.certificateNumber}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-zinc-600 dark:text-zinc-400">{locale === 'ar' ? 'تاريخ الصلاحية' : 'Valid Until'}</span>
-                  <span className="font-semibold text-zinc-900 dark:text-zinc-100">
-                    {COMPANY_PROFILE.certifications.icv.validity}
+                  <span className="text-[#687670] dark:text-[#8FA19A]">{locale === 'ar' ? 'تاريخ الصلاحية' : 'Valid Until'}</span>
+                  <span className="font-mono font-semibold text-[#0B1713] dark:text-[#F4F6F5]">
+                    {locale === 'ar' ? COMPANY_PROFILE.certifications.icv.validityAr : COMPANY_PROFILE.certifications.icv.validity}
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* Card 3: ADRA Commercial Licence */}
-            <div className="p-8 rounded-3xl bg-[#FDFCFB] dark:bg-[#111726] border border-zinc-200 dark:border-zinc-800 shadow-sm flex flex-col lg:flex-row gap-8 items-start justify-between">
-              <div className="flex-1 space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-3 rounded-xl bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300">
-                    <FileCheck className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">REGULATORY LICENCE</span>
-                    <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-                      Abu Dhabi Licence CN-2769971
-                    </h2>
-                  </div>
+            {/* Dossier 3: ADRA Commercial Licence */}
+            <div className="p-8 sm:p-10 rounded-lg bg-[#F3EFEA]/60 dark:bg-[#0C1A15] border border-[#E3DFD7] dark:border-[#1A2E26] grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              <div className="lg:col-span-8 space-y-5">
+                <div className="space-y-3">
+                  <span className="font-mono text-xs font-semibold text-[#6B1426] dark:text-[#2DD4A4] block">
+                    03 · REGULATORY COMMERCIAL LICENCE
+                  </span>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-[#0B1713] dark:text-[#F4F6F5] font-mono">
+                    Abu Dhabi Licence {COMPANY_PROFILE.licence.number}
+                  </h2>
+                  <p className="text-sm sm:text-base text-[#485650] dark:text-[#A6B5AF] leading-relaxed">
+                    {locale === 'ar'
+                      ? 'رخصة تجارية صادرة عن دائرة التنمية الاقتصادية في أبوظبي (ADRA) سارية المفعول حتى 17 أبريل 2031، مملوكة بنسبة 100% لمواطني الدولة.'
+                      : 'Commercial licence issued by the Abu Dhabi Department of Economic Development (ADRA), valid until 17 April 2031, with 100% UAE National ownership.'}
+                  </p>
                 </div>
 
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  {locale === 'ar'
-                    ? 'رخصة تجارية صادرة عن دائرة التنمية الاقتصادية في أبوظبي (ADRA) سارية المفعول حتى 17 أبريل 2031، مملوكة بنسبة 100% لمواطني الدولة.'
-                    : 'Commercial licence issued by the Abu Dhabi Department of Economic Development (ADRA), valid until 17 April 2031, with 100% UAE National ownership.'}
-                </p>
-
-                {/* 7 Activities */}
-                <div className="pt-2">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-3">
-                    {locale === 'ar' ? 'الأنشطة المرخصة قانونياً:' : 'Authorized Economic Activities:'}
+                {/* 7 Licensed Activities */}
+                <div className="pt-4 border-t border-[#E3DFD7] dark:border-[#1A2E26]">
+                  <h3 className="text-xs font-semibold text-[#0B1713] dark:text-[#F4F6F5] mb-3">
+                    {locale === 'ar' ? 'الأنشطة المرخصة قانونياً (01 — 07):' : 'Authorized Economic Activities (01 — 07):'}
                   </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                     {COMPANY_PROFILE.licence.activities[locale].map((act, i) => (
-                      <div key={i} className="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#008751] shrink-0" />
+                      <div key={i} className="flex items-baseline gap-2.5 text-[#2C3A34] dark:text-[#C8D4CE]">
+                        <span className="font-mono text-[11px] text-[#6B1426] dark:text-[#2DD4A4] shrink-0">
+                          0{i + 1}.
+                        </span>
                         <span>{act}</span>
                       </div>
                     ))}
@@ -198,35 +169,35 @@ export default function CompliancePageView({ locale }: CompliancePageViewProps) 
                 </div>
               </div>
 
-              <div className="w-full lg:w-80 p-5 rounded-2xl bg-white dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700 space-y-3 text-xs">
-                <div className="flex justify-between pb-2 border-b border-zinc-100 dark:border-zinc-700">
-                  <span className="text-zinc-600 dark:text-zinc-400">{locale === 'ar' ? 'رقم الرخصة' : 'Licence No.'}</span>
-                  <span className="font-mono font-bold text-zinc-900 dark:text-zinc-100">
+              <div className="lg:col-span-4 p-6 rounded-lg bg-white dark:bg-[#07110E] border border-[#E3DFD7] dark:border-[#1A2E26] space-y-3 text-xs">
+                <div className="flex justify-between pb-2.5 border-b border-[#E3DFD7] dark:border-[#1A2E26]">
+                  <span className="text-[#687670] dark:text-[#8FA19A]">{locale === 'ar' ? 'رقم الرخصة' : 'Licence No.'}</span>
+                  <span className="font-mono font-bold text-[#0B1713] dark:text-[#F4F6F5]">
                     {COMPANY_PROFILE.licence.number}
                   </span>
                 </div>
-                <div className="flex justify-between pb-2 border-b border-zinc-100 dark:border-zinc-700">
-                  <span className="text-zinc-600 dark:text-zinc-400">{locale === 'ar' ? 'الملكية' : 'Ownership'}</span>
-                  <span className="font-semibold text-[#008751] dark:text-[#34D399]">
+                <div className="flex justify-between pb-2.5 border-b border-[#E3DFD7] dark:border-[#1A2E26]">
+                  <span className="text-[#687670] dark:text-[#8FA19A]">{locale === 'ar' ? 'الملكية' : 'Ownership'}</span>
+                  <span className="font-semibold text-[#007A4D] dark:text-[#2DD4A4]">
                     {COMPANY_PROFILE.ownership[locale]}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-zinc-600 dark:text-zinc-400">{locale === 'ar' ? 'تاريخ الصلاحية' : 'Valid Until'}</span>
-                  <span className="font-semibold text-zinc-900 dark:text-zinc-100">
-                    {COMPANY_PROFILE.licence.validity}
+                  <span className="text-[#687670] dark:text-[#8FA19A]">{locale === 'ar' ? 'تاريخ الصلاحية' : 'Valid Until'}</span>
+                  <span className="font-mono font-semibold text-[#0B1713] dark:text-[#F4F6F5]">
+                    {locale === 'ar' ? COMPANY_PROFILE.licence.validityAr : COMPANY_PROFILE.licence.validity}
                   </span>
                 </div>
               </div>
             </div>
           </div>
-          </section>
-        </SectionReveal>
+        </section>
+      </SectionReveal>
 
-        {/* CTA Banner */}
-        <SectionReveal>
-          <CtaBanner locale={locale} />
-        </SectionReveal>
-      </main>
+      {/* CTA Banner */}
+      <SectionReveal>
+        <CtaBanner locale={locale} />
+      </SectionReveal>
+    </main>
   );
 }

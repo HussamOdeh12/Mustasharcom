@@ -7,8 +7,8 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#FDFCFB' },
-    { media: '(prefers-color-scheme: dark)', color: '#0B0F19' },
+    { media: '(prefers-color-scheme: light)', color: '#FAF8F5' },
+    { media: '(prefers-color-scheme: dark)', color: '#07110E' },
   ],
 };
 
@@ -102,7 +102,7 @@ export default function ArabicRootLayout({ children }: { children: React.ReactNo
   return (
     <div
       dir="rtl"
-      className="min-h-screen flex flex-col bg-[#FDFCFB] dark:bg-[#0B0F19] text-zinc-900 dark:text-zinc-100 antialiased selection:bg-[#6B1426] selection:text-white transition-colors duration-200"
+      className="min-h-screen flex flex-col bg-[#FAF8F5] dark:bg-[#07110E] text-[#0B1713] dark:text-[#F4F6F5] antialiased selection:bg-[#6B1426] selection:text-white transition-colors duration-200"
     >
       <script
         type="application/ld+json"

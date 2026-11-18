@@ -3,35 +3,14 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Breadcrumbs from '../ui/Breadcrumbs';
 import ContactForm from '../forms/ContactForm';
-import { Locale, SERVICES_CATALOG, ServiceDetail } from '@/lib/company-data';
+import { Locale, SERVICES_CATALOG, COMPANY_PROFILE } from '@/lib/company-data';
 import { UI_STRINGS } from '@/lib/translations';
-import {
-  CheckCircle2,
-  FileCheck2,
-  ArrowRight,
-  ArrowLeft,
-  Briefcase,
-  BarChart3,
-  Layers,
-  ShieldCheck,
-  Wrench,
-  Headset,
-  TrendingUp,
-} from 'lucide-react';
+import { ArrowRight, ArrowLeft } from 'lucide-react';
 
 interface ServiceDetailViewProps {
   locale: Locale;
   slug: string;
 }
-
-const iconsMap: Record<string, React.ReactNode> = {
-  'it-consulting': <Briefcase className="w-6 h-6 text-[#6B1426] dark:text-[#F38C9C]" />,
-  'data-ai': <BarChart3 className="w-6 h-6 text-[#008751] dark:text-[#34D399]" />,
-  'systems-applications': <Layers className="w-6 h-6 text-[#6B1426] dark:text-[#F38C9C]" />,
-  'infrastructure-security': <ShieldCheck className="w-6 h-6 text-[#008751] dark:text-[#34D399]" />,
-  'technical-support': <Wrench className="w-6 h-6 text-[#6B1426] dark:text-[#F38C9C]" />,
-  'contact-center': <Headset className="w-6 h-6 text-[#008751] dark:text-[#34D399]" />,
-};
 
 export default function ServiceDetailView({ locale, slug }: ServiceDetailViewProps) {
   const service = SERVICES_CATALOG.find((s) => s.slug === slug);
@@ -44,185 +23,198 @@ export default function ServiceDetailView({ locale, slug }: ServiceDetailViewPro
   const ArrowIcon = isRtl ? ArrowLeft : ArrowRight;
 
   const servicesIndexHref = locale === 'ar' ? '/ar/services' : '/services';
-  const contactHref = locale === 'ar' ? '/ar/contact' : '/contact';
 
   const relatedServicesList = SERVICES_CATALOG.filter((s) =>
     service.relatedServices.includes(s.slug)
   );
 
   return (
-    <main id="main-content" className="flex-1 pt-24 md:pt-28" dir={isRtl ? 'rtl' : 'ltr'}>
-        {/* Breadcrumbs */}
-        <div className="border-b border-zinc-200/80 dark:border-zinc-800/80 bg-zinc-50/50 dark:bg-zinc-900/30">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-            <Breadcrumbs
-              locale={locale}
-              items={[
-                { label: t.breadcrumbsServices, href: servicesIndexHref },
-                { label: service.title[locale] },
-              ]}
-            />
+    <main id="main-content" className="flex-1" dir={isRtl ? 'rtl' : 'ltr'}>
+      {/* Breadcrumbs */}
+      <div className="border-b border-[#E3DFD7] dark:border-[#1A2E26] bg-[#F3EFEA]/70 dark:bg-[#0A1612]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+          <Breadcrumbs
+            locale={locale}
+            items={[
+              { label: t.breadcrumbsServices, href: servicesIndexHref },
+              { label: service.title[locale] },
+            ]}
+          />
+        </div>
+      </div>
+
+      {/* Consilio-style Dark Practice Hero */}
+      <section className="py-16 md:py-22 bg-[#060E0B] text-[#F4F6F5] border-b border-[#1A2E26]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl space-y-5">
+            <div className="flex items-center gap-3 text-xs font-mono text-[#2DD4A4]">
+              <span>PRACTICE {service.number} / 06</span>
+              <span aria-hidden="true" className="text-[#3A4F46]">·</span>
+              <span>{locale === 'ar' ? 'ممارسة استشارية معتمدة' : 'Verified Consulting Practice'}</span>
+            </div>
+
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#F4F6F5] leading-[1.12] text-balance">
+              {service.title[locale]}
+            </h1>
+
+            <p className="text-base sm:text-lg text-[#B8C7C0] leading-relaxed max-w-3xl">
+              {service.shortDesc[locale]}
+            </p>
           </div>
         </div>
+      </section>
 
-        {/* Hero Section */}
-        <section className="py-14 md:py-18 border-b border-zinc-200/80 dark:border-zinc-800/80 bg-[#FBF9F5] dark:bg-[#090D16]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="font-mono text-sm font-bold text-zinc-600 dark:text-zinc-400">
-                  {service.number}
+      {/* Practice Body */}
+      <section className="py-16 md:py-24 bg-[#FAF8F5] dark:bg-[#07110E]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+            {/* Left Main Content */}
+            <div className="lg:col-span-7 space-y-14">
+              {/* Practice Overview */}
+              <div className="space-y-4">
+                <span className="font-mono text-xs font-semibold text-[#6B1426] dark:text-[#2DD4A4] block">
+                  01 · {locale === 'ar' ? 'نظرة عامة على الممارسة' : 'PRACTICE OVERVIEW'}
                 </span>
-                <div className="p-2.5 rounded-xl bg-white dark:bg-zinc-800 shadow-xs border border-zinc-200 dark:border-zinc-700">
-                  {iconsMap[service.slug]}
-                </div>
-                <span className="text-xs font-bold uppercase tracking-wider text-[#6B1426] dark:text-[#F38C9C]">
-                  {locale === 'ar' ? 'ممارسة استشارية متخصصة' : 'Specialized Consulting Practice'}
-                </span>
+                <h2 className="text-xl sm:text-2xl font-bold text-[#0B1713] dark:text-[#F4F6F5]">
+                  {locale === 'ar' ? 'المنهجية الاستشارية والتنفيذية' : 'Institutional Mandate & Execution Scope'}
+                </h2>
+                <p className="text-sm sm:text-base text-[#485650] dark:text-[#A6B5AF] leading-relaxed">
+                  {service.overview[locale]}
+                </p>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 mb-5 leading-tight">
-                {service.title[locale]}
-              </h1>
-
-              <p className="text-base sm:text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal max-w-3xl">
-                {service.shortDesc[locale]}
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Practice Body */}
-        <section className="py-14 md:py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-              {/* Left Main Content */}
-              <div className="lg:col-span-8 space-y-12">
-                {/* Practice Overview */}
+              {/* Core Capabilities */}
+              <div className="pt-10 border-t border-[#E3DFD7] dark:border-[#1A2E26] space-y-6">
                 <div>
-                  <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
-                    {locale === 'ar' ? 'نظرة عامة على الممارسة' : 'Practice Overview'}
-                  </h2>
-                  <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                    {service.overview[locale]}
-                  </p>
+                  <span className="font-mono text-xs font-semibold text-[#6B1426] dark:text-[#2DD4A4] block mb-1">
+                    02 · {t.coreCapabilities.toUpperCase()}
+                  </span>
+                  <h3 className="text-xl font-bold text-[#0B1713] dark:text-[#F4F6F5]">
+                    {t.coreCapabilities}
+                  </h3>
                 </div>
 
-                {/* Core Capabilities */}
-                <div className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-[#111726] border border-zinc-200 dark:border-zinc-800 shadow-xs">
-                  <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 mb-5 flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-[#008751]" />
-                    <span>{t.coreCapabilities}</span>
-                  </h3>
-                  <div className="grid grid-cols-1 gap-4">
-                    {service.capabilities.map((cap, idx) => {
-                      const text = cap[locale];
-                      const parts = text.split(':');
-                      const title = parts[0];
-                      const detail = parts.slice(1).join(':');
+                <div className="divide-y divide-[#E3DFD7] dark:divide-[#1A2E26] border-y border-[#E3DFD7] dark:border-[#1A2E26]">
+                  {service.capabilities.map((cap, idx) => {
+                    const text = cap[locale];
+                    const parts = text.split(':');
+                    const title = parts[0];
+                    const detail = parts.slice(1).join(':');
 
-                      return (
-                        <div
-                          key={idx}
-                          className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-100 dark:border-zinc-800/70"
-                        >
-                          <span className="font-bold text-sm text-zinc-900 dark:text-zinc-100 block mb-1">
+                    return (
+                      <div key={idx} className="py-5 flex items-baseline gap-4">
+                        <span className="font-mono text-xs font-semibold text-[#6B1426] dark:text-[#2DD4A4] shrink-0">
+                          0{idx + 1}.
+                        </span>
+                        <div className="space-y-1">
+                          <div className="font-bold text-sm sm:text-base text-[#0B1713] dark:text-[#F4F6F5]">
                             {title}
-                          </span>
+                          </div>
                           {detail && (
-                            <span className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                            <p className="text-xs sm:text-sm text-[#485650] dark:text-[#A6B5AF] leading-relaxed">
                               {detail}
-                            </span>
+                            </p>
                           )}
                         </div>
-                      );
-                    })}
-                  </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Key Deliverables */}
+              <div className="space-y-6">
+                <div>
+                  <span className="font-mono text-xs font-semibold text-[#6B1426] dark:text-[#2DD4A4] block mb-1">
+                    03 · {t.deliverables.toUpperCase()}
+                  </span>
+                  <h3 className="text-xl font-bold text-[#0B1713] dark:text-[#F4F6F5]">
+                    {t.deliverables}
+                  </h3>
                 </div>
 
-                {/* Deliverables */}
-                <div>
-                  <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 mb-5 flex items-center gap-2">
-                    <FileCheck2 className="w-5 h-5 text-[#6B1426] dark:text-[#F38C9C]" />
-                    <span>{t.deliverables}</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {service.deliverables.map((deliv, idx) => (
+                    <div
+                      key={idx}
+                      className="p-5 rounded-lg border border-[#E3DFD7] dark:border-[#1A2E26] bg-[#F3EFEA]/60 dark:bg-[#0C1A15] flex items-baseline gap-3"
+                    >
+                      <span className="font-mono text-xs text-[#6B1426] dark:text-[#2DD4A4] shrink-0">
+                        0{idx + 1}.
+                      </span>
+                      <span className="text-xs sm:text-sm font-medium text-[#0B1713] dark:text-[#F4F6F5] leading-relaxed">
+                        {deliv[locale]}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Strategic Sector Impact */}
+              <div className="p-7 rounded-lg bg-[#060E0B] text-[#F4F6F5] border border-[#1A2E26] space-y-2">
+                <span className="font-mono text-xs text-[#2DD4A4] block">
+                  04 · {t.strategicImpact.toUpperCase()}
+                </span>
+                <h3 className="text-base font-bold text-[#F4F6F5]">
+                  {t.strategicImpact}
+                </h3>
+                <p className="text-xs sm:text-sm text-[#B8C7C0] leading-relaxed">
+                  {service.strategicValue[locale]}
+                </p>
+                <div className="pt-3 text-[11px] font-mono text-[#768780]">
+                  ADRA Lic. {COMPANY_PROFILE.licence.number} · {COMPANY_PROFILE.certifications.iso.standard}
+                </div>
+              </div>
+
+              {/* Related Practices */}
+              {relatedServicesList.length > 0 && (
+                <div className="pt-8 border-t border-[#E3DFD7] dark:border-[#1A2E26]">
+                  <h3 className="text-xs font-semibold text-[#687670] dark:text-[#8FA19A] mb-4">
+                    {t.relatedPractices}
                   </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {service.deliverables.map((deliv, idx) => (
-                      <div
-                        key={idx}
-                        className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#111726] text-xs font-medium text-zinc-800 dark:text-zinc-200 flex items-start gap-2.5"
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    {relatedServicesList.map((rel) => (
+                      <Link
+                        key={rel.slug}
+                        href={locale === 'ar' ? `/ar/services/${rel.slug}` : `/services/${rel.slug}`}
+                        className="p-4 rounded-lg border border-[#E3DFD7] dark:border-[#1A2E26] bg-white dark:bg-[#0C1A15] hover:border-[#6B1426] dark:hover:border-[#2DD4A4] transition-colors group flex flex-col justify-between gap-3"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#6B1426] dark:bg-[#F38C9C] shrink-0 mt-1.5" />
-                        <span>{deliv[locale]}</span>
-                      </div>
+                        <span className="font-mono text-xs text-[#6B1426] dark:text-[#2DD4A4]">
+                          {rel.number}.
+                        </span>
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-xs font-bold text-[#0B1713] dark:text-[#F4F6F5] group-hover:text-[#6B1426] dark:group-hover:text-[#2DD4A4] transition-colors line-clamp-2">
+                            {rel.title[locale]}
+                          </span>
+                          <ArrowIcon className="w-3.5 h-3.5 text-[#687670] shrink-0" />
+                        </div>
+                      </Link>
                     ))}
                   </div>
                 </div>
+              )}
+            </div>
 
-                {/* Strategic Sector Impact */}
-                <div className="p-6 rounded-2xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-800 flex items-start gap-4">
-                  <div className="p-2.5 rounded-xl bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 shrink-0">
-                    <TrendingUp className="w-5 h-5 text-[#008751]" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mb-1">
-                      {t.strategicImpact}
-                    </h3>
-                    <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                      {service.strategicValue[locale]}
-                    </p>
-                  </div>
+            {/* Right Sticky Sidebar: Direct RFP Inquiry */}
+            <div className="lg:col-span-5">
+              <div className="sticky top-24 space-y-5">
+                <div className="space-y-1.5">
+                  <span className="text-xs font-semibold text-[#6B1426] dark:text-[#2DD4A4] block">
+                    {locale === 'ar' ? 'طلب استشارة أو كراسة شروط' : 'Direct Practice Consultation'}
+                  </span>
+                  <h2 className="text-xl font-bold text-[#0B1713] dark:text-[#F4F6F5]">
+                    {locale === 'ar'
+                      ? 'ناقش متطلبات هذا المشروع مع استشاريينا'
+                      : 'Discuss Your Requirements With Our Practice Leads'}
+                  </h2>
                 </div>
 
-                {/* Related Practices */}
-                {relatedServicesList.length > 0 && (
-                  <div className="pt-6 border-t border-zinc-200 dark:border-zinc-800">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-4">
-                      {t.relatedPractices}
-                    </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {relatedServicesList.map((rel) => (
-                        <Link
-                          key={rel.slug}
-                          href={locale === 'ar' ? `/ar/services/${rel.slug}` : `/services/${rel.slug}`}
-                          className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#111726] hover:border-[#6B1426] dark:hover:border-zinc-700 transition-colors group flex items-center justify-between gap-3"
-                        >
-                          <div>
-                            <span className="font-mono text-[10px] text-zinc-600 dark:text-zinc-400 block">
-                              {rel.number}
-                            </span>
-                            <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-[#6B1426] dark:group-hover:text-[#F38C9C] transition-colors">
-                              {rel.title[locale]}
-                            </span>
-                          </div>
-                          <ArrowIcon className="w-4 h-4 text-zinc-600 dark:text-zinc-400 group-hover:text-[#6B1426] shrink-0" />
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Right Sticky Sidebar: Direct RFP Inquiry */}
-              <div className="lg:col-span-4">
-                <div className="sticky top-24 space-y-6">
-                  <div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#6B1426] dark:text-[#F38C9C] block mb-2">
-                      {locale === 'ar' ? 'طلب استشارة أو كراسة شروط' : 'Direct Practice Consultation'}
-                    </span>
-                    <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-4">
-                      {locale === 'ar'
-                        ? 'ناقش متطلبات هذا المشروع مع استشاريينا'
-                        : 'Discuss Your Requirements With Our Practice Leads'}
-                    </h2>
-                  </div>
-
-                  <ContactForm locale={locale} preselectedService={service.slug} />
-                </div>
+                <ContactForm locale={locale} preselectedService={service.slug} />
               </div>
             </div>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
+    </main>
   );
 }

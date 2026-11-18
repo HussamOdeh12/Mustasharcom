@@ -2,34 +2,78 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+:root {
+  --bg-canvas: #FAF8F5;
+  --bg-surface: #FFFFFF;
+  --bg-subtle: #F3EFEA;
+  --bg-dark-hero: #07110E;
+  --bg-dark-card: #0C1A15;
+  --text-primary: #0B1713;
+  --text-secondary: #485650;
+  --text-muted: #687670;
+  --border-hairline: #E3DFD7;
+  --accent-burgundy: #6B1426;
+  --accent-teal: #007A4D;
+  --accent-luminous: #2DD4A4;
+  --accent-gold: #C6A355;
+}
+
+.dark {
+  --bg-canvas: #07110E;
+  --bg-surface: #0C1A15;
+  --bg-subtle: #10221C;
+  --bg-dark-hero: #050C0A;
+  --bg-dark-card: #0C1A15;
+  --text-primary: #F4F6F5;
+  --text-secondary: #A6B5AF;
+  --text-muted: #768780;
+  --border-hairline: #1A2E26;
+  --accent-burgundy: #E64866;
+  --accent-teal: #2DD4A4;
+  --accent-luminous: #2DD4A4;
+  --accent-gold: #D4B46A;
+}
+
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 5.5rem;
+  font-family: var(--font-sans-en), system-ui, -apple-system, sans-serif;
 }
 
 [dir="rtl"] {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Cairo", "Tajawal", "Noto Sans Arabic", sans-serif;
-  line-height: 1.65;
+  font-family: var(--font-sans-ar), var(--font-sans-en), system-ui, -apple-system, sans-serif;
+  line-height: 1.7;
+}
+
+.font-mono {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
 }
 
 /* Page Transition Animation (Lightweight, Non-blocking CSS) */
 @keyframes pageTransitionEnter {
   0% {
     opacity: 0;
+    transform: translateY(4px);
   }
   100% {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
 .page-transition-enter {
-  animation: pageTransitionEnter 240ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  will-change: opacity;
+  animation: pageTransitionEnter 220ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
 }
 
-/* Restrained Hover Card Lift */
+/* Consilio-style Restrained Card & Row Transitions */
 .hover-card-lift {
-  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1), border-color 200ms ease;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), border-color 200ms cubic-bezier(0.16, 1, 0.3, 1), background-color 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -54,6 +98,3 @@ html {
     transition: none !important;
   }
 }
-
-
-

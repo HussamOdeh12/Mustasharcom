@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
-import { BarChart3, Cpu, LineChart, Sparkles, ArrowRight, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowRight, ArrowLeft, ArrowUpRight } from 'lucide-react';
 import { Locale } from '@/lib/company-data';
-import { UI_STRINGS } from '@/lib/translations';
 
 interface DataAiSpotlightProps {
   locale: Locale;
@@ -12,124 +12,135 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
   const isRtl = locale === 'ar';
   const ArrowIcon = isRtl ? ArrowLeft : ArrowRight;
   const dataAiHref = locale === 'ar' ? '/ar/services/data-ai' : '/services/data-ai';
+  const projectsHref = locale === 'ar' ? '/ar/projects' : '/projects';
 
   const capabilities = [
     {
-      icon: <LineChart className="w-5 h-5 text-[#008751] dark:text-[#34D399]" />,
-      title: locale === 'ar' ? 'استشارات تحليل وتصنيف البيانات' : 'Data Analysis & Classification',
+      num: '01',
+      title: locale === 'ar' ? 'تحليلات وتصنيف البيانات المؤسسية' : 'Data Analytics & Classification',
       desc:
         locale === 'ar'
-          ? 'استشارات متخصصة في تصنيف مجموعات البيانات الضخمة، وهيكلة قواعد البيانات، وتحويل السجلات التشغيلية إلى رؤى استراتيجية تدعم اتخاذ القرار.'
-          : 'Consultancy on large-scale dataset classification, database structuring, and transforming operational records into actionable strategic intelligence.',
+          ? 'استشارات متخصصة في تصنيف مجموعات البيانات الحكومية الضخمة، والتدقيق الإحصائي، وتحليل معدلات تبني واستخدام الخدمات الرقمية.'
+          : 'Comprehensive classification, statistical auditing, and digital service adoption analysis across large-scale municipal data repositories.',
     },
     {
-      icon: <BarChart3 className="w-5 h-5 text-[#6B1426] dark:text-[#F38C9C]" />,
-      title: locale === 'ar' ? 'لوحات وتقارير Power BI التفاعلية' : 'Power BI Dashboards & Reporting',
+      num: '02',
+      title: locale === 'ar' ? 'لوحات وتقارير Power BI التنفيذية' : 'Power BI Dashboards & Reporting',
       desc:
         locale === 'ar'
-          ? 'تصميم وبناء لوحات مؤشرات الأداء وتقارير Power BI للجهات الحكومية لمتابعة المشاريع والخدمات التشغيلية بدقة وموثوقية عالية.'
-          : 'Interactive Power BI dashboards and KPI reporting built for municipal leadership to monitor service delivery, budgets, and project timelines in real time.',
+          ? 'تصميم وبناء منظومات تقارير ولوحات Power BI تفاعلية للقيادات لمتابعة مؤشرات الأداء الاستراتيجية والتشغيلية بدقة.'
+          : 'Executive Power BI dashboard suites and scheduled KPI telemetry built for leadership visibility across operations and budgets.',
     },
     {
-      icon: <Cpu className="w-5 h-5 text-blue-600 dark:text-blue-400" />,
-      title: locale === 'ar' ? 'الأتمتة الروبوتية للعمليات (RPA) والذكاء الاصطناعي' : 'Robotic Process Automation (RPA) & AI',
+      num: '03',
+      title: locale === 'ar' ? 'هندسة وتكامل البيانات (Data Engineering)' : 'Data Engineering & Governance',
       desc:
         locale === 'ar'
-          ? 'تطبيق خوارزميات أتمتة الإجراءات الروبوتية والشبكات لتقليل العمل اليدوي، تسريع إنجاز المعاملات، وتقليص التكاليف التشغيلية بنسب قياسية.'
-          : 'Deploying RPA and automated network scripting to streamline repetitive workflows, accelerate transaction throughput, and eliminate operational bottlenecks.',
+          ? 'مواءمة تدفقات البيانات (ETL) وتوحيد نماذج البيانات عبر الإدارات والأنظمة المركزية وفق ضوابط أمن المعلومات المعتمدة.'
+          : 'Data pipeline harmonization, ETL modeling, and cross-departmental repository integration under strict security compliance.',
+    },
+    {
+      num: '04',
+      title: locale === 'ar' ? 'أتمتة العمليات بالذكاء الاصطناعي (RPA)' : 'Automation / RPA & AI Solutions',
+      desc:
+        locale === 'ar'
+          ? 'نشر الروبوتات البرمجية الذكية لأتمتة إجراءات برمجة الشبكات والمعاملات المتكررة لتقليص زمن الإنجاز والتكلفة التشغيلية.'
+          : 'Bot-driven workflow automation, AI-assisted network programming procedures, and rule engines that eliminate manual bottlenecks.',
     },
   ];
 
   return (
     <section
       id="data-ai"
-      className="py-16 md:py-24 bg-white dark:bg-[#0B0F19] border-b border-zinc-200/80 dark:border-zinc-800/80 transition-colors"
+      className="py-20 md:py-28 bg-[#060E0B] text-[#F4F6F5] border-b border-[#1A2E26] relative overflow-hidden"
       dir={isRtl ? 'rtl' : 'ltr'}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+        {/* Top Editorial Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-12 border-b border-[#1A2E26]">
           <div className="max-w-2xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-[#008751]/10 text-[#008751] dark:bg-[#008751]/20 dark:text-[#34D399]">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>{locale === 'ar' ? 'البيانات والذكاء الاصطناعي' : 'Data & AI Practice'}</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight leading-tight">
+            <span className="text-xs font-semibold text-[#2DD4A4] tracking-wide block">
+              03 · {locale === 'ar' ? 'البيانات، التحليلات والذكاء الاصطناعي' : 'Data, Analytics & AI Spotlight'}
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#F4F6F5] tracking-tight leading-tight text-balance">
               {locale === 'ar'
-                ? 'تحويل البيانات المؤسسية إلى قرارات ذكية وأتمتة فعالة'
-                : 'Transforming Enterprise Data into Strategic Clarity & Automated Value'}
+                ? 'تحويل أصول البيانات الحكومية إلى مؤشرات قيادية وأتمتة ذكية'
+                : 'Turning Complex Institutional Data into Executive Intelligence & Automation'}
             </h2>
-            <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              {locale === 'ar'
-                ? 'نمكن دوائر حكومة أبوظبي من الاستفادة القصوى من بياناتها وأصولها الرقمية عبر حلول استشارية تجمع بين التحليلات المتقدمة وأتمتة العمليات.'
-                : 'Empowering Abu Dhabi government entities to leverage their data assets through integrated consultancy, modern telemetry, and proven automation architectures.'}
-            </p>
           </div>
 
           <Link
             href={dataAiHref}
-            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#008751] dark:text-[#34D399] hover:underline whitespace-nowrap"
+            className="inline-flex items-center gap-2 text-xs font-semibold text-[#2DD4A4] hover:underline whitespace-nowrap shrink-0"
           >
-            <span>{locale === 'ar' ? 'استكشف حلول البيانات وذكاء الأعمال' : 'Explore Data & AI Practice'}</span>
+            <span>{locale === 'ar' ? 'استكشف ممارسة البيانات والذكاء الاصطناعي' : 'Explore Data & AI Practice'}</span>
             <ArrowIcon className="w-3.5 h-3.5 shrink-0" />
           </Link>
         </div>
 
-        {/* 3 Main Capability Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {capabilities.map((item, idx) => (
-            <div
-              key={idx}
-              className="p-6 sm:p-7 rounded-2xl bg-[#FDFCFB] dark:bg-[#111726] border border-zinc-200 dark:border-zinc-800 shadow-xs flex flex-col justify-between"
-            >
-              <div>
-                <div className="w-11 h-11 rounded-xl bg-white dark:bg-zinc-800 border border-zinc-200/80 dark:border-zinc-700/80 flex items-center justify-center mb-5 shadow-2xs">
-                  {item.icon}
+        {/* Asymmetric 2-Column Split: Architectural Visualization + 4 Capabilities */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 pt-12 items-stretch">
+          {/* Left Visual Showcase + Verified Mandate Proof */}
+          <div className="lg:col-span-5 flex flex-col justify-between gap-6">
+            <div className="relative flex-1 min-h-[260px] sm:min-h-[320px] rounded-lg overflow-hidden border border-[#1E362D] bg-[#0C1A15]">
+              <Image
+                src="/images/data_ai_telemetry_architecture_1794979011520.jpg"
+                alt={
+                  locale === 'ar'
+                    ? 'البنية التحتية لتحليلات البيانات وأتمتة الشبكات بالذكاء الاصطناعي'
+                    : 'Enterprise data analytics and intelligent network automation architecture'
+                }
+                fill
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                referrerPolicy="no-referrer"
+                className="object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050C0A]/90 via-[#050C0A]/30 to-transparent" />
+
+              <div className="absolute bottom-0 inset-x-0 p-5 border-t border-white/10 bg-[#050C0A]/70 backdrop-blur-xs">
+                <div className="text-xs font-mono text-[#2DD4A4]">
+                  {locale === 'ar' ? 'مرجع حكومي موثق · DMT' : 'Verified Mandate Reference · DMT'}
                 </div>
-                <h3 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-2.5">
-                  {item.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
-
-              <div className="pt-5 mt-5 border-t border-zinc-100 dark:border-zinc-800/80">
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-600 dark:text-zinc-400">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#008751]" />
-                  <span>{locale === 'ar' ? 'تنفيذ ميداني موثق' : 'Proven Field Implementation'}</span>
-                </span>
+                <div className="text-sm font-bold text-[#F4F6F5] mt-1">
+                  {locale === 'ar'
+                    ? 'أتمتة إجراءات برمجة الشبكات بالذكاء الاصطناعي (RPA)'
+                    : 'AI & RPA Network Programming Automation'}
+                </div>
+                <div className="mt-2 flex items-center justify-between text-xs text-[#A6B5AF]">
+                  <span className="font-mono text-[#C6A355] font-semibold">AED 10,000,000</span>
+                  <Link href={projectsHref} className="inline-flex items-center gap-1 text-[#2DD4A4] hover:underline">
+                    <span>{locale === 'ar' ? 'عرض بالسجل' : 'View in Register'}</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
 
-        {/* Reference Highlight Banner */}
-        <div className="p-6 sm:p-8 rounded-2xl bg-[#FBF9F5] dark:bg-[#0E1322] border border-zinc-200 dark:border-zinc-800">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-            <div className="md:col-span-8 space-y-2">
-              <span className="text-xs font-mono font-bold text-[#6B1426] dark:text-[#F38C9C] uppercase">
-                {locale === 'ar' ? 'مشروع مرجعي معتمد' : 'Verified Engagement Highlight'}
-              </span>
-              <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
-                {locale === 'ar'
-                  ? 'مشروع أتمتة الشبكات بالذكاء الاصطناعي (RPA) بقيمة 10,000,000 درهم'
-                  : 'AED 10,000,000 AI & RPA Network Automation Engagement'}
-              </h3>
-              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                {locale === 'ar'
-                  ? 'نفذته مستشاركم بنجاح لصالح دائرة البلديات والنقل بأبوظبي لأتمتة العمليات التشغيلية وتطوير أدوات القياس والمتابعة الذكية.'
-                  : 'Executed by Mustasharcom for the Department of Municipalities and Transport (DMT) to streamline operational workflows and deploy automated monitoring tools.'}
-              </p>
-            </div>
-            <div className="md:col-span-4 flex md:justify-end">
-              <Link
-                href={locale === 'ar' ? '/ar/projects' : '/projects'}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-xs font-semibold hover:bg-zinc-800 dark:hover:bg-white transition-colors"
+          {/* Right 2x2 Capability Grid */}
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {capabilities.map((cap) => (
+              <div
+                key={cap.num}
+                className="p-6 sm:p-7 rounded-lg bg-[#0B1914] border border-[#1A2E26] flex flex-col justify-between gap-4 hover:border-[#2DD4A4]/50 transition-colors"
               >
-                <span>{locale === 'ar' ? 'عرض تفاصيل المشروع بالسجل' : 'View Project in Registry'}</span>
-                <ArrowIcon className="w-3.5 h-3.5 shrink-0" />
-              </Link>
-            </div>
+                <div className="space-y-3">
+                  <span className="font-mono text-xs font-semibold text-[#2DD4A4] block">
+                    {cap.num}.
+                  </span>
+                  <h3 className="text-base sm:text-lg font-bold text-[#F4F6F5] leading-snug">
+                    {cap.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#A6B5AF] leading-relaxed">
+                    {cap.desc}
+                  </p>
+                </div>
+
+                <div className="pt-4 border-t border-[#1A2E26] text-[11px] font-mono text-[#768780]">
+                  {locale === 'ar' ? 'ممارسة معتمدة · أبوظبي' : 'Verified Capability · Abu Dhabi'}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

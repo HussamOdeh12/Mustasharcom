@@ -53,7 +53,7 @@ export default function GlobalSearch({
         <button
           type="button"
           onClick={() => setOpenState(true)}
-          className={`inline-flex items-center justify-center p-2 rounded-lg text-zinc-700 dark:text-zinc-200 hover:text-[#6B1426] dark:hover:text-[#F38C9C] hover:bg-zinc-100 dark:hover:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-800 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B1426] cursor-pointer shrink-0 ${className}`}
+          className={`inline-flex items-center justify-center p-2.5 rounded-md text-[#2C3A34] dark:text-[#C8D4CE] hover:text-[#0B1713] dark:hover:text-white hover:bg-[#F3EFEA] dark:hover:bg-[#10221C] border border-[#E3DFD7] dark:border-[#1A2E26] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B1426] cursor-pointer shrink-0 ${className}`}
           aria-label={isRtl ? 'البحث في الموقع (Ctrl+K)' : 'Search website (Ctrl+K)'}
           title={isRtl ? 'البحث (Ctrl+K)' : 'Search (Ctrl+K)'}
         >
@@ -63,14 +63,14 @@ export default function GlobalSearch({
         <button
           type="button"
           onClick={() => setOpenState(true)}
-          className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/50 text-xs text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors ${className}`}
+          className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-md border border-[#E3DFD7] dark:border-[#1A2E26] bg-[#F3EFEA]/70 dark:bg-[#0C1A15] text-xs text-[#485650] dark:text-[#A6B5AF] hover:border-[#6B1426] dark:hover:border-[#2DD4A4] transition-colors ${className}`}
           aria-label={isRtl ? 'البحث السريع' : 'Quick search'}
         >
           <div className="flex items-center gap-2">
-            <Search className="w-3.5 h-3.5 text-[#6B1426] dark:text-[#E63956]" />
+            <Search className="w-3.5 h-3.5 text-[#6B1426] dark:text-[#2DD4A4]" />
             <span>{isRtl ? 'البحث في الخدمات والمشاريع...' : 'Search services & projects...'}</span>
           </div>
-          <kbd className="px-1.5 py-0.5 text-[10px] font-mono bg-white dark:bg-zinc-700 rounded border border-zinc-200 dark:border-zinc-600 text-zinc-600 dark:text-zinc-400">
+          <kbd className="px-1.5 py-0.5 text-[10px] font-mono bg-white dark:bg-[#10221C] rounded border border-[#E3DFD7] dark:border-[#1A2E26] text-[#485650] dark:text-[#A6B5AF]">
             ⌘K
           </kbd>
         </button>
@@ -78,14 +78,14 @@ export default function GlobalSearch({
         <button
           type="button"
           onClick={() => setOpenState(true)}
-          className={`hidden sm:inline-flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs border border-zinc-200 dark:border-zinc-800 bg-zinc-50/80 dark:bg-zinc-800/40 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:border-zinc-300 dark:hover:border-zinc-700 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B1426] cursor-pointer shrink-0 ${className}`}
+          className={`hidden sm:inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md text-xs border border-[#E3DFD7] dark:border-[#1A2E26] bg-[#F3EFEA]/60 dark:bg-[#0C1A15] text-[#485650] dark:text-[#A6B5AF] hover:text-[#0B1713] dark:hover:text-white hover:border-[#C5BFB4] dark:hover:border-[#284539] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B1426] cursor-pointer shrink-0 whitespace-nowrap ${className}`}
           aria-label={isRtl ? 'البحث في الموقع (Ctrl+K)' : 'Search website (Ctrl+K)'}
         >
-          <Search className="w-3.5 h-3.5 text-[#6B1426] dark:text-[#E63956] shrink-0" />
-          <span className="hidden md:inline text-zinc-600 dark:text-zinc-400">
-            {isRtl ? 'بحث...' : 'Search...'}
+          <Search className="w-3.5 h-3.5 text-[#6B1426] dark:text-[#2DD4A4] shrink-0" />
+          <span className="hidden xl:inline">
+            {isRtl ? 'بحث' : 'Search'}
           </span>
-          <kbd className="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-mono bg-white dark:bg-zinc-700/80 rounded border border-zinc-200 dark:border-zinc-600 text-zinc-600 dark:text-zinc-400 font-semibold shadow-2xs">
+          <kbd className="hidden md:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono bg-white dark:bg-[#10221C] rounded border border-[#E3DFD7] dark:border-[#1A2E26] text-[#485650] dark:text-[#A6B5AF]">
             ⌘K
           </kbd>
         </button>

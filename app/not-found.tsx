@@ -2,24 +2,26 @@ import Link from 'next/link';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#FDFCFB] dark:bg-[#0B0F19] text-zinc-900 dark:text-zinc-100 p-4 text-center">
-      <div className="w-16 h-16 rounded-2xl bg-[#6B1426]/10 text-[#6B1426] dark:bg-[#6B1426]/25 dark:text-[#F38C9C] flex items-center justify-center font-bold text-2xl mb-4">
-        404
-      </div>
-      <h1 className="text-2xl font-bold tracking-tight mb-2">Page Not Found / الصفحة غير موجودة</h1>
-      <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-md mb-6">
-        The requested page could not be found. Return to the home page or contact support.
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#060E0B] text-[#F4F6F5] p-6 text-center">
+      <span className="font-mono text-sm font-semibold text-[#2DD4A4] mb-3">
+        ERROR 404
+      </span>
+      <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+        Page Not Found · الصفحة غير موجودة
+      </h1>
+      <p className="text-sm text-[#A6B5AF] max-w-md mb-8 leading-relaxed">
+        The requested resource could not be found or has been relocated. Return to the Mustasharcom home page.
       </p>
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center justify-center gap-3">
         <Link
           href="/"
-          className="px-4 py-2 rounded-lg bg-[#6B1426] hover:bg-[#8B1E3F] text-white text-sm font-semibold transition-colors shadow-sm"
+          className="px-5 py-2.5 rounded-md bg-[#2DD4A4] hover:bg-[#24B88D] text-[#05100C] text-xs font-semibold transition-colors"
         >
           Home (English)
         </Link>
         <Link
           href="/ar"
-          className="px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-sm font-semibold transition-colors"
+          className="px-5 py-2.5 rounded-md border border-[#1E362D] bg-[#0C1A15] hover:border-[#2DD4A4] text-[#F4F6F5] text-xs font-semibold transition-colors"
         >
           الرئيسية (العربية)
         </Link>
