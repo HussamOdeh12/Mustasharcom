@@ -14,7 +14,7 @@ interface TopologyNode {
   id: string;
   labelEn: string;
   labelAr: string;
-  stageIndex: number; // maps to capabilities 0..3 in DataAiSpotlight
+  stageIndex: number;
   nx: number;
   ny: number;
   x: number;
@@ -37,6 +37,20 @@ interface EnergyPacket {
   t: number;
   speed: number;
   dir: 1 | -1;
+}
+
+interface NetworkSceneState {
+  width: number;
+  height: number;
+  isMobile: boolean;
+  nodes: TopologyNode[];
+  edges: TopologyEdge[];
+  packets: EnergyPacket[];
+  relayPoints: { nx: number; ny: number; phase: number }[];
+  hoveredIdx: number;
+  activation: number;
+  highlightCooldown: number;
+  simTime: number;
 }
 
 const DOMAIN_NODES: Omit<TopologyNode, 'x' | 'y' | 'ringGlow'>[] = [
@@ -124,9 +138,15 @@ export default function DataAiNetworkCanvas({
 }: DataAiNetworkCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sceneRef = useRef<NetworkSceneState | null>(null);
+  const drawFrameRef = useRef<((dt: number, animateMotion: boolean) => void) | null>(null);
+  const rafIdRef = useRef<number>(0);
+
+  const localeRef = useRef(locale);
   const activeStageRef = useRef(activeStage);
   const onSelectRef = useRef(onSelectStage);
 
+  localeRef.current = locale;
   activeStageRef.current = activeStage;
   onSelectRef.current = onSelectStage;
 
@@ -137,6 +157,7 @@ export default function DataAiNetworkCanvas({
     threshold: 0.05,
   });
 
+  // 1. Initialize persistent topology scene, ResizeObserver, and pointer handlers once
   useEffect(() => {
     const container = containerRef.current;
     const canvas = canvasRef.current;
@@ -146,18 +167,9 @@ export default function DataAiNetworkCanvas({
     if (!ctx) return;
 
     let width = container.clientWidth || 560;
-    let height = container.clientHeight || 360;
+    let height = container.clientHeight || 310;
     const isMobile = width < 640;
     const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
-
-    const resize = () => {
-      width = container.clientWidth || 560;
-      height = container.clientHeight || 360;
-      canvas.width = Math.floor(width * dpr);
-      canvas.height = Math.floor(height * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-    resize();
 
     const nodes: TopologyNode[] = DOMAIN_NODES.map((n) => ({
       ...n,
@@ -171,7 +183,6 @@ export default function DataAiNetworkCanvas({
       highlight: 0,
     }));
 
-    // Subtle secondary relay vertices for visual depth (unlabeled micro-nodes)
     const relayPoints = [
       { nx: 0.37, ny: 0.44, phase: 0.9 },
       { nx: 0.67, ny: 0.43, phase: 2.1 },
@@ -189,9 +200,31 @@ export default function DataAiNetworkCanvas({
       });
     }
 
-    let hoveredIdx = -1;
-    let activation = reducedMotion ? 1 : 0;
-    let highlightCooldown = 1.6;
+    const scene: NetworkSceneState = {
+      width,
+      height,
+      isMobile,
+      nodes,
+      edges,
+      packets,
+      relayPoints,
+      hoveredIdx: -1,
+      activation: reducedMotion ? 1 : 0.6,
+      highlightCooldown: 1.2,
+      simTime: 0,
+    };
+    sceneRef.current = scene;
+
+    const resize = () => {
+      width = container.clientWidth || 560;
+      height = container.clientHeight || 310;
+      scene.width = width;
+      scene.height = height;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
 
     const updateHover = (clientX: number, clientY: number) => {
       const rect = canvas.getBoundingClientRect();
@@ -199,14 +232,14 @@ export default function DataAiNetworkCanvas({
       const py = clientY - rect.top;
       let nearest = -1;
       let minDist = 44;
-      for (let i = 0; i < nodes.length; i++) {
-        const d = Math.hypot(nodes[i].x - px, nodes[i].y - py);
+      for (let i = 0; i < scene.nodes.length; i++) {
+        const d = Math.hypot(scene.nodes[i].x - px, scene.nodes[i].y - py);
         if (d < minDist) {
           minDist = d;
           nearest = i;
         }
       }
-      hoveredIdx = nearest;
+      scene.hoveredIdx = nearest;
       canvas.style.cursor = nearest >= 0 ? 'pointer' : 'default';
     };
 
@@ -215,14 +248,14 @@ export default function DataAiNetworkCanvas({
     };
 
     const handlePointerLeave = () => {
-      hoveredIdx = -1;
+      scene.hoveredIdx = -1;
       canvas.style.cursor = 'default';
     };
 
     const handleClick = (e: MouseEvent) => {
       updateHover(e.clientX, e.clientY);
-      if (hoveredIdx >= 0 && onSelectRef.current) {
-        onSelectRef.current(nodes[hoveredIdx].stageIndex);
+      if (scene.hoveredIdx >= 0 && onSelectRef.current) {
+        onSelectRef.current(scene.nodes[scene.hoveredIdx].stageIndex);
       }
     };
 
@@ -230,15 +263,9 @@ export default function DataAiNetworkCanvas({
     canvas.addEventListener('pointerleave', handlePointerLeave, { passive: true });
     canvas.addEventListener('click', handleClick);
 
-    let resizeObserver: ResizeObserver | null = null;
-    if ('ResizeObserver' in window) {
-      resizeObserver = new ResizeObserver(() => resize());
-      resizeObserver.observe(container);
-    }
-
     const computeCurveControl = (e: TopologyEdge) => {
-      const na = nodes[e.from];
-      const nb = nodes[e.to];
+      const na = scene.nodes[e.from];
+      const nb = scene.nodes[e.to];
       const mx = (na.x + nb.x) * 0.5;
       const my = (na.y + nb.y) * 0.5;
       const dx = nb.x - na.x;
@@ -252,79 +279,89 @@ export default function DataAiNetworkCanvas({
       };
     };
 
-    const drawFrame = (timeSec: number, dt: number) => {
-      ctx.clearRect(0, 0, width, height);
-
-      if (activation < 1) {
-        activation = Math.min(1, activation + dt * 1.15);
+    const drawFrame = (dt: number, animateMotion: boolean) => {
+      if (animateMotion) {
+        scene.simTime += dt;
+        if (scene.activation < 1) {
+          scene.activation = Math.min(1, scene.activation + dt * 1.4);
+        }
+      } else if (reducedMotion) {
+        scene.activation = 1;
       }
 
+      const timeSec = scene.simTime;
+      const w = scene.width;
+      const h = scene.height;
+      const act = scene.activation;
       const currentStage = activeStageRef.current;
 
-      // Update node positions with subtle breathing motion
-      for (let i = 0; i < nodes.length; i++) {
-        const n = nodes[i];
-        const amp = isMobile ? 3.5 : 6;
-        const bx = reducedMotion ? 0 : Math.sin(timeSec * 0.55 + n.phase) * amp;
-        const by = reducedMotion ? 0 : Math.cos(timeSec * 0.48 + n.phase * 1.2) * (amp * 0.8);
-        n.x = n.nx * width + bx;
-        n.y = n.ny * height + by;
-        n.ringGlow = Math.max(0, n.ringGlow - dt * 1.35);
+      ctx.clearRect(0, 0, w, h);
+
+      // Update node positions with continuous subtle breathing motion
+      for (let i = 0; i < scene.nodes.length; i++) {
+        const n = scene.nodes[i];
+        const amp = scene.isMobile ? 3.5 : 6;
+        const bx = animateMotion ? Math.sin(timeSec * 0.58 + n.phase) * amp : 0;
+        const by = animateMotion ? Math.cos(timeSec * 0.5 + n.phase * 1.2) * (amp * 0.8) : 0;
+        n.x = n.nx * w + bx;
+        n.y = n.ny * h + by;
+        n.ringGlow = Math.max(0, n.ringGlow - dt * 1.3);
       }
 
-      // Occasional connection pulse highlighting
-      if (!reducedMotion) {
-        highlightCooldown -= dt;
-        if (highlightCooldown <= 0) {
-          const randomEdge = edges[Math.floor(Math.random() * edges.length)];
+      // Recurring selective connection highlights
+      if (animateMotion) {
+        scene.highlightCooldown -= dt;
+        if (scene.highlightCooldown <= 0) {
+          const randomEdge = scene.edges[Math.floor(Math.random() * scene.edges.length)];
           randomEdge.highlight = 1;
-          highlightCooldown = 1.4 + Math.random() * 1.4;
+          scene.highlightCooldown = 1.2 + Math.random() * 1.3;
         }
       }
 
       // Subtle background architectural grid arcs
       ctx.save();
-      ctx.strokeStyle = 'rgba(24, 198, 160, 0.06)';
+      ctx.strokeStyle = 'rgba(24, 198, 160, 0.065)';
       ctx.lineWidth = 1;
       for (let r = 1; r <= 3; r++) {
         ctx.beginPath();
-        ctx.arc(width * 0.52, height * 0.5, Math.min(width, height) * (0.24 * r), 0, Math.PI * 2);
+        ctx.arc(w * 0.52, h * 0.5, Math.min(w, h) * (0.24 * r), 0, Math.PI * 2);
         ctx.stroke();
       }
       ctx.restore();
 
       // Secondary micro-relay links
-      for (let i = 0; i < relayPoints.length; i++) {
-        const rp = relayPoints[i];
-        const rx = rp.nx * width + (reducedMotion ? 0 : Math.sin(timeSec * 0.4 + rp.phase) * 4);
-        const ry = rp.ny * height + (reducedMotion ? 0 : Math.cos(timeSec * 0.45 + rp.phase) * 4);
-        const target = nodes[(i * 2) % nodes.length];
-        ctx.strokeStyle = `rgba(23, 75, 62, ${(0.35 * activation).toFixed(3)})`;
+      for (let i = 0; i < scene.relayPoints.length; i++) {
+        const rp = scene.relayPoints[i];
+        const rx = rp.nx * w + (animateMotion ? Math.sin(timeSec * 0.42 + rp.phase) * 4 : 0);
+        const ry = rp.ny * h + (animateMotion ? Math.cos(timeSec * 0.46 + rp.phase) * 4 : 0);
+        const target = scene.nodes[(i * 2) % scene.nodes.length];
+
+        ctx.strokeStyle = `rgba(23, 75, 62, ${(0.38 * act).toFixed(3)})`;
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(rx, ry);
         ctx.lineTo(target.x, target.y);
         ctx.stroke();
 
-        ctx.fillStyle = `rgba(24, 198, 160, ${(0.25 * activation).toFixed(3)})`;
+        ctx.fillStyle = `rgba(24, 198, 160, ${(0.28 * act).toFixed(3)})`;
         ctx.beginPath();
         ctx.arc(rx, ry, 2, 0, Math.PI * 2);
         ctx.fill();
       }
 
       // Draw curved primary topology edges
-      for (let i = 0; i < edges.length; i++) {
-        const e = edges[i];
-        e.highlight = Math.max(0, e.highlight - dt * 0.85);
-        const na = nodes[e.from];
-        const nb = nodes[e.to];
+      for (let i = 0; i < scene.edges.length; i++) {
+        const e = scene.edges[i];
+        e.highlight = Math.max(0, e.highlight - dt * 0.8);
+        const na = scene.nodes[e.from];
+        const nb = scene.nodes[e.to];
         const { cx, cy } = computeCurveControl(e);
 
         const stageMatch = na.stageIndex === currentStage || nb.stageIndex === currentStage;
-        const hoverMatch = hoveredIdx === e.from || hoveredIdx === e.to;
+        const hoverMatch = scene.hoveredIdx === e.from || scene.hoveredIdx === e.to;
 
-        const baseAlpha = stageMatch ? 0.42 : 0.19;
-        const totalAlpha = Math.min(0.88, (baseAlpha + e.highlight * 0.36 + (hoverMatch ? 0.35 : 0)) * activation);
+        const baseAlpha = stageMatch ? 0.44 : 0.2;
+        const totalAlpha = Math.min(0.9, (baseAlpha + e.highlight * 0.36 + (hoverMatch ? 0.35 : 0)) * act);
 
         ctx.strokeStyle = `rgba(24, 198, 160, ${totalAlpha.toFixed(3)})`;
         ctx.lineWidth = stageMatch || hoverMatch ? 1.65 : 1.05;
@@ -334,32 +371,32 @@ export default function DataAiNetworkCanvas({
         ctx.stroke();
       }
 
-      // Advance & draw traveling light packets (ION-inspired)
-      if (!reducedMotion && activation > 0.25) {
-        for (let i = 0; i < packets.length; i++) {
-          const p = packets[i];
-          const e = edges[p.edgeIdx];
-          const na = nodes[e.from];
-          const nb = nodes[e.to];
+      // Continuous traveling light packets (ION-inspired)
+      if (animateMotion) {
+        for (let i = 0; i < scene.packets.length; i++) {
+          const p = scene.packets[i];
+          const e = scene.edges[p.edgeIdx];
+          const na = scene.nodes[e.from];
+          const nb = scene.nodes[e.to];
           const stageBoost = na.stageIndex === currentStage || nb.stageIndex === currentStage ? 1.35 : 1;
 
           p.t += p.speed * stageBoost * dt * p.dir;
 
           if (p.t > 1 || p.t < 0) {
             const targetIdx = p.t > 1 ? e.to : e.from;
-            nodes[targetIdx].ringGlow = 1;
-            // Pick an edge connected to targetIdx for smooth signal continuity
+            scene.nodes[targetIdx].ringGlow = 1;
+
             const candidates: number[] = [];
-            for (let k = 0; k < edges.length; k++) {
-              if (edges[k].from === targetIdx || edges[k].to === targetIdx) {
+            for (let k = 0; k < scene.edges.length; k++) {
+              if (scene.edges[k].from === targetIdx || scene.edges[k].to === targetIdx) {
                 candidates.push(k);
               }
             }
             const nextEdgeIdx = candidates.length > 0
               ? candidates[Math.floor(Math.random() * candidates.length)]
-              : Math.floor(Math.random() * edges.length);
+              : Math.floor(Math.random() * scene.edges.length);
             p.edgeIdx = nextEdgeIdx;
-            if (edges[nextEdgeIdx].from === targetIdx) {
+            if (scene.edges[nextEdgeIdx].from === targetIdx) {
               p.dir = 1;
               p.t = 0;
             } else {
@@ -368,9 +405,9 @@ export default function DataAiNetworkCanvas({
             }
           }
 
-          const activeEdge = edges[p.edgeIdx];
-          const pA = nodes[activeEdge.from];
-          const pB = nodes[activeEdge.to];
+          const activeEdge = scene.edges[p.edgeIdx];
+          const pA = scene.nodes[activeEdge.from];
+          const pB = scene.nodes[activeEdge.to];
           const { cx, cy } = computeCurveControl(activeEdge);
 
           const t = p.t;
@@ -385,7 +422,7 @@ export default function DataAiNetworkCanvas({
 
           const grad = ctx.createLinearGradient(tx, ty, px, py);
           grad.addColorStop(0, 'rgba(24, 198, 160, 0)');
-          grad.addColorStop(1, 'rgba(24, 198, 160, 0.92)');
+          grad.addColorStop(1, 'rgba(24, 198, 160, 0.94)');
           ctx.strokeStyle = grad;
           ctx.lineWidth = 2.4;
           ctx.beginPath();
@@ -401,25 +438,34 @@ export default function DataAiNetworkCanvas({
       }
 
       // Draw domain nodes & bilingual labels
-      const isAr = locale === 'ar';
+      const isAr = localeRef.current === 'ar';
       ctx.font = isAr
         ? '600 11px system-ui, -apple-system, sans-serif'
         : '600 10.5px ui-monospace, SFMono-Regular, Menlo, monospace';
       ctx.textBaseline = 'middle';
 
-      for (let i = 0; i < nodes.length; i++) {
-        const n = nodes[i];
+      for (let i = 0; i < scene.nodes.length; i++) {
+        const n = scene.nodes[i];
         const isStageActive = n.stageIndex === currentStage;
-        const isHovered = hoveredIdx === i;
-        const emphasis = isHovered ? 1 : isStageActive ? 0.85 : 0.45;
+        const isHovered = scene.hoveredIdx === i;
+        const emphasis = isHovered ? 1 : isStageActive ? 0.88 : 0.5;
 
-        // Outer activation / arrival pulse ring
+        // Ambient breathing halo on hub nodes + arrival ripples
+        const hubWave = animateMotion && n.isHub ? (timeSec * 0.5 + n.phase) % 1 : 0;
+        if (animateMotion && n.isHub) {
+          ctx.strokeStyle = `rgba(24, 198, 160, ${((1 - hubWave) * 0.25 * act).toFixed(3)})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.radius + 4 + hubWave * 14, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
         const pulseRadius = n.radius + 7 + (1 - n.ringGlow) * 7;
         if (n.ringGlow > 0.04 || isStageActive || isHovered) {
           const ringAlpha = Math.max(
-            n.ringGlow * 0.55,
-            isHovered ? 0.65 : isStageActive ? 0.34 : 0
-          ) * activation;
+            n.ringGlow * 0.58,
+            isHovered ? 0.68 : isStageActive ? 0.36 : 0
+          ) * act;
           ctx.strokeStyle = `rgba(24, 198, 160, ${ringAlpha.toFixed(3)})`;
           ctx.lineWidth = 1.25;
           ctx.beginPath();
@@ -427,21 +473,21 @@ export default function DataAiNetworkCanvas({
           ctx.stroke();
         }
 
-        // Core dark backing disc for crisp contrast over background lines
+        // Core dark backing disc
         ctx.fillStyle = '#071C17';
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.radius + 2, 0, Math.PI * 2);
         ctx.fill();
 
-        // Node fill
+        // Node core fill
         ctx.fillStyle = isStageActive || isHovered
-          ? `rgba(24, 198, 160, ${activation.toFixed(3)})`
-          : `rgba(18, 169, 137, ${(0.55 * activation).toFixed(3)})`;
+          ? `rgba(24, 198, 160, ${act.toFixed(3)})`
+          : `rgba(18, 169, 137, ${(0.6 * act).toFixed(3)})`;
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
         ctx.fill();
 
-        // Crisp node label pill
+        // Crisp node label badge
         const label = isAr ? n.labelAr : n.labelEn;
         const metrics = ctx.measureText(label);
         const padX = 8;
@@ -449,58 +495,107 @@ export default function DataAiNetworkCanvas({
         const pillH = 20;
         const placeAbove = n.ny > 0.55;
         const ly = placeAbove ? n.y - n.radius - 18 : n.y + n.radius + 18;
-        const lx = Math.max(pillW * 0.5 + 8, Math.min(width - pillW * 0.5 - 8, n.x));
+        const lx = Math.max(pillW * 0.5 + 8, Math.min(w - pillW * 0.5 - 8, n.x));
 
-        ctx.fillStyle = `rgba(7, 28, 23, ${(0.88 * activation).toFixed(3)})`;
+        ctx.fillStyle = `rgba(7, 28, 23, ${(0.9 * act).toFixed(3)})`;
         ctx.strokeStyle = isStageActive || isHovered
-          ? `rgba(24, 198, 160, ${(0.7 * activation).toFixed(3)})`
-          : `rgba(23, 75, 62, ${(0.85 * activation).toFixed(3)})`;
+          ? `rgba(24, 198, 160, ${(0.75 * act).toFixed(3)})`
+          : `rgba(23, 75, 62, ${(0.88 * act).toFixed(3)})`;
         ctx.lineWidth = 1;
 
         ctx.beginPath();
-        ctx.roundRect(lx - pillW * 0.5, ly - pillH * 0.5, pillW, pillH, 5);
+        if (typeof ctx.roundRect === 'function') {
+          ctx.roundRect(lx - pillW * 0.5, ly - pillH * 0.5, pillW, pillH, 5);
+        } else {
+          ctx.rect(lx - pillW * 0.5, ly - pillH * 0.5, pillW, pillH);
+        }
         ctx.fill();
         ctx.stroke();
 
         ctx.fillStyle = isStageActive || isHovered
-          ? `rgba(244, 247, 245, ${activation.toFixed(3)})`
+          ? `rgba(244, 247, 245, ${act.toFixed(3)})`
           : `rgba(184, 199, 194, ${(0.85 * emphasis + 0.15).toFixed(3)})`;
         ctx.textAlign = 'center';
         ctx.fillText(label, lx, ly + 0.5);
       }
     };
 
-    drawFrame(0, 0.02);
+    drawFrameRef.current = drawFrame;
+    drawFrame(0, false);
 
-    let rafId = 0;
-    let lastTime = performance.now();
-    const minFrameMs = isMobile ? 34 : 22; // ~30fps mobile, ~45fps desktop
-
-    const shouldRun = !reducedMotion && isInView && docVisible;
-
-    const tick = (now: number) => {
-      if (!shouldRun) return;
-      const elapsed = now - lastTime;
-      if (elapsed >= minFrameMs) {
-        const dt = Math.min(0.05, elapsed / 1000);
-        lastTime = now;
-        drawFrame(now / 1000, dt);
-      }
-      rafId = window.requestAnimationFrame(tick);
-    };
-
-    if (shouldRun) {
-      rafId = window.requestAnimationFrame(tick);
+    let resizeObserver: ResizeObserver | null = null;
+    if ('ResizeObserver' in window) {
+      resizeObserver = new ResizeObserver(() => {
+        resize();
+        drawFrame(0, false);
+      });
+      resizeObserver.observe(container);
     }
 
     return () => {
-      if (rafId) window.cancelAnimationFrame(rafId);
+      if (rafIdRef.current) {
+        window.cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = 0;
+      }
       if (resizeObserver) resizeObserver.disconnect();
       canvas.removeEventListener('pointermove', handlePointerMove);
       canvas.removeEventListener('pointerleave', handlePointerLeave);
       canvas.removeEventListener('click', handleClick);
+      drawFrameRef.current = null;
+      sceneRef.current = null;
     };
-  }, [locale, reducedMotion, isInView, docVisible]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Redraw immediately when activeStage or locale changes while paused
+  useEffect(() => {
+    if (drawFrameRef.current) {
+      drawFrameRef.current(0, false);
+    }
+  }, [activeStage, locale]);
+
+  // 2. Cleanly start/pause/resume rAF without resetting topology, packets, or activation state
+  useEffect(() => {
+    const shouldRun = !reducedMotion && isInView && docVisible;
+
+    if (rafIdRef.current) {
+      window.cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = 0;
+    }
+
+    if (!shouldRun) {
+      if (reducedMotion && drawFrameRef.current) {
+        drawFrameRef.current(0, false);
+      }
+      return;
+    }
+
+    const scene = sceneRef.current;
+    const minFrameMs = scene?.isMobile ? 34 : 22; // ~30fps mobile, ~45fps desktop
+    let lastTime = performance.now();
+    let active = true;
+
+    const tick = (now: number) => {
+      if (!active) return;
+      const elapsed = now - lastTime;
+      if (elapsed >= minFrameMs) {
+        const dt = Math.min(0.05, Math.max(0.001, elapsed / 1000));
+        lastTime = now;
+        drawFrameRef.current?.(dt, true);
+      }
+      rafIdRef.current = window.requestAnimationFrame(tick);
+    };
+
+    rafIdRef.current = window.requestAnimationFrame(tick);
+
+    return () => {
+      active = false;
+      if (rafIdRef.current) {
+        window.cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = 0;
+      }
+    };
+  }, [reducedMotion, isInView, docVisible]);
 
   return (
     <div

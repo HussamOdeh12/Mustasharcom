@@ -120,7 +120,7 @@ test('Priority 2: ServicesCarousel implements all 6 practices, prev/next boundar
   assert.ok(carouselCode.includes("touchAction: 'pan-x pan-y'"), 'Carousel must allow both horizontal and vertical touch panning');
 });
 
-test('Priority 3: SectionReveal defaults to visible on SSR, uses IntersectionObserver, and respects prefers-reduced-motion', () => {
+test('Priority 3: SectionReveal defaults to visible on SSR, replays via dual-observer hysteresis, and respects prefers-reduced-motion', () => {
   const revealCode = fs.readFileSync(path.join(ROOT, 'components/ui/SectionReveal.tsx'), 'utf8');
   const globalsCss = fs.readFileSync(path.join(ROOT, 'app/globals.css'), 'utf8');
 
@@ -130,10 +130,12 @@ test('Priority 3: SectionReveal defaults to visible on SSR, uses IntersectionObs
     'SectionReveal must initialize in visible SSR state'
   );
   assert.ok(
-    revealCode.includes("window.matchMedia('(prefers-reduced-motion: reduce)').matches"),
-    'SectionReveal must check prefers-reduced-motion'
+    revealCode.includes('useReducedMotion'),
+    'SectionReveal must check prefers-reduced-motion via useReducedMotion'
   );
-  assert.ok(revealCode.includes('new IntersectionObserver'), 'SectionReveal must use IntersectionObserver');
+  assert.ok(revealCode.includes('enterObserver') && revealCode.includes('exitObserver'), 'SectionReveal must use dual-observer hysteresis for repeatable reveals');
+  assert.ok(!revealCode.includes('.unobserve('), 'SectionReveal must not unobserve after first reveal so animations can replay');
+  assert.ok(revealCode.includes("rootMargin: '96px 0px 96px 0px'"), 'Exit observer must use a 96px buffer to prevent boundary flickering');
 
   // CSS staggered child classes & reduced motion media query
   assert.ok(globalsCss.includes('.section-reveal-hidden .reveal-item'), 'globals.css must define nested .reveal-item hidden state');
@@ -230,5 +232,31 @@ test('Priority 9: Hero & Data-AI Canvas visualizations are original, lazy-loaded
   }
   const strippedUi = (networkCanvas + spotlight).replace(/\/\/.*$/gm, '');
   assert.ok(!/\b(FPS|LATENCY|UPTIME|LIVE TELEMETRY)\b|99\.9%/i.test(strippedUi), 'Must not include fabricated operational telemetry');
+});
+
+test('Priority 10: Continuous canvas persistence (pause/resume without reset) and CSS scroll-driven effects with reduced-motion disables', () => {
+  const heroCanvas = fs.readFileSync(path.join(ROOT, 'components/motion/HeroTechCanvas.tsx'), 'utf8');
+  const networkCanvas = fs.readFileSync(path.join(ROOT, 'components/motion/DataAiNetworkCanvas.tsx'), 'utf8');
+  const globalsCss = fs.readFileSync(path.join(ROOT, 'app/globals.css'), 'utf8');
+
+  // Persistent scene state + clamped dt + rafIdRef guard across pause/resume
+  for (const [name, code] of [
+    ['HeroTechCanvas', heroCanvas],
+    ['DataAiNetworkCanvas', networkCanvas],
+  ]) {
+    assert.ok(code.includes('sceneRef'), `${name} must hold persistent scene state in sceneRef`);
+    assert.ok(code.includes('rafIdRef'), `${name} must guard rAF handle via rafIdRef`);
+    assert.ok(code.includes('Math.min(0.05'), `${name} must clamp delta-time on resume`);
+    assert.ok(code.includes('}, [reducedMotion, isInView, docVisible]);'), `${name} must separate pause/resume loop effect from scene setup`);
+  }
+
+  // HeroTechCanvas includes drifting ambient particles
+  assert.ok(heroCanvas.includes('ambientParticles') || heroCanvas.includes('AmbientParticle'), 'HeroTechCanvas must render continuous ambient particles');
+
+  // CSS scroll-driven compositor effects and reduced-motion override
+  assert.ok(globalsCss.includes('@supports (animation-timeline: view())'), 'globals.css must feature-detect CSS scroll-driven animations');
+  assert.ok(globalsCss.includes('.scroll-parallax-media'), 'globals.css must define .scroll-parallax-media');
+  assert.ok(globalsCss.includes('.scroll-contour-depth'), 'globals.css must define .scroll-contour-depth');
+  assert.ok(globalsCss.includes('.scroll-accent-progress'), 'globals.css must define .scroll-accent-progress');
 });
 

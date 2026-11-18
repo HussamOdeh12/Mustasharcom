@@ -165,7 +165,7 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* PART 1: Consilio Interactive Approach / Methodology Framework */}
         <div className="reveal-item reveal-delay-1 pb-24 md:pb-28 border-b border-[#DCE3DF] dark:border-[#174B3E]">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-12">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-12 mb-6 border-b border-[#DCE3DF] dark:border-[#174B3E] relative">
             <div className="max-w-3xl space-y-4">
               <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#174B3E] dark:text-[#18C6A0] block">
                 05 / {locale === 'ar' ? 'منهجية العمل الاستشاري' : 'Our Consultancy Approach'}
@@ -187,6 +187,8 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
               <span>{locale === 'ar' ? 'المزيد عن فلسفتنا الاستشارية' : 'More About Our Methodology'}</span>
               <ArrowIcon className="w-4 h-4 btn-slide-arrow" />
             </Link>
+
+            <div className="scroll-accent-progress absolute bottom-0 inset-x-0 h-[2px] bg-[#174B3E] dark:bg-[#18C6A0]" aria-hidden="true" />
           </div>
 
           {/* Interactive 3-Stage Process Selector Tabs */}
@@ -246,7 +248,10 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
               </p>
             </div>
 
-            <div className="lg:col-span-5 p-6 sm:p-8 rounded-xl bg-[#F7F5F0] dark:bg-[#071C17] border border-[#DCE3DF] dark:border-[#174B3E] space-y-4">
+            <div
+              key={`${currentPhase.step}-deliverables`}
+              className="lg:col-span-5 p-6 sm:p-8 rounded-xl bg-[#F7F5F0] dark:bg-[#071C17] border border-[#DCE3DF] dark:border-[#174B3E] space-y-4 page-transition-enter"
+            >
               <div className="text-xs font-mono uppercase tracking-wider text-[#697671] dark:text-[#A3B8B0]">
                 {locale === 'ar' ? 'المخرجات الرئيسية لهذه المرحلة' : 'Key Stage Deliverables'}
               </div>

@@ -140,16 +140,18 @@ html {
   animation: heroMediaReveal 800ms cubic-bezier(0.22, 1, 0.36, 1) 180ms both;
 }
 
-/* Scroll-Triggered Section Reveal & Nested Stagger System */
+/* Scroll-Triggered Repeatable Section Reveal & Nested Stagger System */
 .section-reveal {
-  transition: opacity 680ms cubic-bezier(0.22, 1, 0.36, 1),
-              transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 640ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 640ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
 
 .section-reveal-hidden {
   opacity: 0;
   transform: translate3d(0, 24px, 0);
+  transition-duration: 120ms;
+  transition-delay: 0ms;
 }
 
 .section-reveal-visible {
@@ -167,6 +169,8 @@ html {
 .section-reveal-hidden .reveal-item {
   opacity: 0;
   transform: translate3d(0, 20px, 0);
+  transition-duration: 100ms;
+  transition-delay: 0ms;
 }
 
 .section-reveal-visible .reveal-item {
@@ -193,11 +197,74 @@ html {
 .section-reveal-hidden .reveal-line {
   opacity: 0;
   transform: scaleX(0.18);
+  transition-duration: 100ms;
+  transition-delay: 0ms;
 }
 
 .section-reveal-visible .reveal-line {
   opacity: 1;
   transform: scaleX(1);
+}
+
+/* Scroll-Driven CSS Compositor Motion (Native view() timeline with graceful fallback) */
+@keyframes scrollMediaParallax {
+  from {
+    transform: translate3d(0, -16px, 0) scale(1.07);
+  }
+  to {
+    transform: translate3d(0, 16px, 0) scale(1.07);
+  }
+}
+
+@keyframes scrollContourDepth {
+  from {
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    transform: translate3d(0, -14px, 0);
+  }
+}
+
+@keyframes scrollAccentProgress {
+  from {
+    transform: scaleX(0.14);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.scroll-accent-progress {
+  transform-origin: left center;
+}
+
+[dir="rtl"] .scroll-accent-progress {
+  transform-origin: right center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .scroll-parallax-media {
+      animation: scrollMediaParallax linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+      will-change: transform;
+    }
+
+    .scroll-contour-depth {
+      animation: scrollContourDepth linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+      will-change: transform;
+    }
+
+    .scroll-accent-progress {
+      animation: scrollAccentProgress linear both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 42%;
+      will-change: transform;
+    }
+  }
 }
 
 /* Consilio-style Card Lift, Illumination & Editorial Image Zoom */
@@ -319,7 +386,10 @@ html {
   .hero-stagger-2,
   .hero-stagger-3,
   .hero-stagger-4,
-  .hero-media-reveal {
+  .hero-media-reveal,
+  .scroll-parallax-media,
+  .scroll-contour-depth,
+  .scroll-accent-progress {
     animation: none !important;
     transform: none !important;
     opacity: 1 !important;

@@ -45,7 +45,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
 
       {/* Server-rendered crisp static architectural contour SVG (visible immediately at FCP/LCP) */}
       <svg
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-30"
+        className="scroll-contour-depth absolute inset-0 w-full h-full pointer-events-none opacity-30"
         viewBox="0 0 1440 960"
         fill="none"
         preserveAspectRatio="xMidYMid slice"
@@ -149,19 +149,21 @@ export default function HeroSection({ locale }: HeroSectionProps) {
         <div className="hero-media-reveal mt-12 md:mt-16">
           <div className="group relative rounded-xl overflow-hidden border border-[#174B3E] bg-[#0B2922]">
             <div className="relative h-[340px] sm:h-[440px] md:h-[520px] lg:h-[580px] w-full overflow-hidden">
-              <Image
-                src="/images/hero_abu_dhabi_advisory_1794979008017.jpg"
-                alt={
-                  locale === 'ar'
-                    ? 'المقر الاستشاري والتقني لشركة مستشاركم للحلول المعلوماتية في أبوظبي'
-                    : 'Mustasharcom for Informatics Solutions corporate advisory architecture in Abu Dhabi'
-                }
-                fill
-                priority
-                sizes="(max-width: 1280px) 100vw, 1280px"
-                referrerPolicy="no-referrer"
-                className="object-cover object-center img-zoom-transition"
-              />
+              <div className="absolute inset-0 scroll-parallax-media">
+                <Image
+                  src="/images/hero_abu_dhabi_advisory_1794979008017.jpg"
+                  alt={
+                    locale === 'ar'
+                      ? 'المقر الاستشاري والتقني لشركة مستشاركم للحلول المعلوماتية في أبوظبي'
+                      : 'Mustasharcom for Informatics Solutions corporate advisory architecture in Abu Dhabi'
+                  }
+                  fill
+                  priority
+                  sizes="(max-width: 1280px) 100vw, 1280px"
+                  referrerPolicy="no-referrer"
+                  className="object-cover object-center img-zoom-transition"
+                />
+              </div>
               {/* Cinematic Multi-Stop Atmospheric Scrim */}
               <div
                 className="absolute inset-0"

@@ -51,6 +51,9 @@ export default function WhoWeAreSection({ locale }: WhoWeAreSectionProps) {
               <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#174B3E] dark:text-[#18C6A0] block">
                 01 / {t.whoWeAre}
               </span>
+              <div className="h-[2px] w-20 bg-[#174B3E]/30 dark:bg-[#18C6A0]/30 overflow-hidden rounded-full" aria-hidden="true">
+                <div className="scroll-accent-progress h-full w-full bg-[#174B3E] dark:bg-[#18C6A0]" />
+              </div>
               <div className="text-xs text-[#697671] dark:text-[#A3B8B0]">
                 {locale === 'ar' ? 'تأسست في أبوظبي · 2019' : 'Abu Dhabi Sovereign Practice · Est. 2019'}
               </div>
@@ -59,7 +62,7 @@ export default function WhoWeAreSection({ locale }: WhoWeAreSectionProps) {
             <div className="hidden lg:block pt-12">
               <Link
                 href={aboutHref}
-                className="btn-slide-trigger inline-flex items-center gap-2.5 px-5 py-3 rounded-md bg-[#071C17] dark:bg-[#0B2922] text-[#F4F7F5] border border-[#071C17] dark:border-[#174B3E] hover:bg-[#174B3E] dark:hover:border-[#18C6A0] text-xs font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0]"
+                className="btn-slide-trigger btn-press inline-flex items-center gap-2.5 px-5 py-3 rounded-md bg-[#071C17] dark:bg-[#0B2922] text-[#F4F7F5] border border-[#071C17] dark:border-[#174B3E] hover:bg-[#174B3E] dark:hover:border-[#18C6A0] text-xs font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0]"
               >
                 <span>{locale === 'ar' ? 'تعرف على الشركة والقيادة' : 'More About Mustasharcom'}</span>
                 <ArrowIcon className="w-3.5 h-3.5 text-[#18C6A0] btn-slide-arrow" />
@@ -111,18 +114,20 @@ export default function WhoWeAreSection({ locale }: WhoWeAreSectionProps) {
           {/* Left 7 Columns: Large-Scale Editorial Visual Carrier */}
           <div className="reveal-item reveal-delay-2 lg:col-span-7 flex flex-col">
             <div className="group relative flex-1 min-h-[340px] sm:min-h-[420px] lg:min-h-[500px] rounded-xl overflow-hidden border border-[#DCE3DF] dark:border-[#174B3E] bg-[#0B2922]">
-              <Image
-                src="/images/about_executive_boardroom_1794979011521.jpg"
-                alt={
-                  locale === 'ar'
-                    ? 'اجتماع استشاري تنفيذي لشركة مستشاركم في أبوظبي'
-                    : 'Mustasharcom executive consulting advisory session in Abu Dhabi'
-                }
-                fill
-                sizes="(max-width: 1024px) 100vw, 58vw"
-                referrerPolicy="no-referrer"
-                className="object-cover object-center img-zoom-transition"
-              />
+              <div className="absolute inset-0 scroll-parallax-media">
+                <Image
+                  src="/images/about_executive_boardroom_1794979011521.jpg"
+                  alt={
+                    locale === 'ar'
+                      ? 'اجتماع استشاري تنفيذي لشركة مستشاركم في أبوظبي'
+                      : 'Mustasharcom executive consulting advisory session in Abu Dhabi'
+                  }
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 58vw"
+                  referrerPolicy="no-referrer"
+                  className="object-cover object-center img-zoom-transition"
+                />
+              </div>
               <div
                 className="absolute inset-0"
                 style={{

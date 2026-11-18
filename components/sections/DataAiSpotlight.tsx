@@ -171,7 +171,7 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Editorial Section Header */}
-        <div className="reveal-item reveal-delay-1 flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-14 md:pb-18 border-b border-[#174B3E]">
+        <div className="reveal-item reveal-delay-1 flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-14 md:pb-18 border-b border-[#174B3E] relative">
           <div className="max-w-3xl space-y-4">
             <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#18C6A0] block">
               03 / {locale === 'ar' ? 'البيانات، التحليلات والذكاء الاصطناعي' : 'Data, Analytics & AI Architecture'}
@@ -193,6 +193,8 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
             <span>{locale === 'ar' ? 'استكشف ممارسة البيانات والذكاء الاصطناعي' : 'Explore Data & AI Practice'}</span>
             <ArrowIcon className="w-4 h-4 shrink-0 btn-slide-arrow" />
           </Link>
+
+          <div className="scroll-accent-progress absolute bottom-0 inset-x-0 h-[2px] bg-[#18C6A0]" aria-hidden="true" />
         </div>
 
         {/* Asymmetric Interactive Split: Left Progressive Accordion/Selector + Right Animated Data Network Stage */}

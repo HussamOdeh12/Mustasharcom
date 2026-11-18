@@ -31,7 +31,7 @@ export default function CtaBanner({ locale }: CtaBannerProps) {
       />
 
       <svg
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-25"
+        className="scroll-contour-depth absolute inset-0 w-full h-full pointer-events-none opacity-25"
         viewBox="0 0 1440 600"
         fill="none"
         preserveAspectRatio="xMidYMid slice"

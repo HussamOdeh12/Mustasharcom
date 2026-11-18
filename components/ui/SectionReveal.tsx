@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { useReducedMotion } from '@/lib/motion';
 
 interface SectionRevealProps {
   children: React.ReactNode;
@@ -16,73 +17,88 @@ export default function SectionReveal({
   id,
 }: SectionRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
-  // Start visible on SSR/initial render so content is 100% accessible without JS,
-  // then arm below-the-fold sections for smooth viewport entrance transitions.
+  const reducedMotion = useReducedMotion();
+
+  // Start visible on SSR/initial render so content is 100% readable without JS,
+  // then arm below-the-fold sections for repeatable viewport reveal transitions.
   const [revealState, setRevealState] = useState<'initial' | 'hidden' | 'visible'>('initial');
 
   useEffect(() => {
     const el = ref.current;
     if (!el || typeof window === 'undefined') return;
 
-    const prefersReducedMotion =
-      typeof window.matchMedia === 'function' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+    if (reducedMotion || !('IntersectionObserver' in window)) {
       setRevealState('visible');
       return;
     }
 
     const rect = el.getBoundingClientRect();
-    // Keep sections already in or above the viewport immediately visible
-    if (rect.top < window.innerHeight * 0.86) {
-      setRevealState('visible');
-      return;
-    }
+    const initiallyVisible = rect.top < window.innerHeight * 0.88 && rect.bottom > 0;
+    setRevealState(initiallyVisible ? 'visible' : 'hidden');
 
-    setRevealState('hidden');
-
-    const observer = new IntersectionObserver(
+    // Hysteresis Zone 1 (Enter): trigger reveal when section enters inside bottom/top bounds
+    const enterObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             setRevealState('visible');
-            observer.unobserve(entry.target);
           }
         }
       },
       {
-        threshold: 0.06,
-        rootMargin: '0px 0px -36px 0px',
+        threshold: 0.01,
+        rootMargin: '0px 0px -32px 0px',
       }
     );
 
-    observer.observe(el);
+    // Hysteresis Zone 2 (Meaningful Exit): reset to hidden only after section is >96px clear of viewport
+    let isFirstExitCheck = true;
+    const exitObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (isFirstExitCheck) {
+            isFirstExitCheck = false;
+            continue;
+          }
+          if (!entry.isIntersecting) {
+            setRevealState('hidden');
+          }
+        }
+      },
+      {
+        threshold: 0,
+        rootMargin: '96px 0px 96px 0px',
+      }
+    );
 
-    // Safety fallback: ensure content never remains trapped hidden on ultra-short viewports
+    enterObserver.observe(el);
+    exitObserver.observe(el);
+
+    // Initial mount safety check for sections positioned right near the bottom fold
     const safetyTimer = window.setTimeout(() => {
       const currentRect = el.getBoundingClientRect();
-      if (currentRect.top < window.innerHeight) {
+      if (currentRect.top < window.innerHeight && currentRect.bottom > 0) {
         setRevealState('visible');
       }
     }, 900);
 
     return () => {
-      observer.disconnect();
+      enterObserver.disconnect();
+      exitObserver.disconnect();
       window.clearTimeout(safetyTimer);
     };
-  }, []);
+  }, [reducedMotion]);
 
   const stateClass =
-    revealState === 'hidden'
-      ? 'section-reveal section-reveal-hidden'
-      : 'section-reveal section-reveal-visible';
+    reducedMotion || revealState !== 'hidden'
+      ? 'section-reveal section-reveal-visible'
+      : 'section-reveal section-reveal-hidden';
 
   return (
     <div
       ref={ref}
       id={id}
-      data-reveal-state={revealState}
+      data-reveal-state={reducedMotion ? 'visible' : revealState}
       className={`${stateClass} ${className}`.trim()}
       style={delay > 0 ? { transitionDelay: `${delay}ms` } : undefined}
     >

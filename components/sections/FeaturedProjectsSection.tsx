@@ -87,7 +87,7 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Editorial Header */}
-        <div className="reveal-item reveal-delay-1 flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-14 md:pb-20 border-b border-[#DCE3DF] dark:border-[#174B3E]">
+        <div className="reveal-item reveal-delay-1 flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-14 md:pb-20 border-b border-[#DCE3DF] dark:border-[#174B3E] relative">
           <div className="max-w-3xl space-y-4">
             <span className="text-xs font-mono font-semibold uppercase tracking-widest text-[#174B3E] dark:text-[#18C6A0] block">
               04 / {t.selectedEngagements}
@@ -109,7 +109,7 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
 
           <Link
             href={projectsHref}
-            className="btn-slide-trigger inline-flex items-center gap-2.5 px-6 py-3.5 rounded-md bg-[#071C17] hover:bg-[#174B3E] dark:bg-[#18C6A0] dark:hover:bg-[#12A989] text-[#F4F7F5] dark:text-[#071C17] text-xs sm:text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] whitespace-nowrap shrink-0"
+            className="btn-slide-trigger btn-press inline-flex items-center gap-2.5 px-6 py-3.5 rounded-md bg-[#071C17] hover:bg-[#174B3E] dark:bg-[#18C6A0] dark:hover:bg-[#12A989] text-[#F4F7F5] dark:text-[#071C17] text-xs sm:text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0] whitespace-nowrap shrink-0"
           >
             <span>
               {locale === 'ar'
@@ -118,6 +118,8 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
             </span>
             <ArrowIcon className="w-4 h-4 shrink-0 btn-slide-arrow" />
           </Link>
+
+          <div className="scroll-accent-progress absolute bottom-0 inset-x-0 h-[2px] bg-[#174B3E] dark:bg-[#18C6A0]" aria-hidden="true" />
         </div>
 
         {/* 2 Large-Scale Alternating Editorial Case Study Showcases */}
@@ -140,14 +142,16 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
                     href={projectsHref}
                     className="relative flex-1 min-h-[300px] sm:min-h-[380px] lg:min-h-[440px] rounded-xl overflow-hidden border border-[#DCE3DF] dark:border-[#174B3E] bg-[#0B2922] block focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18C6A0]"
                   >
-                    <Image
-                      src={item.image}
-                      alt={item.imageAlt}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 58vw"
-                      referrerPolicy="no-referrer"
-                      className="object-cover object-center img-zoom-transition"
-                    />
+                    <div className="absolute inset-0 scroll-parallax-media">
+                      <Image
+                        src={item.image}
+                        alt={item.imageAlt}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 58vw"
+                        referrerPolicy="no-referrer"
+                        className="object-cover object-center img-zoom-transition"
+                      />
+                    </div>
                     <div
                       className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-90"
                       style={{
