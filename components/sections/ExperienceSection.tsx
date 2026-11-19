@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { Locale, COMPANY_PROFILE } from '@/lib/company-data';
+import BlurLetterReveal from '../motion/BlurLetterReveal';
+import HeadingH3 from '../ui/HeadingH3';
+import ScrollToNextButton from '../ui/ScrollToNextButton';
 
 interface ExperienceSectionProps {
   locale: Locale;
@@ -174,9 +177,15 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
                 className="font-bold text-[#17211D] dark:text-[#F4F7F5] tracking-[-0.03em] leading-[1.08] text-balance"
                 style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
               >
-                {locale === 'ar'
-                  ? 'إطار عمل منهجي لتبسيط التعقيد وتحقيق نتائج مستدامة'
-                  : 'A Proven Framework For Sustainable Institutional Transformation'}
+                <BlurLetterReveal
+                  text={
+                    locale === 'ar'
+                      ? 'إطار عمل منهجي لتبسيط التعقيد وتحقيق نتائج مستدامة'
+                      : 'A Proven Framework For Sustainable Institutional Transformation'
+                  }
+                  staggerMs={15}
+                  maxStaggerSpanMs={560}
+                />
               </h2>
             </div>
 
@@ -239,9 +248,9 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
                 <span>ISO 9001:2015 GOVERNED</span>
               </div>
 
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#17211D] dark:text-[#F4F7F5] tracking-tight leading-[1.15]">
+              <HeadingH3 size="display">
                 {currentPhase.title}
-              </h3>
+              </HeadingH3>
 
               <p className="text-base sm:text-lg text-[#3E544C] dark:text-[#A3B8B0] leading-relaxed">
                 {currentPhase.summary}
@@ -290,11 +299,11 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
                 <div className="text-xs font-mono uppercase tracking-wider text-[#697671] dark:text-[#A3B8B0]">
                   {locale === 'ar' ? 'النماذج الاستشارية التقليدية' : 'Conventional Vendors'}
                 </div>
-                <h3 className="text-xl font-bold text-[#3E544C] dark:text-[#A3B8B0]">
+                <HeadingH3 size="md" tone="muted">
                   {locale === 'ar'
                     ? 'العديد من المشاريع الاستشارية تتعثر عند الانتقال من التخطيط إلى التشغيل الفعلي.'
                     : 'Many consulting engagements deliver lengthy reports, but fall short during technical execution.'}
-                </h3>
+                </HeadingH3>
                 <ul className="space-y-3.5 pt-2">
                   {traditionalChallenges.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-3 text-sm text-[#697671] dark:text-[#A3B8B0]">
@@ -312,11 +321,11 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
                 <div className="text-xs font-mono uppercase tracking-wider text-[#18C6A0]">
                   <span>{locale === 'ar' ? 'مع مستشاركم للحلول المعلوماتية' : 'With Mustasharcom'}</span>
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-bold text-[#F4F7F5] tracking-tight leading-snug">
+                <HeadingH3 size="lg" tone="inverted">
                   {locale === 'ar'
                     ? 'ندمج الخبرة الاستشارية مع التنفيذ الهندسي الميداني لتحقيق كفاءة ملموسة ومستدامة.'
                     : 'We combine senior advisory expertise with hands-on software & AI execution to deliver measurable institutional results.'}
-                </h3>
+                </HeadingH3>
                 <ul className="space-y-4 pt-2">
                   {mustasharcomAdvantages.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-3.5 text-sm sm:text-base text-[#DCE6E2]">
@@ -337,11 +346,11 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
               <span className="text-xs font-mono uppercase tracking-wider text-[#174B3E] dark:text-[#18C6A0] block mb-1">
                 {locale === 'ar' ? 'الجهات الحكومية المتعاقد معها' : 'Verified Government Partner Roster'}
               </span>
-              <h3 className="text-2xl sm:text-3xl font-bold text-[#17211D] dark:text-[#F4F7F5] tracking-tight">
+              <HeadingH3 size="lg">
                 {locale === 'ar'
                   ? 'شراكات راسخة مع هيئات ودوائر حكومة أبوظبي'
                   : 'Trusted by Leading Authorities Across the Emirate of Abu Dhabi'}
-              </h3>
+              </HeadingH3>
             </div>
             <span className="font-mono text-xs text-[#697671] dark:text-[#A3B8B0]">
               {COMPANY_PROFILE.location.city[locale]} · 100% PUBLIC SECTOR HERITAGE
@@ -369,6 +378,18 @@ export default function ExperienceSection({ locale }: ExperienceSectionProps) {
             ))}
           </div>
         </div>
+
+        <ScrollToNextButton
+          targetId="credentials"
+          sectionIndex="07"
+          variant="light"
+          label={
+            locale === 'ar'
+              ? 'الاطلاع على التراخيص وشهادات الجودة'
+              : 'Continue to Licensing & Quality'
+          }
+          className="pt-14 md:pt-16"
+        />
       </div>
     </section>
   );

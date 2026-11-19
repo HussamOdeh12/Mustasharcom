@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowRight, ArrowLeft, Phone, Mail, ArrowUpRight } from 'lucide-react';
 import { Locale, COMPANY_PROFILE } from '@/lib/company-data';
 import { UI_STRINGS } from '@/lib/translations';
+import BlurLetterReveal from '../motion/BlurLetterReveal';
 
 interface CtaBannerProps {
   locale: Locale;
@@ -17,6 +18,7 @@ export default function CtaBanner({ locale }: CtaBannerProps) {
 
   return (
     <section
+      id="consultation"
       className="relative py-24 md:py-36 bg-[#071C17] text-[#F4F7F5] border-t border-[#174B3E] overflow-hidden"
       dir={isRtl ? 'rtl' : 'ltr'}
     >
@@ -67,12 +69,20 @@ export default function CtaBanner({ locale }: CtaBannerProps) {
               {locale === 'ar' ? (
                 <>
                   نبني الوضوح المؤسسي.{' '}
-                  <span className="text-[#18C6A0]">ونسرّع التحول الرقمي.</span>
+                  <BlurLetterReveal
+                    text="ونسرّع التحول الرقمي."
+                    className="text-[#18C6A0]"
+                  />
                 </>
               ) : (
                 <>
                   Build institutional clarity.{' '}
-                  <span className="text-[#18C6A0]">Unlock digital transformation.</span>
+                  <BlurLetterReveal
+                    text="Deliver digital transformation."
+                    staggerMs={20}
+                    maxStaggerSpanMs={540}
+                    className="text-[#18C6A0]"
+                  />
                 </>
               )}
             </h2>

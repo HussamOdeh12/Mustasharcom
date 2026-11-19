@@ -260,3 +260,41 @@ test('Priority 10: Continuous canvas persistence (pause/resume without reset) an
   assert.ok(globalsCss.includes('.scroll-accent-progress'), 'globals.css must define .scroll-accent-progress');
 });
 
+test('Priority 11: ScrollToNextButton, ScrollJourneyLine, HeadingH3, and BlurLetterReveal are properly implemented and integrated', () => {
+  const scrollBtn = fs.readFileSync(path.join(ROOT, 'components/ui/ScrollToNextButton.tsx'), 'utf8');
+  const journeyLine = fs.readFileSync(path.join(ROOT, 'components/motion/ScrollJourneyLine.tsx'), 'utf8');
+  const headingH3 = fs.readFileSync(path.join(ROOT, 'components/ui/HeadingH3.tsx'), 'utf8');
+  const blurReveal = fs.readFileSync(path.join(ROOT, 'components/motion/BlurLetterReveal.tsx'), 'utf8');
+  const homeView = fs.readFileSync(path.join(ROOT, 'components/pages/HomePageView.tsx'), 'utf8');
+  const heroSection = fs.readFileSync(path.join(ROOT, 'components/sections/HeroSection.tsx'), 'utf8');
+  const globalsCss = fs.readFileSync(path.join(ROOT, 'app/globals.css'), 'utf8');
+
+  // ScrollToNextButton checks
+  assert.ok(scrollBtn.includes('IntersectionObserver'), 'ScrollToNextButton must reveal via IntersectionObserver');
+  assert.ok(scrollBtn.includes('scrollIntoView'), 'ScrollToNextButton must smoothly scroll to target section');
+  assert.ok(scrollBtn.includes('useReducedMotion'), 'ScrollToNextButton must respect reduced motion');
+
+  // ScrollJourneyLine checks
+  assert.ok(journeyLine.includes('getTotalLength'), 'ScrollJourneyLine must compute SVG path length');
+  assert.ok(journeyLine.includes('strokeDashoffset'), 'ScrollJourneyLine must animate SVG strokeDashoffset on scroll');
+  assert.ok(journeyLine.includes('getPointAtLength'), 'ScrollJourneyLine must position tracer along SVG path');
+  assert.ok(journeyLine.includes('requestAnimationFrame'), 'ScrollJourneyLine must throttle scroll updates with rAF');
+  assert.ok(homeView.includes('<ScrollJourneyLine'), 'HomePageView must render ScrollJourneyLine');
+
+  // HeadingH3 checks
+  assert.ok(headingH3.includes('<h3'), 'HeadingH3 must render semantic <h3> element');
+  assert.ok(headingH3.includes('tracking-[-0.0'), 'HeadingH3 must define tight letter tracking');
+  assert.ok(headingH3.includes('transition-colors'), 'HeadingH3 must include smooth color transitions');
+
+  // BlurLetterReveal checks
+  assert.ok(blurReveal.includes('ARABIC_SCRIPT_REGEX'), 'BlurLetterReveal must preserve Arabic cursive script joining');
+  assert.ok(blurReveal.includes('sr-only'), 'BlurLetterReveal must expose clean screen-reader text');
+  assert.ok(blurReveal.includes('useReducedMotion'), 'BlurLetterReveal must honor prefers-reduced-motion');
+  assert.ok(globalsCss.includes('@keyframes blurLetterIn'), 'globals.css must define blurLetterIn keyframes');
+  assert.ok(globalsCss.includes('filter: blur('), 'globals.css must animate blur reduction');
+  assert.ok(heroSection.includes('<BlurLetterReveal'), 'HeroSection must integrate BlurLetterReveal');
+  assert.ok(heroSection.includes('<ScrollToNextButton'), 'HeroSection must integrate ScrollToNextButton');
+  assert.ok(heroSection.includes('<HeadingH3'), 'HeroSection must integrate HeadingH3');
+});
+
+

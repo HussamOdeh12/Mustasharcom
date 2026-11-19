@@ -5,6 +5,9 @@ import { ArrowRight, ArrowLeft, ArrowUpRight } from 'lucide-react';
 import { Locale, COMPANY_PROFILE } from '@/lib/company-data';
 import { UI_STRINGS } from '@/lib/translations';
 import HeroTechLayer from '../motion/HeroTechLayer';
+import BlurLetterReveal from '../motion/BlurLetterReveal';
+import HeadingH3 from '../ui/HeadingH3';
+import ScrollToNextButton from '../ui/ScrollToNextButton';
 
 interface HeroSectionProps {
   locale: Locale;
@@ -22,6 +25,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
 
   return (
     <section
+      id="hero"
       className="relative bg-[#071C17] text-[#F4F7F5] border-b border-[#174B3E] overflow-hidden"
       dir={isRtl ? 'rtl' : 'ltr'}
     >
@@ -103,14 +107,28 @@ export default function HeroSection({ locale }: HeroSectionProps) {
             {locale === 'ar' ? (
               <>
                 استشارات تقنية المعلومات،{' '}
-                <span className="text-[#18C6A0]">البيانات والذكاء الاصطناعي</span>
+                <BlurLetterReveal
+                  text="البيانات والذكاء الاصطناعي"
+                  trigger="mount"
+                  baseDelayMs={180}
+                  staggerMs={55}
+                  durationMs={660}
+                  className="text-[#18C6A0]"
+                />
                 ، والتحول الرقمي للقطاع الحكومي.
               </>
             ) : (
               <>
                 IT Consultancy,{' '}
-                <span className="text-[#18C6A0]">Data &amp; AI Solutions</span>, and Digital
-                Transformation for Government.
+                <BlurLetterReveal
+                  text="Data & AI Solutions"
+                  trigger="mount"
+                  baseDelayMs={160}
+                  staggerMs={26}
+                  durationMs={640}
+                  className="text-[#18C6A0]"
+                />
+                , and Digital Transformation for Government.
               </>
             )}
           </h1>
@@ -196,9 +214,13 @@ export default function HeroSection({ locale }: HeroSectionProps) {
               <div className="absolute bottom-0 inset-x-0 p-6 sm:p-8 lg:p-10">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end pt-6 border-t border-white/15">
                   <div className="lg:col-span-5 space-y-2">
-                    <div className="text-xs font-mono uppercase tracking-wider text-[#18C6A0]">
+                    <HeadingH3
+                      size="sm"
+                      tone="accent"
+                      className="text-xs sm:text-xs font-mono uppercase tracking-wider font-semibold text-[#18C6A0] dark:text-[#18C6A0]"
+                    >
                       {locale === 'ar' ? 'الفلسفة الاستشارية' : 'Advisory Mandate'}
-                    </div>
+                    </HeadingH3>
                     <p className="text-sm sm:text-base text-[#F4F7F5] font-medium leading-relaxed">
                       &ldquo;{COMPANY_PROFILE.quote[locale]}&rdquo;
                     </p>
@@ -246,6 +268,19 @@ export default function HeroSection({ locale }: HeroSectionProps) {
             </div>
           </div>
         </div>
+
+        {/* Discovery Scroll-to-Next Action */}
+        <ScrollToNextButton
+          targetId="who-we-are"
+          sectionIndex="01"
+          variant="dark"
+          label={
+            locale === 'ar'
+              ? 'اكتشف من نحن والمنهجية الاستشارية'
+              : 'Explore Who We Are'
+          }
+          className="pt-10 md:pt-14"
+        />
       </div>
     </section>
   );

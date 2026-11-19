@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { ArrowRight, ArrowLeft, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { Locale, SERVICES_CATALOG } from '@/lib/company-data';
 import { UI_STRINGS } from '@/lib/translations';
+import HeadingH3 from '../ui/HeadingH3';
+import ScrollToNextButton from '../ui/ScrollToNextButton';
 
 interface ServicesCarouselProps {
   locale: Locale;
@@ -377,13 +379,14 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
                   </div>
 
                   {/* Large Display Title */}
-                  <h3
-                    className={`text-2xl sm:text-3xl font-bold tracking-tight leading-[1.18] mb-4 ${
-                      isDataAi ? 'text-[#F4F7F5]' : 'text-[#17211D] dark:text-[#F4F7F5]'
-                    }`}
+                  <HeadingH3
+                    size="lg"
+                    tone={isDataAi ? 'inverted' : 'default'}
+                    interactive
+                    className="mb-4"
                   >
                     {svc.title[locale]}
-                  </h3>
+                  </HeadingH3>
 
                   {/* Editorial Narrative */}
                   <p
@@ -484,6 +487,18 @@ export default function ServicesCarousel({ locale }: ServicesCarouselProps) {
             <ArrowIcon className="w-4 h-4 btn-slide-arrow" />
           </Link>
         </div>
+
+        <ScrollToNextButton
+          targetId="data-ai"
+          sectionIndex="03"
+          variant="light"
+          label={
+            locale === 'ar'
+              ? 'الانتقال إلى معمارية البيانات والذكاء الاصطناعي'
+              : 'Continue to Data & AI Architecture'
+          }
+          className="pt-12 md:pt-14"
+        />
       </div>
     </section>
   );

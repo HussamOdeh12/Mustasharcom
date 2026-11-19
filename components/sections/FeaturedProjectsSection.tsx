@@ -4,6 +4,9 @@ import Image from 'next/image';
 import { ArrowRight, ArrowLeft, ArrowUpRight } from 'lucide-react';
 import { Locale, PROJECTS_RECORD } from '@/lib/company-data';
 import { UI_STRINGS } from '@/lib/translations';
+import BlurLetterReveal from '../motion/BlurLetterReveal';
+import HeadingH3 from '../ui/HeadingH3';
+import ScrollToNextButton from '../ui/ScrollToNextButton';
 
 interface FeaturedProjectsSectionProps {
   locale: Locale;
@@ -96,9 +99,15 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
               className="font-bold text-[#17211D] dark:text-[#F4F7F5] tracking-[-0.03em] leading-[1.08] text-balance"
               style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
             >
-              {locale === 'ar'
-                ? 'نتائج حقيقية من شراكات استراتيجية مع القطاع الحكومي'
-                : 'Real Results From Strategic Public-Sector Partnerships'}
+              <BlurLetterReveal
+                text={
+                  locale === 'ar'
+                    ? 'نتائج حقيقية من شراكات استراتيجية مع القطاع الحكومي'
+                    : 'Real Results From Strategic Public-Sector Partnerships'
+                }
+                staggerMs={16}
+                maxStaggerSpanMs={560}
+              />
             </h2>
             <p className="text-base sm:text-lg text-[#3E544C] dark:text-[#A3B8B0] leading-relaxed max-w-2xl">
               {locale === 'ar'
@@ -208,14 +217,14 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
                       {item.client}
                     </div>
 
-                    <h3 className="text-2xl sm:text-3xl font-bold text-[#17211D] dark:text-[#F4F7F5] tracking-tight leading-[1.18]">
+                    <HeadingH3 size="lg" interactive>
                       <Link
                         href={projectsHref}
-                        className="hover:text-[#174B3E] dark:hover:text-[#18C6A0] transition-colors focus:outline-none focus-visible:underline"
+                        className="focus:outline-none focus-visible:underline"
                       >
                         {item.title}
                       </Link>
-                    </h3>
+                    </HeadingH3>
 
                     <p className="text-sm sm:text-base text-[#3E544C] dark:text-[#A3B8B0] leading-relaxed">
                       {item.summary}
@@ -250,11 +259,11 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
               <span className="text-xs font-mono uppercase tracking-wider text-[#697671] dark:text-[#A3B8B0] block mb-1">
                 {locale === 'ar' ? 'مختارات إضافية من السجل الرسمي' : 'Additional Verified Public-Sector Mandates'}
               </span>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#17211D] dark:text-[#F4F7F5]">
+              <HeadingH3 size="md">
                 {locale === 'ar'
                   ? 'عقود حكومية إضافية ضمن محفظة الـ 17 مشروعاً'
                   : 'Selected Highlights from Our 17-Contract Government Portfolio'}
-              </h3>
+              </HeadingH3>
             </div>
             <Link
               href={projectsHref}
@@ -309,6 +318,18 @@ export default function FeaturedProjectsSection({ locale }: FeaturedProjectsSect
             })}
           </div>
         </div>
+
+        <ScrollToNextButton
+          targetId="experience"
+          sectionIndex="05"
+          variant="light"
+          label={
+            locale === 'ar'
+              ? 'تعرف على منهجية العمل الاستشاري'
+              : 'Continue to Consultancy Approach'
+          }
+          className="pt-14 md:pt-16"
+        />
       </div>
     </section>
   );

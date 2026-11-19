@@ -4,6 +4,9 @@ import Image from 'next/image';
 import { ArrowRight, ArrowLeft, ArrowUpRight } from 'lucide-react';
 import { Locale, COMPANY_PROFILE } from '@/lib/company-data';
 import { UI_STRINGS } from '@/lib/translations';
+import BlurLetterReveal from '../motion/BlurLetterReveal';
+import HeadingH3 from '../ui/HeadingH3';
+import ScrollToNextButton from '../ui/ScrollToNextButton';
 
 interface WhoWeAreSectionProps {
   locale: Locale;
@@ -77,8 +80,12 @@ export default function WhoWeAreSection({ locale }: WhoWeAreSectionProps) {
             >
               {locale === 'ar' ? (
                 <>
-                  تتشارك <span className="text-[#174B3E] dark:text-[#18C6A0]">مستشاركم</span> مع
-                  الجهات الحكومية والمؤسسات الطموحة لتبسيط الأنظمة المعقدة،{' '}
+                  تتشارك{' '}
+                  <BlurLetterReveal
+                    text="مستشاركم"
+                    className="text-[#174B3E] dark:text-[#18C6A0]"
+                  />{' '}
+                  مع الجهات الحكومية والمؤسسات الطموحة لتبسيط الأنظمة المعقدة،{' '}
                   <span className="text-[#697671] dark:text-[#A3B8B0]">
                     وتعزيز صناعة القرار بالبيانات والذكاء الاصطناعي، وتحقيق كفاءة تشغيلية مستدامة بأعلى معايير الجودة.
                   </span>
@@ -86,9 +93,12 @@ export default function WhoWeAreSection({ locale }: WhoWeAreSectionProps) {
               ) : (
                 <>
                   Mustasharcom partners with ambitious government authorities to{' '}
-                  <span className="text-[#174B3E] dark:text-[#18C6A0]">
-                    implement complex systems in the simplest way
-                  </span>
+                  <BlurLetterReveal
+                    text="implement complex systems in the simplest way"
+                    staggerMs={18}
+                    maxStaggerSpanMs={620}
+                    className="text-[#174B3E] dark:text-[#18C6A0]"
+                  />
                   ,{' '}
                   <span className="text-[#697671] dark:text-[#A3B8B0]">
                     strengthen executive decision-making through data &amp; AI, and deliver lasting operational efficiency.
@@ -171,9 +181,9 @@ export default function WhoWeAreSection({ locale }: WhoWeAreSectionProps) {
                     </span>
                     <span className="w-6 h-[1px] bg-[#DCE3DF] dark:bg-[#174B3E]" />
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#17211D] dark:text-[#F4F7F5] tracking-tight leading-snug">
+                  <HeadingH3 size="md" interactive>
                     {pillar.title}
-                  </h3>
+                  </HeadingH3>
                   <p className="text-sm sm:text-base text-[#3E544C] dark:text-[#A3B8B0] leading-relaxed">
                     {pillar.body}
                   </p>
@@ -188,6 +198,18 @@ export default function WhoWeAreSection({ locale }: WhoWeAreSectionProps) {
             </div>
           </div>
         </div>
+
+        <ScrollToNextButton
+          targetId="services"
+          sectionIndex="02"
+          variant="light"
+          label={
+            locale === 'ar'
+              ? 'استكشف الممارسات والخدمات الاستشارية'
+              : 'Continue to Consulting Services'
+          }
+          className="pt-14 md:pt-16"
+        />
       </div>
     </section>
   );

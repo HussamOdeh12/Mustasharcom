@@ -7,6 +7,9 @@ import Image from 'next/image';
 import { ArrowRight, ArrowLeft, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { Locale } from '@/lib/company-data';
 import { useViewportObserver } from '@/lib/motion';
+import BlurLetterReveal from '../motion/BlurLetterReveal';
+import HeadingH3 from '../ui/HeadingH3';
+import ScrollToNextButton from '../ui/ScrollToNextButton';
 
 // Dynamically load the Data & AI Network Canvas only once the section approaches the viewport
 const DataAiNetworkCanvas = dynamic(() => import('../motion/DataAiNetworkCanvas'), {
@@ -180,9 +183,15 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
               className="font-bold text-[#F4F7F5] tracking-[-0.03em] leading-[1.08] text-balance"
               style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
             >
-              {locale === 'ar'
-                ? 'تحويل أصول البيانات الحكومية إلى مؤشرات قيادية وأتمتة ذكية'
-                : 'Turning Complex Institutional Data into Executive Intelligence & Automation'}
+              <BlurLetterReveal
+                text={
+                  locale === 'ar'
+                    ? 'تحويل أصول البيانات الحكومية إلى مؤشرات قيادية وأتمتة ذكية'
+                    : 'Turning Complex Institutional Data into Executive Intelligence & Automation'
+                }
+                staggerMs={14}
+                maxStaggerSpanMs={580}
+              />
             </h2>
           </div>
 
@@ -220,13 +229,14 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
                         >
                           {cap.num}
                         </span>
-                        <h3
-                          className={`text-lg sm:text-xl md:text-2xl font-bold tracking-tight transition-colors ${
-                            isSelected ? 'text-[#F4F7F5]' : 'text-[#A3B8B0] group-hover:text-[#F4F7F5]'
-                          }`}
+                        <HeadingH3
+                          size="md"
+                          tone={isSelected ? 'inverted' : 'muted'}
+                          interactive
+                          className="text-lg sm:text-xl md:text-2xl"
                         >
                           {cap.title}
-                        </h3>
+                        </HeadingH3>
                       </div>
 
                       <span
@@ -358,6 +368,18 @@ export default function DataAiSpotlight({ locale }: DataAiSpotlightProps) {
             </div>
           </div>
         </div>
+
+        <ScrollToNextButton
+          targetId="engagements"
+          sectionIndex="04"
+          variant="dark"
+          label={
+            locale === 'ar'
+              ? 'استعراض المشاريع والعقود الموثقة'
+              : 'Continue to Case Studies'
+          }
+          className="pt-14 md:pt-16"
+        />
       </div>
     </section>
   );

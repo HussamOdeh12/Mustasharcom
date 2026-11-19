@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { ArrowRight, ArrowLeft, ArrowUpRight } from 'lucide-react';
 import { Locale, COMPANY_PROFILE } from '@/lib/company-data';
 import { UI_STRINGS } from '@/lib/translations';
+import HeadingH3 from '../ui/HeadingH3';
+import ScrollToNextButton from '../ui/ScrollToNextButton';
 
 interface CredentialsSectionProps {
   locale: Locale;
@@ -64,6 +66,7 @@ export default function CredentialsSection({ locale }: CredentialsSectionProps) 
 
   return (
     <section
+      id="credentials"
       className="py-24 md:py-36 bg-[#F7F5F0] dark:bg-[#071C17] border-b border-[#DCE3DF] dark:border-[#174B3E] transition-colors"
       dir={isRtl ? 'rtl' : 'ltr'}
     >
@@ -149,11 +152,11 @@ export default function CredentialsSection({ locale }: CredentialsSectionProps) 
               <span className="text-xs font-mono text-[#174B3E] dark:text-[#18C6A0] uppercase tracking-wider block">
                 ADRA COMMERCIAL LICENCE CN-2769971
               </span>
-              <h3 className="text-lg sm:text-xl font-bold text-[#17211D] dark:text-[#F4F7F5] mt-1">
+              <HeadingH3 size="sm" className="mt-1">
                 {locale === 'ar'
                   ? 'الأنشطة الاقتصادية والتقنية السبعة المرخصة رسمياً في إمارة أبوظبي'
                   : 'Seven Formally Licensed Economic & Informatics Activities'}
-              </h3>
+              </HeadingH3>
             </div>
             <Link
               href={complianceHref}
@@ -175,6 +178,18 @@ export default function CredentialsSection({ locale }: CredentialsSectionProps) 
             ))}
           </div>
         </div>
+
+        <ScrollToNextButton
+          targetId="consultation"
+          sectionIndex="08"
+          variant="light"
+          label={
+            locale === 'ar'
+              ? 'الانتقال إلى طلب الاستشارة والتواصل'
+              : 'Continue to Consultation'
+          }
+          className="pt-14 md:pt-16"
+        />
       </div>
     </section>
   );
